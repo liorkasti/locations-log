@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, StatusBar, Dimensions } from 'react-native';
 import { NativeRouter, Route, Switch, BackButton, Redirect } from "react-router-native";
-import { Categories } from "./screens/Categories";
+import { Categories } from "./src/screens";
+import { HeaderBar } from "./src/components/HeaderBar";
 
 export default function App() {
   return (
@@ -10,7 +11,7 @@ export default function App() {
       <NativeRouter>
         <Switch>
           <BackButton>
-            <Route exact path="/screens" exact component={Chat} />
+            <Route exact path="/screens" exact component={Categories} />
           </BackButton>
         </Switch>
       </NativeRouter>
@@ -21,7 +22,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",  },
+    alignItems: "center",
+  },
 });
-
-export default App;

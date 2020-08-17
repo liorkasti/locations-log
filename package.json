@@ -11,8 +11,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "babel-preset-react-native": "2.1.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-material-design": "^0.3.7",
     "react-router-native": "^5.2.0"
   },
   "devDependencies": {

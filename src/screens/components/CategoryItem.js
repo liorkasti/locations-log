@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import {TouchableHighlight, View, Text, StyleSheet} from 'react-native';
-import {COLOR} from 'react-native-material-ui';
+import {COLOR} from './node_modules/react-native-material-ui';
 import PropTypes from 'prop-types';
 
 class CategoryItem extends PureComponent {
