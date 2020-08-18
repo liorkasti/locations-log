@@ -5,7 +5,7 @@ import CategoryItem from '../components/CategoryItem';
 import CategoryInput from '../components/CategoryInput';
 // import EmptyView from './components/EmptyView';
 
-export default function Categories({props}) {
+export default function Categories({ props }) {
 
   const [categoriesList, setCategoriesList] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
@@ -14,7 +14,7 @@ export default function Categories({props}) {
   // console.log("The Location Categories: ", categoriesList);
   useEffect(() => {
     console.error("dialogOpen: ", props);
-  },[props])
+  }, [props])
 
   const addCategoryHandler = categoryTitle => {
     setCategoriesList(currentCategories => [
@@ -42,41 +42,51 @@ export default function Categories({props}) {
 
         <View style={styles.textContainer}>
           {
-            //todo: show txt on input true
             categoriesList.length ?
               <Text style={styles.textPrompt}>Location Categiries</Text>
               :
               <Text style={styles.textPrompt}>Please create a new Location Categiries</Text>
           }
         </View>
-        <Button
-          title="Add"
-          // title="Add New Category" 
-          color="rgba(0,88,155,1)"
-          onPress={() => setIsAddMode(true)}
-        />
 
-        <CategoryInput
-          visible={isAddMode}
-          onAddCategory={addCategoryHandler}
-          onCancel={cancelCategoryAdditionHandler}
-          dialogOpen={props.dialogOpen}
-          onDismiss={props.onDismiss}
-          initialValue=""
-        />
-        <FlatList
-          keyExtractor={(item, index) => item.id}
-          data={categoriesList}
-          renderItem={itemData => (
-            <CategoryItem
-              id={itemData.item.id}
-              onDelete={removeCategoryHandler}
-              title={itemData.item.value}
+
+        {props.dialogOpen &&
+          <>
+            <Button
+              title="Add"
+              // title="Add New Category" 
+              color="rgba(0,88,155,1)"
+              //todo: add button width 
+              onPress={() => setIsAddMode(true)}
             />
-          )}
-        />
+            <CategoryInput
+              visible={isAddMode}
+              onAddCategory={addCategoryHandler}
+              onCancel={cancelCategoryAdditionHandler}
+              dialogOpen={props.dialogOpen}
+              onDismiss={props.onDismiss}
+              initialValue=""
+            />
+          </>
+        }
 
-        <InputDialog
+        {categoriesList.length ?
+          <FlatList
+            keyExtractor={(item, index) => item.id}
+            data={categoriesList}
+            renderItem={itemData => (
+              <CategoryItem
+                id={itemData.item.id}
+                onDelete={removeCategoryHandler}
+                title={itemData.item.value}
+              />
+            )}
+          />
+          :
+          null
+        }
+
+        {/* <InputDialog
           cancelLabel="Cancel"
           okLabel="Add"
           backgroundColor="white"
@@ -85,7 +95,7 @@ export default function Categories({props}) {
           // visible={true}
           visible={props.dialogOpen}
           onDismiss={props.onDismiss}
-        />
+        /> */}
 
 
       </ScrollView>
