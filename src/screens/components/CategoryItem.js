@@ -1,48 +1,27 @@
-import React, {PureComponent} from 'react';
-import {TouchableHighlight, View, Text, StyleSheet} from 'react-native';
-import {COLOR} from './node_modules/react-native-material-ui';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 
-class CategoryItem extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
 
-  onInternalClick = () => {
-    const {name, onClick} = this.props;
-    onClick({name});
-  };
-
-  render() {
+const CategoryItem = props => {
     return (
-      <TouchableHighlight
-        onPress={this.onInternalClick}
-        underlayColor={COLOR.blue100}>
-        <View style={styles.layout}>
-          <Text style={styles.label}>{this.props.name}</Text>
-        </View>
-      </TouchableHighlight>
+        // <TouchableOpacity activeOpacity={0.8} onPress={props.onDelete}>
+        <TouchableNativeFeedback
+            onPress={props.onDelete.bind(this, props.id)}>
+            <View style={styles.listItem} >
+                {/* itemData.item.value */}
+                <Text>{props.title}</Text>
+            </View>
+        </TouchableNativeFeedback>
     );
-  }
-}
-
-const styles = StyleSheet.create({
-  layout: {
-    alignItems: 'center',
-    backgroundColor: COLOR.white,
-    padding: 16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: COLOR.grey300,
-  },
-  label: {
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-});
-
-CategoryItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
 };
 
+const styles = StyleSheet.create({
+    listItem: {
+        padding: 10,
+        marginVertical: 10,
+        backgroundColor: '#ccc',
+        borderColor: 'black',
+        borderWidth: 1
+    },
+});
 export default CategoryItem;

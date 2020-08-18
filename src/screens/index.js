@@ -1,59 +1,76 @@
 import React, { useState, useEffect } from "react";
-import {
-    View, StyleSheet, Dimensions, Image,
-    TouchableOpacity, Text, ScrollView, SafeAreaView, Constants
-} from "react-native"
+import { View, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Text, ScrollView, SafeAreaView, Constants } from "react-native"
 import { useHistory } from "react-router-dom";
 
+import Categories from "./Categories";
+import Location from "./Location";
+
 import HeaderBar from "./components/HeaderBar";
-import { Categories } from "./Categories";
-import { Location } from "./Location";
 
 const components = { Categories, Location };
 
-const createdAt = new Date().getTime();
-
 export default function Index(props) {
-    const [componentIndex, setComponentIndex] = useState(0);
-    const [currentIndex, setCurrentIndex] = useState();
-    
-    let history = useHistory();
-    
-    const componentKeys = ["Categories", "Location"];
-    const headers = { Categories: "Categories", Location: "Location" }
 
-    //user finished create a stay
-    function onHome() {
-        history.push("/home");
-    };
+    const [componentIndex, setComponentIndex] = useState(0);
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [showBack, setShowBack] = useState(false);
+
+    const componentKeys = ["Categories", "Location"];
+    const headers = { Categories: "Categories", Location: "Location" };
+
+    const categories = []
+
+
+    useEffect(() => {
+        console.warn(componentIndex);
+        if (componentIndex > componentKeys.length - 1) {
+            history.push("/");
+        }
+        if (componentIndex < 0) {
+            setShowBack(false);
+        }
+        if (componentIndex > 0) {
+            setShowBack(true);
+        }
+    }, [componentIndex])
+
+    let history = useHistory();
+
+    const onCreate = (name) => {
+
+        categories(name)
+    }
 
     const CurrentComponentRouter = (props) => {
         const CurrentComponent = components[componentKeys[componentIndex]];
-        console.warn("current component", CurrentComponent)
         if (!CurrentComponent) return <View />
         return (
             <CurrentComponent
                 style={styles.componentStyle}
-
-                //if builder x component has back button
-                //it's button should have onPress={()=>{props.onNext}}
-                onBack={() => {
-                    setComponentIndex(componentIndex - 1)
-                }}
+                onBack={() => { setComponentIndex(componentIndex - 1) }}
+                onNext={() => { setComponentIndex(componentIndex + 1) }}
+                showBack={showBack}
+                componentIndex={componentIndex}
+                dialogOpen={props.dialogOpen}
+                onDismiss={() => { setDialogOpen(false); }}
             />)
     }
 
     return (
         <View style={styles.container}>
+            <StatusBar backgroundColor="rgba(2,172,235,1)" />
+
             <HeaderBar
-                // screenWidth={windowWidth}
+                onCreate={() => { setDialogOpen(true); }}
                 style={styles.header}
                 header={headers[componentKeys[componentIndex]]}
-                onBack={() => setComponentIndex(componentIndex - 1)}
+                onBack={() => { setComponentIndex(componentIndex - 1) }}
+                // showBack={() => { componentIndex == 0 ? setShowBack(showBack) : setShowBack(!showBack)}}
+                componentIndex={componentIndex}
             />
 
             <ScrollView style={styles.scrollView}>
-                <CurrentComponentRouter />
+                <CurrentComponentRouter dialogOpen={dialogOpen} />
             </ScrollView>
         </View>
     );
@@ -64,8 +81,6 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
-        // padding: 10,
-        backgroundColor: "rgba(2,172,235,1)",
         flex: 1,
         flexDirection: "column",
         height: windowHeight,

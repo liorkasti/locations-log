@@ -20,8 +20,6 @@ const styles = StyleSheet.create({
     // flex: 1,
     height: 1600,
     width: windowWidth,
-    backgroundColor: "rgba(2,172,235,1)",
-
   },
 
 });

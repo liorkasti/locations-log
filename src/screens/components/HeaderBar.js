@@ -1,32 +1,53 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image } from "react-native";
-import Icon from "./node_modules/react-native-vector-icons/Entypo";
+import Icon from "react-native-vector-icons/Entypo";
 
-function HeaderBar(props) {
+const HeaderBar = (props) => {
+
+  useEffect(() => {
+    console.warn("show componentIndex: ", props.componentIndex)
+  }, [props.componentIndex]);
+
+
+  // onAddCategory = name => {
+  //   this.dismissShowDialog();
+  //   console.log(`CategoryScreen: inserted category name is ${name}`);
+  //   if (!name || name.length == 0) {
+  //     toastMaker('Please insert category name');
+  //     return;
+  //   }
+  //   if (isCategoryExists({name}, this.props.categories)) {
+  //     toastMaker('Category already exists');
+  //     return;
+  //   }
+  //   this.props.addCategory({name});
+  // };
+
   return (
     <View style={[styles.container, props.style]}>
-      <View style={styles.group1}>
-        <View style={styles.rect}>
-          <Text style={styles.bsD1}>BS&quot;D</Text>
-          <View style={styles.button4RowRow}>
-            <Text style={styles.header}>{props.header}</Text>
-            <View style={styles.button4Row}>
-              <TouchableOpacity onPress={() => { props.onBack() }} style={styles.button4}>
-                <TouchableOpacity onPress={() => { props.onBack() }} style={styles.button5}>
-                  <Icon name="chevron-left" style={styles.icon1}></Icon>
-                </TouchableOpacity>
+      <View style={styles.headerStack}>
+        <Text style={styles.bsD1}>BS&quot;D</Text>
+        <Text style={styles.header}>{props.header}</Text>
+        <View style={styles.buttonstack}>
+          {props.componentIndex > 0 &&
+            <TouchableOpacity
+              onPress={() => { props.onBack() }} >
+              <Icon
+                name="chevron-left"
+                style={styles.icon}>
+              </Icon>
+            </TouchableOpacity>
+          }
+          {props.componentIndex === 0 &&
+            <View style={styles.createbuttonRow}>
+              <TouchableOpacity
+                onPress={() => { props.onCreate() }}
+                style={styles.createbutton}>
+                <Icon name="plus" style={styles.icon}></Icon>
+                {/* <Text style={styles.textCteate}>CREATE</Text> */}
               </TouchableOpacity>
             </View>
-            <View style={styles.button4RowFiller}></View>
-            <TouchableOpacity onPress={props.onHome} style={styles.button3}>
-              <View style={styles.image1Filler}></View>
-              <Image
-                source={require("../assets/images/jstay-icon-inverted8.png")}
-                resizeMode="contain"
-                style={styles.image1}
-              ></Image>
-            </TouchableOpacity>
-          </View>
+          }
         </View>
       </View>
     </View>
@@ -40,40 +61,45 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     width: windowWidth,
-    // alignItems: 'center',
   },
-  group1: {
-    height: 0,
-    paddingBottom: 10
-  },
-  rect: {
+  headerStack: {
     height: 91,
     borderColor: "rgba(0,88,155,1)",
     borderWidth: 0,
-    borderBottomWidth: .7
+    borderBottomWidth: .7,
+    justifyContent: "center",
   },
   bsD1: {
     color: "rgba(177,177,177,1)",
-    opacity: 0.35,
+    opacity: 0.75,
     fontSize: 10,
     fontFamily: "roboto-regular",
     alignSelf: "flex-end",
-    marginTop: 13,
-    marginRight: 38
+    marginTop: 10,
+    marginRight: 18
   },
-  button4: {
+  buttonback: {
     width: 29,
-    height: 40
+    height: 40,
   },
-  button5: {
-    width: 29,
-    height: 40
+  createbuttonRow: {
+    position: "absolute",
   },
-  icon1: {
+  createbutton: {
+    width: "100%",
+    height: 40,
+    // marginRight: 38,
+    left: windowWidth - 48
+  },
+  icon: {
     color: "rgba(0,88,155,1)",
     fontSize: 40
+  },
+  textCteate: {
+    color: "rgba(0,88,155,1)",
+    fontSize: 16,
+    right: 26
   },
   header: {
     position: "absolute",
@@ -82,41 +108,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: "roboto-regular",
     textAlign: "center",
-    //TODO: do these better
-    // width: 270,
-    // marginLeft: 35,  
-    // right: windowWidth > 500 ? (-windowWidth*.16) : windowWidth > 400 ? (-windowWidth*.06) : 0,
-    marginTop: 12
   },
-  button4Row: {
-    height: 40,
-    flexDirection: "row",
-    marginTop: 10
-  },
-  button4RowFiller: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  button3: {
-    width: 62,
-    height: 62,
-    flexDirection: "row"
-  },
-  image1Filler: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  image1: {
-    // right: windowWidth < 400 ? 8 : 3,
-    height: 62,
-    width: 62
-  },
-  button4RowRow: {
+  buttonstack: {
     height: 62,
     flexDirection: "row",
-    marginTop: 5,
-    marginLeft: 6,
-    marginRight: 6
   }
 });
 
