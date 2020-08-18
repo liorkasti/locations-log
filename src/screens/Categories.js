@@ -11,7 +11,8 @@ export default function Categories({ props }) {
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
-  // console.log("The Location Categories: ", categoriesList);
+  console.log("The Location Categories: ", categoriesList);
+
   useEffect(() => {
     console.error("dialogOpen: ", props);
   }, [props])
@@ -24,6 +25,7 @@ export default function Categories({ props }) {
     setIsAddMode(false);
   };
 
+  
   const removeCategoryHandler = categoryId => {
     console.log('TO BE DELETED: ' + categoryId);
     console.log(currentCategories);
@@ -33,7 +35,7 @@ export default function Categories({ props }) {
   };
 
   const cancelCategoryAdditionHandler = () => {
-    setIsAddMode(false);
+    setIsCancelMode(true);
   };
 
   return (
@@ -52,19 +54,20 @@ export default function Categories({ props }) {
 
         {props.dialogOpen &&
           <>
-            <Button
+            {/* <Button
               title="Add"
               // title="Add New Category" 
               color="rgba(0,88,155,1)"
               //todo: add button width 
               onPress={() => setIsAddMode(true)}
-            />
+            /> */}
+
             <CategoryInput
               visible={isAddMode}
               onAddCategory={addCategoryHandler}
               onCancel={cancelCategoryAdditionHandler}
               dialogOpen={props.dialogOpen}
-              onDismiss={props.onDismiss}
+              onDismiss={() => { props.setDialogOpen()}}
               initialValue=""
             />
           </>
@@ -78,7 +81,9 @@ export default function Categories({ props }) {
               <CategoryItem
                 id={itemData.item.id}
                 onDelete={removeCategoryHandler}
+                onPress={props.onNext}
                 title={itemData.item.value}
+                // style={styles.categoryItem}
               />
             )}
           />
@@ -110,18 +115,19 @@ const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
-    padding: 50,
-    height: 400
+    maxHeight: "98%"
   },
   boxContainer: {
     flexDirection: 'row',
-    // width: '80%',
     justifyContent: 'space-around',
     alignItems: 'center'
   },
   textContainer: {
     alignItems: 'center',
+  },
+  categoryItem: {
+    alignItems: 'center',
+    width: '80%',
   },
   textPrompt: {
     padding: 20,

@@ -6195,6 +6195,11 @@ react-native-animated-hamburger@^0.0.2:
   resolved "https://registry.yarnpkg.com/react-native-animated-hamburger/-/react-native-animated-hamburger-0.0.2.tgz#eee6c35b1a9c6320b88390f4d51a83071cca69ef"
   integrity sha1-7ubDWxqcYyC4g5D01RqDBxzKae8=
 
+react-native-linear-gradient@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/react-native-linear-gradient/-/react-native-linear-gradient-2.5.6.tgz#96215cbc5ec7a01247a20890888aa75b834d44a0"
+  integrity sha512-HDwEaXcQIuXXCV70O+bK1rizFong3wj+5Q/jSyifKFLg0VWF95xh8XQgfzXwtq0NggL9vNjPKXa016KuFu+VFg==
+
 react-native-material-design-styles@^0.2.6:
   version "0.2.7"
   resolved "https://registry.yarnpkg.com/react-native-material-design-styles/-/react-native-material-design-styles-0.2.7.tgz#428560ef4d0659db1163c9f9b5476d886ed22d57"

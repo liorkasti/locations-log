@@ -85,7 +85,8 @@ export default function Index(props) {
                     
                     showBack={showBack}
                     dialogOpen={dialogOpen}
-                    onDismiss={() => { setDialogOpen(false); }}
+                    // onDismiss={() => { setDialogOpen(false); }}
+                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
                     setShowAdd={setShowAdd}
                 />
             </ScrollView>
@@ -99,17 +100,17 @@ const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: "column",
-        height: windowHeight,
-        width: windowWidth,
+        // flexDirection: "column",
+        // height: windowHeight,
+        // width: windowWidth,
         alignItems: "center",
     },
     header: {
-        zIndex: 100000,
+        zIndex: 100,
         paddingBottom: 15
     },
     scrollView: {
         zIndex: 1,
-        marginTop: 80
+        // marginTop: 80
     },
 });

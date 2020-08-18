@@ -36,8 +36,8 @@ const HeaderBar = (props) => {
               onPress={() => { props.onBack() }} >
 
               <Icon
-                name="chevron-left"
-                style={styles.icon}>
+                name="left"
+                style={styles.bachIcon}>
               </Icon>
 
             </TouchableOpacity>
@@ -48,7 +48,7 @@ const HeaderBar = (props) => {
               <TouchableOpacity
                 // onPress={() => { }}
                 // onPress={() => { props.setShowAdd(); props.onCreate() }}
-                onPress={() => { props.setDialogOpen();  props.setShowAdd(); }}
+                onPress={() => { props.setDialogOpen();  props.setShowAdd() }}
                 // onPress={() => { props.onCreate() }}
                 style={styles.createbutton}>
                 {props.showAdd
@@ -122,6 +122,15 @@ const styles = StyleSheet.create({
   icon: {
     color: "rgba(0,88,155,1)",
     fontSize: 28,
+  },
+  bachIcon: {
+    color: "rgba(0,88,155,1)",
+    fontSize: 28,
+    width: "100%",
+    height: 30,
+    // marginRight: 38,
+    top: 7,
+    left: 8
   },
   textCteate: {
     color: "rgba(0,88,155,1)",

@@ -6,7 +6,8 @@ const CategoryItem = props => {
     return (
         // <TouchableOpacity activeOpacity={0.8} onPress={props.onDelete}>
         <TouchableNativeFeedback
-            onPress={props.onDelete.bind(this, props.id)}>
+            onPress={() => props.onPress()}  >
+            {/* onPress={props.onDelete.bind(this, props.id)} > */}
             <View style={styles.listItem} >
                 {/* itemData.item.value */}
                 <Text>{props.title}</Text>
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         backgroundColor: '#ccc',
         borderColor: 'black',
-        borderWidth: 1
+        borderWidth: 0.7
     },
 });
 export default CategoryItem;
