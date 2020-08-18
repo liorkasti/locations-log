@@ -26,7 +26,7 @@ const CategoryInput = props => {
           <View style={styles.button}>
             <Button
               title="CANCEL"
-              color="red"
+              color= "#aaa"
               onPress={props.onCancel}
               style={styles.cancleButton}
             />
@@ -36,6 +36,7 @@ const CategoryInput = props => {
               title="ADD"
               onPress={addCategoryHandler}
               style={styles.addButton}
+              color= "rgba(0,88,155,1)"
             />
           </View>
         </View>

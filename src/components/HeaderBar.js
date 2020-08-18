@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image } from "react-native";
-import Icon from "react-native-vector-icons/Entypo";
+import Icon from "react-native-vector-icons/AntDesign";
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import Hamburger from 'react-native-animated-hamburger';
 
 const HeaderBar = (props) => {
+
 
   useEffect(() => {
     console.warn("show componentIndex: ", props.componentIndex)
   }, [props.componentIndex]);
-
 
   // onAddCategory = name => {
   //   this.dismissShowDialog();
@@ -32,19 +34,41 @@ const HeaderBar = (props) => {
           {props.componentIndex > 0 &&
             <TouchableOpacity
               onPress={() => { props.onBack() }} >
+
               <Icon
                 name="chevron-left"
                 style={styles.icon}>
               </Icon>
+
             </TouchableOpacity>
           }
+
           {props.componentIndex === 0 &&
             <View style={styles.createbuttonRow}>
               <TouchableOpacity
-                onPress={() => { props.onCreate() }}
+                onPress={() => { props.setShowAdd() }}
+                // onPress={() => { props.onCreate() }}
                 style={styles.createbutton}>
-                <Icon name="plus" style={styles.icon}></Icon>
-                {/* <Text style={styles.textCteate}>CREATE</Text> */}
+                {props.showAdd
+                  ?
+                  <Icon name="close" style={styles.icon} />
+                  :
+                  <Icon name="plus" style={styles.icon} />
+                }
+
+                  {/* <Hamburger
+                    type="plus"
+                    active={props.showAdd}
+                    onPress={() => { props.setShowAdd() }}
+                    underlayColor="transparent" style={[styles.container, props.style]}
+                  />
+                  {props.showAdd
+                    ?
+                    <FontAwesomeIcon name="close" style={styles.icon} />
+                    :
+                    <FontAwesomeIcon name="plus" style={styles.icon} />
+                  } */
+                }
               </TouchableOpacity>
             </View>
           }
@@ -88,13 +112,14 @@ const styles = StyleSheet.create({
   },
   createbutton: {
     width: "100%",
-    height: 40,
+    height: 30,
     // marginRight: 38,
-    left: windowWidth - 48
+    top: 7,
+    left: windowWidth - 42
   },
   icon: {
     color: "rgba(0,88,155,1)",
-    fontSize: 40
+    fontSize: 28,    
   },
   textCteate: {
     color: "rgba(0,88,155,1)",

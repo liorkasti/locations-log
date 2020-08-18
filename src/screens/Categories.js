@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, FlatList, Button } from "react-native";
-import InputDialog from './components/InputDialog';
-import CategoryItem from './components/CategoryItem';
-import CategoryInput from './components/CategoryInput';
+import InputDialog from '../components/InputDialog';
+import CategoryItem from '../components/CategoryItem';
+import CategoryInput from '../components/CategoryInput';
 // import EmptyView from './components/EmptyView';
 
 export default function Categories(props) {
@@ -37,14 +37,19 @@ export default function Categories(props) {
     <View style={styles.container}>
       <ScrollView>
 
-        {
-          //todo: show txt on input true
-          <Text>Please create a new Location Categiries</Text>
-        }
-
+        <View style={styles.textContainer}>
+          {
+            //todo: show txt on input true
+            categoriesList.length ?
+              <Text style={styles.textPrompt}>Location Categiries</Text>
+              :
+              <Text style={styles.textPrompt}>Please create a new Location Categiries</Text>
+          }
+        </View>
         <Button
           title="Add"
           // title="Add New Category" 
+          color="rgba(0,88,155,1)"
           onPress={() => setIsAddMode(true)}
         />
 
@@ -68,7 +73,7 @@ export default function Categories(props) {
           )}
         />
 
-        {/* <InputDialog
+        <InputDialog
           cancelLabel="Cancel"
           okLabel="Add"
           backgroundColor="white"
@@ -76,7 +81,7 @@ export default function Categories(props) {
           title="Create a new category"
           visible={props.dialogOpen}
           onDismiss={props.onDismiss}
-        /> */}
+        />
 
 
       </ScrollView>
@@ -90,16 +95,23 @@ const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     // justifyContent: "center",
-    padding: 50
+    padding: 50,
+    height: 400
   },
   boxContainer: {
-    padding: 50,
     flexDirection: 'row',
     width: '80%',
-    height: 300,
     justifyContent: 'space-around',
     alignItems: 'center'
+  },
+  textContainer: {
+    alignItems: 'center',
+  },
+  textPrompt: {
+    padding: 20,
+    fontSize: 18,
+    textAlign: 'center'
   }
 });
