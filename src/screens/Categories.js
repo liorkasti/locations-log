@@ -5,13 +5,16 @@ import CategoryItem from '../components/CategoryItem';
 import CategoryInput from '../components/CategoryInput';
 // import EmptyView from './components/EmptyView';
 
-export default function Categories(props) {
+export default function Categories({props}) {
 
   const [categoriesList, setCategoriesList] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
-  console.log("The Location Categories: ", categoriesList);
+  // console.log("The Location Categories: ", categoriesList);
+  useEffect(() => {
+    console.error("dialogOpen: ", props);
+  },[props])
 
   const addCategoryHandler = categoryTitle => {
     setCategoriesList(currentCategories => [
@@ -79,6 +82,7 @@ export default function Categories(props) {
           backgroundColor="white"
           initialValue=""
           title="Create a new category"
+          // visible={true}
           visible={props.dialogOpen}
           onDismiss={props.onDismiss}
         />
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     flexDirection: 'row',
-    width: '80%',
+    // width: '80%',
     justifyContent: 'space-around',
     alignItems: 'center'
   },

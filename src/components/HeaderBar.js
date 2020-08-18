@@ -46,7 +46,9 @@ const HeaderBar = (props) => {
           {props.componentIndex === 0 &&
             <View style={styles.createbuttonRow}>
               <TouchableOpacity
-                onPress={() => { props.setShowAdd() }}
+                // onPress={() => { }}
+                // onPress={() => { props.setShowAdd(); props.onCreate() }}
+                onPress={() => { props.setDialogOpen();  props.setShowAdd(); }}
                 // onPress={() => { props.onCreate() }}
                 style={styles.createbutton}>
                 {props.showAdd
@@ -56,7 +58,7 @@ const HeaderBar = (props) => {
                   <Icon name="plus" style={styles.icon} />
                 }
 
-                  {/* <Hamburger
+                {/* <Hamburger
                     type="plus"
                     active={props.showAdd}
                     onPress={() => { props.setShowAdd() }}
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: "rgba(0,88,155,1)",
-    fontSize: 28,    
+    fontSize: 28,
   },
   textCteate: {
     color: "rgba(0,88,155,1)",

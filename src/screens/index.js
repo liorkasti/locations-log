@@ -10,6 +10,16 @@ import HeaderBar from "../components/HeaderBar";
 
 const components = { Categories, Location };
 
+const CurrentComponentRouter = (props) => {
+    const CurrentComponent = props.currentComponent;
+    if (!CurrentComponent) return <View />
+   
+    return (
+        <CurrentComponent
+            props={props}
+        />)
+};
+
 export default function Index(props) {
 
     const [componentIndex, setComponentIndex] = useState(0);
@@ -42,42 +52,41 @@ export default function Index(props) {
 
         categories(name)
     }
-
-    const CurrentComponentRouter = (props) => {
-        const CurrentComponent = components[componentKeys[componentIndex]];
-        if (!CurrentComponent) return <View />
-        return (
-            <CurrentComponent
-                style={styles.componentStyle}
-                onBack={() => { setComponentIndex(componentIndex - 1) }}
-                onNext={() => { setComponentIndex(componentIndex + 1) }}
-                showBack={showBack}
-                componentIndex={componentIndex}
-                dialogOpen={props.dialogOpen}
-                onDismiss={() => { setDialogOpen(false); }}
-            />)
-    }
+    useEffect(() => {
+        console.warn("dialog open", dialogOpen)
+    }, [dialogOpen])
 
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="rgba(0,88,155,1)" />
 
             <HeaderBar
-                onCreate={() => { setDialogOpen(true); }}
                 style={styles.header}
                 header={headers[componentKeys[componentIndex]]}
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
+                // showBack={() => { componentIndex == 0 ? setShowBack(showBack) : setShowBack(!showBack)}}
                 setShowAdd={() => { setShowAdd(!showAdd); }}
                 showAdd={showAdd}
-                // showBack={() => { componentIndex == 0 ? setShowBack(showBack) : setShowBack(!showBack)}}
                 componentIndex={componentIndex}
-                dialogOpen={props.dialogOpen}
+                // onCreate={() => { setDialogOpen(true); }}
+                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                dialogOpen={dialogOpen}
             />
 
             <ScrollView style={styles.scrollView}>
-                <CurrentComponentRouter 
-                dialogOpen={dialogOpen}
-                setShowAdd={setShowAdd}
+                <CurrentComponentRouter
+                    currentComponent={components[componentKeys[componentIndex]]}
+                    componentIndex={componentIndex}
+
+                    style={styles.componentStyle}
+
+                    onBack={() => { setComponentIndex(componentIndex - 1) }}
+                    onNext={() => { setComponentIndex(componentIndex + 1) }}
+                    
+                    showBack={showBack}
+                    dialogOpen={dialogOpen}
+                    onDismiss={() => { setDialogOpen(false); }}
+                    setShowAdd={setShowAdd}
                 />
             </ScrollView>
         </View>
