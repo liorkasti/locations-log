@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
-import Hamburger from 'react-native-animated-hamburger';
 
 const HeaderBar = (props) => {
 
@@ -46,11 +44,7 @@ const HeaderBar = (props) => {
           {props.componentIndex === 0 &&
             <View style={styles.createbuttonRow}>
               <TouchableOpacity
-                // onPress={() => { }}
-                // onPress={() => { props.setShowAdd(); props.onCreate() }}
-                // onPress={() => { props.setDialogOpen();  props.setShowAdd() }}
                 onPress={() => { props.setDialogOpen(); }}
-                // onPress={() => { props.onCreate() }}
                 style={styles.createbutton}>
 
                 {props.dialogOpen
@@ -58,20 +52,6 @@ const HeaderBar = (props) => {
                   <Icon name="close" style={styles.icon} />
                   :
                   <Icon name="plus" style={styles.icon} />
-                }
-
-                {/* <Hamburger
-                    type="plus"
-                    active={props.showAdd}
-                    onPress={() => { props.setShowAdd() }}
-                    underlayColor="transparent" style={[styles.container, props.style]}
-                  />
-                  {props.showAdd
-                    ?
-                    <FontAwesomeIcon name="close" style={styles.icon} />
-                    :
-                    <FontAwesomeIcon name="plus" style={styles.icon} />
-                  } */
                 }
               </TouchableOpacity>
             </View>
@@ -82,10 +62,8 @@ const HeaderBar = (props) => {
   );
 }
 
-
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
 
 const styles = StyleSheet.create({
   container: {
@@ -117,7 +95,6 @@ const styles = StyleSheet.create({
   createbutton: {
     width: "100%",
     height: 30,
-    // marginRight: 38,
     top: 7,
     left: windowWidth - 42
   },
@@ -130,7 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     width: "100%",
     height: 30,
-    // marginRight: 38,
     top: 7,
     left: 8
   },

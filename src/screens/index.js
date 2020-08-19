@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Text, ScrollView, SafeAreaView, Constants } from "react-native"
 import { useHistory } from "react-router-dom";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 
 import Categories from "./Categories";
 import Location from "./Location";
@@ -25,7 +24,6 @@ export default function Index(props) {
     const [componentIndex, setComponentIndex] = useState(0);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [showBack, setShowBack] = useState(false);
-    // const [showAdd, setShowAdd] = useState(false);
 
     const componentKeys = ["Categories", "Location"];
     const headers = { Categories: "Categories", Location: "Location" };
@@ -66,12 +64,9 @@ export default function Index(props) {
                 header={headers[componentKeys[componentIndex]]}
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
 
-                // setShowAdd={() => { setShowAdd(!showAdd); }}
                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
-                // showAdd={showAdd}
                 dialogOpen={dialogOpen}
-                // showBack={() => { componentIndex == 0 ? setShowBack(showBack) : setShowBack(!showBack)}}
-                // onCreate={() => { setDialogOpen(true); }}
+
                 style={styles.header}
             />
 
@@ -84,8 +79,6 @@ export default function Index(props) {
                     onBack={() => { setComponentIndex(componentIndex - 1) }}
                     onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                    // setShowAdd={setShowAdd}
-                    // setShowAdd={() => { setShowAdd(!showAdd); }}
                     dialogOpen={dialogOpen}
                     setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
@@ -104,9 +97,6 @@ const windowHeight = Dimensions.get('window').height;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // flexDirection: "column",
-        // height: windowHeight,
-        // width: windowWidth,
         alignItems: "center",
     },
     header: {
@@ -115,6 +105,5 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         zIndex: 1,
-        // marginTop: 80
     },
 });

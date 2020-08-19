@@ -16,7 +16,7 @@ const CategoryInput = props => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textDialog}>Create a new Categiry</Text>
+      <Text style={styles.textDialog}>Create a new Category</Text>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Category name"
@@ -27,13 +27,8 @@ const CategoryInput = props => {
       </View>
       <View style={styles.buttonContainer}>
 
-        {/* todo: synch header add button when cancel press */}
         <TouchableOpacity
           onPress={props.onDismiss}
-          // onPress={() => { props.setDialogOpen()}}
-          // onPress={() => { props.onDismiss; props.setDialogOpen();  props.setShowAdd() }}
-          // onPress={() => { props.onDismiss; props.setDialogOpen();  props.setShowAdd() }}
-          // onPress={props.onCancel} 
           style={styles.cancleButton} >
           <Text style={styles.textButton}>CANCEL</Text>
         </TouchableOpacity>
@@ -71,8 +66,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 300,
     justifyContent: 'space-around',
-    // width: 160,
-    // justifyContent: 'space-between',
   },
   cancleButton: {
     backgroundColor: '#ccc',

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, StatusBar, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Picker } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Picker } from "react-native";
 
 export default function Location(props) {
   return (
     <View style={styles.container}>
-      <StatusBar backgroundColor="rgba(2,172,235,1)" />
       <Text>Location</Text>
     </View>
   );

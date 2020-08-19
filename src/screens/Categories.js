@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
-import Icon from "react-native-vector-icons/AntDesign";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 
@@ -48,15 +47,15 @@ export default function Categories({ props }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={{ zIndex: 1, width: windowWidth*.7, height: windowHeight*.95 }}>
 
         <View style={styles.textContainer}>
           {
             categoriesList.length ?
-              <Text style={styles.textPrompt}>Location Categiries</Text>
+              <Text style={styles.textPrompt}>Map Categiries</Text>
               :
               <View style={styles.welcomeContainer}>
-                <Text style={styles.textPrompt}>Please Add Location Categiry</Text>
+                <Text style={styles.textPrompt}>Please Add a Map Category</Text>
                 <FontAwesomeIcon name="map-o" style={styles.icon} />
               </View>
           }
@@ -74,8 +73,6 @@ export default function Categories({ props }) {
           onTouchOutside={() => {
             this.setState({ visible: false });
           }}
-          // animationType = "slide"
-          // transparent = { true}
           dialogAnimation={
             new SlideAnimation({
               slideFrom: 'bottom',
@@ -85,7 +82,7 @@ export default function Categories({ props }) {
         >
           <DialogContent>
 
-            <View style={styles.welcomeContainer}>              
+            <View style={styles.welcomeContainer}>
               <CategoryInput
                 visible={isAddMode}
                 onAddCategory={addCategoryHandler}
@@ -95,8 +92,6 @@ export default function Categories({ props }) {
                 initialValue=""
                 windowWidth={windowWidth}
                 windowHeight={windowHeight}
-              // showAdd={props.showAdd}
-              // onDismiss={() => { props.setDialogOpen(); props.setShowAdd() }}
               />
             </View>
 
@@ -108,20 +103,23 @@ export default function Categories({ props }) {
         {/* {categoriesList.length ? */}
         {
           // props.showAdd &&
-          <FlatList
-            keyExtractor={(item, index) => item.id}
-            data={categoriesList}
-            renderItem={itemData => (
-              <CategoryItem
-                id={itemData.item.id}
-                onDelete={removeCategoryHandler}
-                onPress={props.onNext}
-                title={itemData.item.value}
-              // style={styles.categoryItem}
-              />
-            )}
-          />
+          categoriesList.length ?
 
+            <FlatList
+              keyExtractor={(item, index) => item.id}
+              data={categoriesList}
+              renderItem={itemData => (
+                <CategoryItem
+                  id={itemData.item.id}
+                  onDelete={removeCategoryHandler}
+                  onPress={props.onNext}
+                  title={itemData.item.value}
+                // style={styles.categoryItem}
+                />
+              )}
+            />
+            :
+            null
         }
 
         {/* <InputDialog
