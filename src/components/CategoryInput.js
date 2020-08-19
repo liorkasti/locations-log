@@ -13,6 +13,7 @@ const CategoryInput = props => {
     props.onAddCategory(enteredCategory);
     setEnteredCategory('');
   }
+  
   return (
     // <Modal visible={props.visible} animationType="slide">
     <View style={styles.inputContainer}>
@@ -23,15 +24,20 @@ const CategoryInput = props => {
         value={enteredCategory}
       />
       <View style={styles.buttonContainer}>
+
         <TouchableOpacity
-          onPress={props.onDismiss }
+          onPress={props.onDismiss}
+          // onPress={() => { props.onDismiss; props.setDialogOpen();  props.setShowAdd() }}
+          // onPress={() => { props.onDismiss; props.setDialogOpen();  props.setShowAdd() }}
           // onPress={props.onCancel} 
           style={styles.cancleButton} >
           <Text style={styles.textButton}>CANCEL</Text>
         </TouchableOpacity>
+
         <TouchableOpacity onPress={addCategoryHandler} style={styles.addButton} >
           <Text style={styles.textButton}> ADD</Text>
         </TouchableOpacity>
+        
       </View>
 
     </View>

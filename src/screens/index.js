@@ -13,7 +13,7 @@ const components = { Categories, Location };
 const CurrentComponentRouter = (props) => {
     const CurrentComponent = props.currentComponent;
     if (!CurrentComponent) return <View />
-   
+
     return (
         <CurrentComponent
             props={props}
@@ -25,7 +25,7 @@ export default function Index(props) {
     const [componentIndex, setComponentIndex] = useState(0);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [showBack, setShowBack] = useState(false);
-    const [showAdd, setShowAdd] = useState(false);
+    // const [showAdd, setShowAdd] = useState(false);
 
     const componentKeys = ["Categories", "Location"];
     const headers = { Categories: "Categories", Location: "Location" };
@@ -61,16 +61,18 @@ export default function Index(props) {
             <StatusBar backgroundColor="rgba(0,88,155,1)" />
 
             <HeaderBar
-                style={styles.header}
-                header={headers[componentKeys[componentIndex]]}
-                onBack={() => { setComponentIndex(componentIndex - 1) }}
-                // showBack={() => { componentIndex == 0 ? setShowBack(showBack) : setShowBack(!showBack)}}
-                setShowAdd={() => { setShowAdd(!showAdd); }}
-                showAdd={showAdd}
                 componentIndex={componentIndex}
-                // onCreate={() => { setDialogOpen(true); }}
+                
+                header={headers[componentKeys[componentIndex]]}                
+                onBack={() => { setComponentIndex(componentIndex - 1) }}
+
+                // setShowAdd={() => { setShowAdd(!showAdd); }}
                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                // showAdd={showAdd}
                 dialogOpen={dialogOpen}
+                // showBack={() => { componentIndex == 0 ? setShowBack(showBack) : setShowBack(!showBack)}}
+                // onCreate={() => { setDialogOpen(true); }}
+                style={styles.header}
             />
 
             <ScrollView style={styles.scrollView}>
@@ -78,17 +80,19 @@ export default function Index(props) {
                     currentComponent={components[componentKeys[componentIndex]]}
                     componentIndex={componentIndex}
 
-                    style={styles.componentStyle}
-
                     onBack={() => { setComponentIndex(componentIndex - 1) }}
                     onNext={() => { setComponentIndex(componentIndex + 1) }}
                     
+                    // setShowAdd={() => { setShowAdd(!showAdd); }}
+                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                    // setShowAdd={setShowAdd}
                     showBack={showBack}
                     dialogOpen={dialogOpen}
                     // onDismiss={() => { setDialogOpen(false); }}
-                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
-                    setShowAdd={setShowAdd}
+                    
+                    style={styles.componentStyle}
                 />
+
             </ScrollView>
         </View>
     );

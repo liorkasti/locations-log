@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, FlatList, Button } from "react-native";
+import Icon from "react-native-vector-icons/AntDesign";
+import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+
 import InputDialog from '../components/InputDialog';
 import CategoryItem from '../components/CategoryItem';
 import CategoryInput from '../components/CategoryInput';
@@ -11,7 +14,11 @@ export default function Categories({ props }) {
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
-  console.log("The Location Categories: ", categoriesList);
+
+  useEffect(() => {
+    console.warn("isAddMode: ", isAddMode);
+    console.log("The Location Categories: ", categoriesList);
+  }, [])
 
   useEffect(() => {
     console.error("dialogOpen: ", props);
@@ -25,7 +32,7 @@ export default function Categories({ props }) {
     setIsAddMode(false);
   };
 
-  
+
   const removeCategoryHandler = categoryId => {
     console.log('TO BE DELETED: ' + categoryId);
     console.log(currentCategories);
@@ -47,10 +54,17 @@ export default function Categories({ props }) {
             categoriesList.length ?
               <Text style={styles.textPrompt}>Location Categiries</Text>
               :
-              <Text style={styles.textPrompt}>Please create a new Location Categiries</Text>
+              <View style={styles.welcomeContainer}>
+                <Text style={styles.textPrompt}>Please create a Location Categiry</Text>
+              </View>
           }
         </View>
 
+        {props.dialogOpen == false &&
+          <View style={styles.welcomeContainer}>
+            <FontAwesomeIcon name="map-o" style={styles.icon} />
+          </View>
+        }
 
         {props.dialogOpen &&
           <>
@@ -62,18 +76,23 @@ export default function Categories({ props }) {
               onPress={() => setIsAddMode(true)}
             /> */}
 
+
             <CategoryInput
               visible={isAddMode}
               onAddCategory={addCategoryHandler}
               onCancel={cancelCategoryAdditionHandler}
               dialogOpen={props.dialogOpen}
-              onDismiss={() => { props.setDialogOpen()}}
+              onDismiss={() => { props.setDialogOpen() }}
               initialValue=""
+            // showAdd={props.showAdd}
+            // onDismiss={() => { props.setDialogOpen(); props.setShowAdd() }}
             />
           </>
         }
 
-        {categoriesList.length ?
+        {/* {categoriesList.length ? */}
+        {
+          props.showAdd &&
           <FlatList
             keyExtractor={(item, index) => item.id}
             data={categoriesList}
@@ -83,12 +102,10 @@ export default function Categories({ props }) {
                 onDelete={removeCategoryHandler}
                 onPress={props.onNext}
                 title={itemData.item.value}
-                // style={styles.categoryItem}
+              // style={styles.categoryItem}
               />
             )}
           />
-          :
-          null
         }
 
         {/* <InputDialog
@@ -129,9 +146,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '80%',
   },
+  welcomeContainer: {
+    alignItems: 'center',
+    padding: 20,
+  },
   textPrompt: {
     padding: 20,
     fontSize: 18,
     textAlign: 'center'
-  }
+  },
+  icon: {
+    color: "rgba(0,88,155,1)",
+    fontSize: 90,
+  },
 });

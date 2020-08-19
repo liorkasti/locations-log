@@ -48,10 +48,12 @@ const HeaderBar = (props) => {
               <TouchableOpacity
                 // onPress={() => { }}
                 // onPress={() => { props.setShowAdd(); props.onCreate() }}
-                onPress={() => { props.setDialogOpen();  props.setShowAdd() }}
+                // onPress={() => { props.setDialogOpen();  props.setShowAdd() }}
+                onPress={() => { props.setDialogOpen(); }}
                 // onPress={() => { props.onCreate() }}
                 style={styles.createbutton}>
-                {props.showAdd
+
+                {props.dialogOpen
                   ?
                   <Icon name="close" style={styles.icon} />
                   :
