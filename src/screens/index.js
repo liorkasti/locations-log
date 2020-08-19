@@ -62,8 +62,8 @@ export default function Index(props) {
 
             <HeaderBar
                 componentIndex={componentIndex}
-                
-                header={headers[componentKeys[componentIndex]]}                
+
+                header={headers[componentKeys[componentIndex]]}
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
 
                 // setShowAdd={() => { setShowAdd(!showAdd); }}
@@ -80,16 +80,16 @@ export default function Index(props) {
                     currentComponent={components[componentKeys[componentIndex]]}
                     componentIndex={componentIndex}
 
+                    showBack={showBack}
                     onBack={() => { setComponentIndex(componentIndex - 1) }}
                     onNext={() => { setComponentIndex(componentIndex + 1) }}
-                    
-                    // setShowAdd={() => { setShowAdd(!showAdd); }}
-                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+
                     // setShowAdd={setShowAdd}
-                    showBack={showBack}
+                    // setShowAdd={() => { setShowAdd(!showAdd); }}
                     dialogOpen={dialogOpen}
-                    // onDismiss={() => { setDialogOpen(false); }}
-                    
+                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+
+                    onDismiss={() => { setDialogOpen(false); }}
                     style={styles.componentStyle}
                 />
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 
 const CategoryInput = props => {
   const [enteredCategory, setEnteredCategory] = useState('');
@@ -13,20 +13,24 @@ const CategoryInput = props => {
     props.onAddCategory(enteredCategory);
     setEnteredCategory('');
   }
-  
+
   return (
-    // <Modal visible={props.visible} animationType="slide">
-    <View style={styles.inputContainer}>
-      <TextInput
-        placeholder="Category name"
-        style={styles.input}
-        onChangeText={categoryInputHandler}
-        value={enteredCategory}
-      />
+    <View style={styles.container}>
+      <Text style={styles.textDialog}>Create a new Categiry</Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Category name"
+          style={styles.input}
+          onChangeText={categoryInputHandler}
+          value={enteredCategory}
+        />
+      </View>
       <View style={styles.buttonContainer}>
 
+        {/* todo: synch header add button when cancel press */}
         <TouchableOpacity
           onPress={props.onDismiss}
+          // onPress={() => { props.setDialogOpen()}}
           // onPress={() => { props.onDismiss; props.setDialogOpen();  props.setShowAdd() }}
           // onPress={() => { props.onDismiss; props.setDialogOpen();  props.setShowAdd() }}
           // onPress={props.onCancel} 
@@ -37,32 +41,38 @@ const CategoryInput = props => {
         <TouchableOpacity onPress={addCategoryHandler} style={styles.addButton} >
           <Text style={styles.textButton}> ADD</Text>
         </TouchableOpacity>
-        
       </View>
 
     </View>
-    // </Modal> onPress={() => { props.setDialogOpen()
   );
 };
 
 const styles = StyleSheet.create({
-  inputContainer: {
+  container: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  inputContainer: {
+    width: 300,
+  },
+  textDialog: {
+    padding: 20,
+    fontSize: 20,
+    textAlign: 'center'
   },
   input: {
-    width: '80%',
     borderColor: 'black',
     borderWidth: 0.7,
     padding: 10,
-    margin: 20
+    margin: 10
   },
   buttonContainer: {
     flexDirection: 'row',
-    width: '80%',
-    // justifyContent: 'space-around',
+    width: 300,
+    justifyContent: 'space-around',
     // width: 160,
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
   },
   cancleButton: {
     backgroundColor: '#ccc',

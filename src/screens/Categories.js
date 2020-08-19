@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, FlatList, Button } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 
 import InputDialog from '../components/InputDialog';
 import CategoryItem from '../components/CategoryItem';
@@ -55,44 +56,58 @@ export default function Categories({ props }) {
               <Text style={styles.textPrompt}>Location Categiries</Text>
               :
               <View style={styles.welcomeContainer}>
-                <Text style={styles.textPrompt}>Please create a Location Categiry</Text>
+                <Text style={styles.textPrompt}>Please Add Location Categiry</Text>
+                <FontAwesomeIcon name="map-o" style={styles.icon} />
               </View>
           }
         </View>
 
-        {props.dialogOpen == false &&
+        {/* {props.dialogOpen == false &&
           <View style={styles.welcomeContainer}>
-            <FontAwesomeIcon name="map-o" style={styles.icon} />
           </View>
-        }
+        } */}
 
-        {props.dialogOpen &&
-          <>
-            {/* <Button
-              title="Add"
-              // title="Add New Category" 
-              color="rgba(0,88,155,1)"
-              //todo: add button width 
-              onPress={() => setIsAddMode(true)}
-            /> */}
+        {/* {props.dialogOpen && */}
 
+        < Dialog
+          visible={props.dialogOpen}
+          onTouchOutside={() => {
+            this.setState({ visible: false });
+          }}
+          // animationType = "slide"
+          // transparent = { true}
+          dialogAnimation={
+            new SlideAnimation({
+              slideFrom: 'bottom',
+            })
+          }
+          dialogStyle={styles.dialog}
+        >
+          <DialogContent>
 
-            <CategoryInput
-              visible={isAddMode}
-              onAddCategory={addCategoryHandler}
-              onCancel={cancelCategoryAdditionHandler}
-              dialogOpen={props.dialogOpen}
-              onDismiss={() => { props.setDialogOpen() }}
-              initialValue=""
-            // showAdd={props.showAdd}
-            // onDismiss={() => { props.setDialogOpen(); props.setShowAdd() }}
-            />
-          </>
-        }
+            <View style={styles.welcomeContainer}>              
+              <CategoryInput
+                visible={isAddMode}
+                onAddCategory={addCategoryHandler}
+                onCancel={cancelCategoryAdditionHandler}
+                dialogOpen={props.dialogOpen}
+                onDismiss={() => { props.setDialogOpen() }}
+                initialValue=""
+                windowWidth={windowWidth}
+                windowHeight={windowHeight}
+              // showAdd={props.showAdd}
+              // onDismiss={() => { props.setDialogOpen(); props.setShowAdd() }}
+              />
+            </View>
+
+          </DialogContent>
+        </Dialog>
+
+        {/* } */}
 
         {/* {categoriesList.length ? */}
         {
-          props.showAdd &&
+          // props.showAdd &&
           <FlatList
             keyExtractor={(item, index) => item.id}
             data={categoriesList}
@@ -106,6 +121,7 @@ export default function Categories({ props }) {
               />
             )}
           />
+
         }
 
         {/* <InputDialog
@@ -121,18 +137,25 @@ export default function Categories({ props }) {
 
 
       </ScrollView>
-    </View>
+    </View >
   );
 }
 
 
-const screenHeight = Dimensions.get('window').height + 100;
+const windowHeight = Dimensions.get('window').height + 100;
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     maxHeight: "98%"
+  },
+  dialog: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 300,
+    width: '90%',
+    padding: 20,
   },
   boxContainer: {
     flexDirection: 'row',
@@ -147,12 +170,14 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   welcomeContainer: {
+    // flex: 1,
     alignItems: 'center',
     padding: 20,
   },
   textPrompt: {
-    padding: 20,
-    fontSize: 18,
+    paddingHorizontal: 10,
+    paddingVertical: 30,
+    fontSize: 20,
     textAlign: 'center'
   },
   icon: {
