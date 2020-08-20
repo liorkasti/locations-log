@@ -3,33 +3,41 @@ import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatLi
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 
+import ModifyItem from '../model/ModifyItem'
+
 import InputDialog from '../components/InputDialog';
 import CategoryItem from '../components/CategoryItem';
 import CategoryInput from '../components/CategoryInput';
 // import EmptyView from './components/EmptyView';
 
-export default function Categories({ props }) {
-
+export default function MyLocationController({ props }) {
   const [categoriesList, setCategoriesList] = useState([]);
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
-
+  
+  // const numberOfCategories = 0;
 
   useEffect(() => {
     // console.warn("isAddMode: ", isAddMode);
+    console.log("The numberOfCategories: ", categoriesList.length);
     console.log("The Location Categories: ", categoriesList);
   }, [])
 
   useEffect(() => {
-    console.error("dialogOpen: ", props);
+    // console.error("dialogOpen: ", props);
   }, [props])
 
-  const addCategoryHandler = categoryTitle => {
+  const addCategoryHandler = categoryName => {
     setCategoriesList(currentCategories => [
       ...currentCategories,
-      { id: Math.random().toString(), value: categoryTitle }
+      { id: Math.random().toString(), name: categoryName }
     ]);
     setIsAddMode(false);
+    setCurrentCategory();
+  };
+
+  setCurrentCategory = () => {
+    props.currentCategories(currentCategories);
   };
 
 

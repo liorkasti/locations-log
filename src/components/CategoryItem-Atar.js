@@ -16,8 +16,8 @@ class CategoryItem extends PureComponent {
   render() {
     return (
       <TouchableHighlight
-        onPress={this.onInternalClick}
-        underlayColor={COLOR.blue100}>
+        onPress={this.onInternalClick}>
+        {/* underlayColor={COLOR.blue100}> */}
         <View style={styles.layout}>
           <Text style={styles.label}>{this.props.name}</Text>
         </View>
@@ -29,10 +29,10 @@ class CategoryItem extends PureComponent {
 const styles = StyleSheet.create({
   layout: {
     alignItems: 'center',
-    backgroundColor: COLOR.white,
+    // backgroundColor: COLOR.white,
     padding: 16,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: COLOR.grey300,
+    // borderBottomColor: COLOR.grey300,
   },
   label: {
     fontWeight: 'bold',

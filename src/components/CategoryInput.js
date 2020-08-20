@@ -21,7 +21,7 @@ const CategoryInput = props => {
         <TextInput
           placeholder="Category name"
           style={styles.input}
-          onChangeText={categoryInputHandler}
+          onChangeText={props.categoryInputHandler}
           value={enteredCategory}
         />
       </View>
@@ -33,7 +33,7 @@ const CategoryInput = props => {
           <Text style={styles.textButton}>CANCEL</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={addCategoryHandler} style={styles.addButton} >
+        <TouchableOpacity onPress={props.addCategoryHandler} style={styles.addButton} >
           <Text style={styles.textButton}> ADD</Text>
         </TouchableOpacity>
       </View>
