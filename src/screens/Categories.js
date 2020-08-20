@@ -16,7 +16,7 @@ export default function Categories({ props }) {
 
 
   useEffect(() => {
-    console.warn("isAddMode: ", isAddMode);
+    // console.warn("isAddMode: ", isAddMode);
     console.log("The Location Categories: ", categoriesList);
   }, [])
 
@@ -47,7 +47,7 @@ export default function Categories({ props }) {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{ zIndex: 1, width: windowWidth*.7, height: windowHeight*.95 }}>
+      <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
 
         <View style={styles.textContainer}>
           {

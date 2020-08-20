@@ -3,11 +3,12 @@ import { View, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Text,
 import { useHistory } from "react-router-dom";
 
 import Categories from "./Categories";
+import Category from "./Category";
 import Location from "./Location";
 
 import HeaderBar from "../components/HeaderBar";
 
-const components = { Categories, Location };
+const components = { Categories, Category, Location };
 
 const CurrentComponentRouter = (props) => {
     const CurrentComponent = props.currentComponent;
@@ -22,13 +23,16 @@ const CurrentComponentRouter = (props) => {
 export default function Index(props) {
 
     const [componentIndex, setComponentIndex] = useState(0);
+    const [categoriesList, setCategoriesList] = useState([]);
+    
+    const [isAddMode, setIsAddMode] = useState(false);
+    const [isCancelMode, setIsCancelMode] = useState(false);
+
     const [dialogOpen, setDialogOpen] = useState(false);
     const [showBack, setShowBack] = useState(false);
 
-    const componentKeys = ["Categories", "Location"];
-    const headers = { Categories: "Categories", Location: "Location" };
-
-    const categories = []
+    const componentKeys = ["Categories", "Category", "Location"];
+    const headers = { Categories: "Categories", Category: "Category", Location: "Location" };
 
 
     useEffect(() => {
@@ -60,6 +64,7 @@ export default function Index(props) {
 
             <HeaderBar
                 componentIndex={componentIndex}
+                // currentCategories={currentCategories}
 
                 header={headers[componentKeys[componentIndex]]}
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
@@ -68,12 +73,18 @@ export default function Index(props) {
                 dialogOpen={dialogOpen}
 
                 style={styles.header}
+
             />
 
             <ScrollView style={styles.scrollView}>
                 <CurrentComponentRouter
                     currentComponent={components[componentKeys[componentIndex]]}
                     componentIndex={componentIndex}
+                    // currentCategories={currentCategories}
+                    // categoriesList={categoriesList}
+
+                    // onAddCategory={addCategoryHandler}
+                    // onCancel={cancelCategoryAdditionHandler}
 
                     showBack={showBack}
                     onBack={() => { setComponentIndex(componentIndex - 1) }}
