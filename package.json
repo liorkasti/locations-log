@@ -11,6 +11,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "react-native-community/async-storage",
     "babel-preset-react-native": "2.1.0",
     "react": "16.13.1",
     "react-native": "0.63.2",
@@ -19,7 +20,9 @@
     "react-native-material-design": "^0.3.7",
     "react-native-material-ui": "^1.30.1",
     "react-native-popup-dialog": "^0.18.3",
+    "react-native-root-toast": "^3.2.1",
     "react-native-textinput-effects": "^0.6.1",
+    "react-native-toast-message": "^1.3.2",
     "react-native-vector-icons": "^7.0.0",
     "react-navigation-header-buttons": "^5.0.2",
     "react-router-dom": "^5.2.0",

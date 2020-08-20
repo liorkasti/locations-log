@@ -12,6 +12,8 @@ import CategoryInput from '../components/CategoryInput';
 
 export default function MyLocationController({ props }) {
   const [categoriesList, setCategoriesList] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState('');
+
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
   
@@ -19,12 +21,13 @@ export default function MyLocationController({ props }) {
 
   useEffect(() => {
     // console.warn("isAddMode: ", isAddMode);
-    console.log("The numberOfCategories: ", categoriesList.length);
-    console.log("The Location Categories: ", categoriesList);
   }, [])
-
+  
   useEffect(() => {
     // console.error("dialogOpen: ", props);
+    
+    console.log("The numberOfCategories: ", categoriesList.length);
+    console.log("The Location Categories: ", categoriesList);
   }, [props])
 
   const addCategoryHandler = categoryName => {
@@ -33,18 +36,18 @@ export default function MyLocationController({ props }) {
       { id: Math.random().toString(), name: categoryName }
     ]);
     setIsAddMode(false);
-    setCurrentCategory();
+    setCurrentCategory(categoryName);
   };
 
-  setCurrentCategory = () => {
-    props.currentCategories(currentCategories);
-  };
+  // setCurrentCategory = currentCategories => {
+  //   props.currentCategories(currentCategories);
+  // };
 
 
   const removeCategoryHandler = categoryId => {
     console.log('TO BE DELETED: ' + categoryId);
     console.log(currentCategories);
-    setCourseCategorys(currentCategories => {
+    setCategoriesList(currentCategories => {
       return currentCategories.filter(category => category.id !== categoryId);
     });
   };
@@ -94,6 +97,7 @@ export default function MyLocationController({ props }) {
               <CategoryInput
                 visible={isAddMode}
                 onAddCategory={addCategoryHandler}
+                onCreate={() => { props.setCurrentCategory() }}
                 onCancel={cancelCategoryAdditionHandler}
                 dialogOpen={props.dialogOpen}
                 onDismiss={() => { props.setDialogOpen() }}
@@ -119,9 +123,9 @@ export default function MyLocationController({ props }) {
               renderItem={itemData => (
                 <CategoryItem
                   id={itemData.item.id}
-                  onDelete={removeCategoryHandler}
+                  // onDelete={removeCategoryHandler}
                   onPress={props.onNext}
-                  title={itemData.item.value}
+                  title={itemData.item.name}
                 // style={styles.categoryItem}
                 />
               )}

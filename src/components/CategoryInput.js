@@ -1,17 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import ToastMaker from '../utils/ToastMaker';
+import Toast from 'react-native-root-toast';
+
+
 
 const CategoryInput = props => {
-  const [enteredCategory, setEnteredCategory] = useState('');
-  // const [inputValue, setInputValue] = useState("");
+  const [enteredCategory, setEnteredCategory] = useState("");
+
+  useEffect(() => {
+    console.warn("CategoryInput props: ", props);
+  }, [])
+
+  // console.warn("enteredText: ", enteredCategory);
 
   const categoryInputHandler = enteredText => {
     setEnteredCategory(enteredText);
   };
 
   const addCategoryHandler = () => {
-    props.onAddCategory(enteredCategory);
-    setEnteredCategory('');
+      // console.warn("enteredText: ", enteredCategory);
+      if (enteredCategory.length > 0) {
+        props.onAddCategory(enteredCategory);
+
+        setEnteredCategory('');
+      } else {
+        // todo: No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
+        console.log("No name has been entered.");
+        {<ToastMaker>No name has been entered.</ToastMaker>}
+        setEnteredCategory('');
+      }
   }
 
   return (
@@ -21,7 +39,7 @@ const CategoryInput = props => {
         <TextInput
           placeholder="Category name"
           style={styles.input}
-          onChangeText={props.categoryInputHandler}
+          onChangeText={categoryInputHandler}
           value={enteredCategory}
         />
       </View>
@@ -33,9 +51,10 @@ const CategoryInput = props => {
           <Text style={styles.textButton}>CANCEL</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={props.addCategoryHandler} style={styles.addButton} >
+        <TouchableOpacity onPress={addCategoryHandler} style={styles.addButton} >
           <Text style={styles.textButton}> ADD</Text>
         </TouchableOpacity>
+
       </View>
 
     </View>
