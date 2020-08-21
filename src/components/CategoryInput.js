@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-import ToastMaker from '../utils/ToastMaker';
-import Toast from 'react-native-root-toast';
-
-
+import toastMaker from '../utils/toastMaker';
 
 const CategoryInput = props => {
   const [enteredCategory, setEnteredCategory] = useState("");
 
   useEffect(() => {
-    console.warn("CategoryInput props: ", props);
+    // console.warn("CategoryInput props: ", props);
   }, [])
 
   // console.warn("enteredText: ", enteredCategory);
@@ -25,9 +22,9 @@ const CategoryInput = props => {
 
         setEnteredCategory('');
       } else {
-        // todo: No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
+        // todo: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
         console.log("No name has been entered.");
-        {<ToastMaker>No name has been entered.</ToastMaker>}
+        toastMaker("No name has been entered");
         setEnteredCategory('');
       }
   }

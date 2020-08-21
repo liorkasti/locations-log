@@ -13,7 +13,6 @@ const components = { MyLocationController, Category, Location };
 const CurrentComponentRouter = (props) => {
     const CurrentComponent = props.currentComponent;
     if (!CurrentComponent) return <View />
-
     return (
         <CurrentComponent
             props={props}
@@ -23,8 +22,8 @@ const CurrentComponentRouter = (props) => {
 export default function Index(props) {
 
     const [componentIndex, setComponentIndex] = useState(0);
-    const [categoriesList, setCategoriesList] = useState([]);
-    const [currentCategories, setCurrentCategories] = useState("");
+    const [myLocationList, setMyLocationList] = useState([]);
+    const [currentCategories, setCurrentCategories] = useState([]);
 
     const [isAddMode, setIsAddMode] = useState(false);
     const [isCancelMode, setIsCancelMode] = useState(false);
@@ -33,21 +32,26 @@ export default function Index(props) {
     const [showBack, setShowBack] = useState(false);
 
     const componentKeys = ["MyLocationController", "Category", "Location"];
-    const headers = { MyLocationController: "My Locations", Category: "Category", Location: "Location" };
+    const headers = { MyLocationController: "My Locations", Category: currentCategories, Location: currentCategories };
 
 
     useEffect(() => {
-        console.warn("Component Index: ", componentIndex);
+        // console.warn("Component Index: ", componentIndex);
 
         if (componentIndex > componentKeys.length - 1) {
             history.push("/");
         }
 
-        if (currentCategories) {
-            console.warn("Current Category:", currentCategories);
-
+        if (myLocationList) {
+            // console.warn("My Location List:", myLocationList);
+            // console.log("Current Category: ", currentCategories.id , " Name: ", currentCategories.name);
         }
-        
+
+        if (currentCategories) {
+            // console.warn("Current Category:", currentCategories);
+            // console.log("Current Category: ", currentCategories.id , " Name: ", currentCategories.name);
+        }
+
         if (componentIndex < 0) {
             setShowBack(false);
         }
@@ -56,68 +60,66 @@ export default function Index(props) {
         }
 
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
-        // if (categoriesList.length) {
-        //     setCategoriesList(currentCategories => [
-        //         ...currentCategories,
-        //         { id: Math.random().toString(), name: categoryTitle }
-        //     ]);
-        // }
-    }, [componentIndex])
+    }, [])
 
     let history = useHistory();
 
     const onCreate = (name) => {
-
         categories(name)
     }
-    useEffect(() => {
-        console.warn("dialog open", dialogOpen)
-    }, [dialogOpen])
 
-    return (
-        <View style={styles.container}>
-            <StatusBar backgroundColor="rgba(0,88,155,1)" />
+    const addMyLocationHandler = currentCategories => { 
+        setMyLocationList(myLocationList => [
+        ...myLocationList,
+        { id: Math.random().toString(), name: currentCategories.name }
+    ]);
+}
 
-            <HeaderBar
+
+return (
+    <View style={styles.container}>
+        <StatusBar backgroundColor="rgba(0,88,155,1)" />
+
+        <HeaderBar
+            componentIndex={componentIndex}
+            currentCategories={currentCategories}
+
+            header={headers[componentKeys[componentIndex]]}
+            onBack={() => { setComponentIndex(componentIndex - 1) }}
+
+            setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+            dialogOpen={dialogOpen}
+
+            style={styles.header}
+
+        />
+
+        <ScrollView style={styles.scrollView}>
+            <CurrentComponentRouter
+                currentComponent={components[componentKeys[componentIndex]]}
                 componentIndex={componentIndex}
-                // currentCategories={setCurrentCategories(currentCategories)}
-                currentCategories={currentCategories}
 
-                header={headers[componentKeys[componentIndex]]}
+                // myLocationList={myLocationList}
+                onUpdateList={() => { addMyLocationHandler }}
+
+                // currentCategories={currentCategories}
+                onUpdateCategory={setCurrentCategories}
+
+
+                showBack={showBack}
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
+                onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
                 dialogOpen={dialogOpen}
+                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                style={styles.header}
-
+                onDismiss={() => { setDialogOpen(false); }}
+                style={styles.componentStyle}
             />
 
-            <ScrollView style={styles.scrollView}>
-                <CurrentComponentRouter
-                    currentComponent={components[componentKeys[componentIndex]]}
-                    componentIndex={componentIndex}
-
-                    categoriesList={categoriesList}
-
-                    // currentCategories={setCurrentCategories(currentCategories)}
-                    currentCategories={currentCategories}
-
-
-                    showBack={showBack}
-                    onBack={() => { setComponentIndex(componentIndex - 1) }}
-                    onNext={() => { setComponentIndex(componentIndex + 1) }}
-
-                    dialogOpen={dialogOpen}
-                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
-
-                    onDismiss={() => { setDialogOpen(false); }}
-                    style={styles.componentStyle}
-                />
-
-            </ScrollView>
-        </View>
-    );
+        </ScrollView>
+    </View>
+);
 }
 
 const windowWidth = Dimensions.get('window').width;

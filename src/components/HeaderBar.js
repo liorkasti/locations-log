@@ -6,7 +6,7 @@ const HeaderBar = (props) => {
 
 
   useEffect(() => {
-    console.warn("show componentIndex: ", props.componentIndex)
+    // console.warn("show componentIndex: ", props.componentIndex)
   }, [props.componentIndex]);
 
   // onAddCategory = name => {

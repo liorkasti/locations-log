@@ -11,45 +11,64 @@ import CategoryInput from '../components/CategoryInput';
 // import EmptyView from './components/EmptyView';
 
 export default function MyLocationController({ props }) {
-  const [categoriesList, setCategoriesList] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState('');
+  const [categoryList, setCategoryList] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState([]);
 
+  const [updateList, setUpdateList] = useState(false);
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
-  
+
   // const numberOfCategories = 0;
 
   useEffect(() => {
     // console.warn("isAddMode: ", isAddMode);
   }, [])
-  
+
   useEffect(() => {
+
+    // console.warn("updateList: ", updateList);
+    // console.error("Current Category: ", currentCategory);
+
+    if (updateList) { props.onUpdateCategory(currentCategory); }
+
+  }, [currentCategory])
+
+  useEffect(() => {
+    // console.log("MyLocationController props: ", props);
     // console.error("dialogOpen: ", props);
-    
-    console.log("The numberOfCategories: ", categoriesList.length);
-    console.log("The Location Categories: ", categoriesList);
-  }, [props])
+
+    if (updateList) {
+      // console.log("The numberOfCategories: ", categoryList.length);
+      // console.log("The Location Categories: ", categoryList);
+      // props.onUpdateList(currentCategories => [
+      //   ...currentCategories,
+      //   { id: Math.random().toString(), name: categoryName }
+      // ]);
+    }
+  }, [categoryList])
 
   const addCategoryHandler = categoryName => {
-    setCategoriesList(currentCategories => [
-      ...currentCategories,
+    setCategoryList(currentCategory => [
+      ...currentCategory,
       { id: Math.random().toString(), name: categoryName }
     ]);
     setIsAddMode(false);
+    setUpdateList(true);
     setCurrentCategory(categoryName);
   };
 
-  // setCurrentCategory = currentCategories => {
-  //   props.currentCategories(currentCategories);
+  // setCurrentCategory = currentCategory => {
+  //   props.currentCategory(currentCategory);
   // };
 
 
   const removeCategoryHandler = categoryId => {
     console.log('TO BE DELETED: ' + categoryId);
-    console.log(currentCategories);
-    setCategoriesList(currentCategories => {
-      return currentCategories.filter(category => category.id !== categoryId);
+    // console.log("Current Category: ", currentCategory);
+    setCategoryList(currentCategory => {
+      return currentCategory.filter(category => category.id !== categoryId);
     });
+    setUpdateList(true);
   };
 
   const cancelCategoryAdditionHandler = () => {
@@ -62,7 +81,7 @@ export default function MyLocationController({ props }) {
 
         <View style={styles.textContainer}>
           {
-            categoriesList.length ?
+            categoryList.length ?
               <Text style={styles.textPrompt}>Map Categiries</Text>
               :
               <View style={styles.welcomeContainer}>
@@ -92,7 +111,6 @@ export default function MyLocationController({ props }) {
           dialogStyle={styles.dialog}
         >
           <DialogContent>
-
             <View style={styles.welcomeContainer}>
               <CategoryInput
                 visible={isAddMode}
@@ -106,45 +124,32 @@ export default function MyLocationController({ props }) {
                 windowHeight={windowHeight}
               />
             </View>
-
           </DialogContent>
         </Dialog>
 
         {/* } */}
 
-        {/* {categoriesList.length ? */}
+        {/* {categoryList.length ? */}
         {
           // props.showAdd &&
-          categoriesList.length ?
+          categoryList.length ?
 
             <FlatList
               keyExtractor={(item, index) => item.id}
-              data={categoriesList}
+              data={categoryList}
               renderItem={itemData => (
                 <CategoryItem
                   id={itemData.item.id}
                   // onDelete={removeCategoryHandler}
                   onPress={props.onNext}
                   title={itemData.item.name}
-                // style={styles.categoryItem}
+                  style={styles.categoryItem}
                 />
               )}
             />
             :
             null
         }
-
-        {/* <InputDialog
-          cancelLabel="Cancel"
-          okLabel="Add"
-          backgroundColor="white"
-          initialValue=""
-          title="Create a new category"
-          // visible={true}
-          visible={props.dialogOpen}
-          onDismiss={props.onDismiss}
-        /> */}
-
 
       </ScrollView>
     </View >
