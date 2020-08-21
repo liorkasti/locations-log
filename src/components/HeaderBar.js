@@ -45,10 +45,8 @@ const HeaderBar = (props) => {
           }
           {props.componentIndex === 1 &&
             <View style={styles.createbuttonRow}>
-              {/* todoL rigt toolbar */}
-              <ToolbarAction icon="more-vert"
-              //  onPress={null}
-              />
+              {/* todoL right toolbar */}
+              {/* <ToolbarAction icon="more-vert" onPress={null} /> */}
               <TouchableOpacity
                 onPress={() => { props.setDialogOpen(); }}
                 style={styles.createbutton}>
