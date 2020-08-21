@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
-import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 
 import ModifyItem from '../model/ModifyItem'
@@ -86,7 +86,7 @@ export default function MyLocationController({ props }) {
               :
               <View style={styles.welcomeContainer}>
                 <Text style={styles.textPrompt}>Please Add a Map Category</Text>
-                <FontAwesomeIcon name="map-o" style={styles.icon} />
+                <FontAwesomeIcon name="add-location" style={styles.icon} />
               </View>
           }
         </View>
@@ -197,6 +197,6 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: "rgba(0,88,155,1)",
-    fontSize: 90,
-  },
+    fontSize: 120,
+  }
 });

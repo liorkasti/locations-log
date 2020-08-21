@@ -38,9 +38,7 @@ export default function Index(props) {
     useEffect(() => {
         // console.warn("Component Index: ", componentIndex);
 
-        if (componentIndex > componentKeys.length - 1) {
-            history.push("/");
-        }
+        if (componentIndex > componentKeys.length - 1) { history.push("/"); }
 
         if (myLocationList) {
             // console.warn("My Location List:", myLocationList);
@@ -52,12 +50,8 @@ export default function Index(props) {
             // console.log("Current Category: ", currentCategories.id , " Name: ", currentCategories.name);
         }
 
-        if (componentIndex < 0) {
-            setShowBack(false);
-        }
-        if (componentIndex > 0) {
-            setShowBack(true);
-        }
+        if (componentIndex < 0) { setShowBack(false); }
+        if (componentIndex > 0) { setShowBack(true); }
 
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
     }, [])
@@ -68,58 +62,58 @@ export default function Index(props) {
         categories(name)
     }
 
-    const addMyLocationHandler = currentCategories => { 
+    const addMyLocationHandler = currentCategories => {
         setMyLocationList(myLocationList => [
-        ...myLocationList,
-        { id: Math.random().toString(), name: currentCategories.name }
-    ]);
-}
+            ...myLocationList,
+            { id: Math.random().toString(), name: currentCategories.name }
+        ]);
+    }
 
 
-return (
-    <View style={styles.container}>
-        <StatusBar backgroundColor="rgba(0,88,155,1)" />
+    return (
+        <View style={styles.container}>
+            <StatusBar backgroundColor="rgba(0,88,155,1)" />
 
-        <HeaderBar
-            componentIndex={componentIndex}
-            currentCategories={currentCategories}
-
-            header={headers[componentKeys[componentIndex]]}
-            onBack={() => { setComponentIndex(componentIndex - 1) }}
-
-            setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
-            dialogOpen={dialogOpen}
-
-            style={styles.header}
-
-        />
-
-        <ScrollView style={styles.scrollView}>
-            <CurrentComponentRouter
-                currentComponent={components[componentKeys[componentIndex]]}
+            <HeaderBar
                 componentIndex={componentIndex}
+                currentCategories={currentCategories}
 
-                // myLocationList={myLocationList}
-                onUpdateList={() => { addMyLocationHandler }}
-
-                // currentCategories={currentCategories}
-                onUpdateCategory={setCurrentCategories}
-
-
-                showBack={showBack}
+                header={headers[componentKeys[componentIndex]]}
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
-                onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                dialogOpen={dialogOpen}
                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                dialogOpen={dialogOpen}
 
-                onDismiss={() => { setDialogOpen(false); }}
-                style={styles.componentStyle}
+                style={styles.header}
+
             />
 
-        </ScrollView>
-    </View>
-);
+            <ScrollView style={styles.scrollView}>
+                <CurrentComponentRouter
+                    currentComponent={components[componentKeys[componentIndex]]}
+                    componentIndex={componentIndex}
+
+                    // myLocationList={myLocationList}
+                    onUpdateList={() => { addMyLocationHandler }}
+
+                    // currentCategories={currentCategories}
+                    onUpdateCategory={setCurrentCategories}
+
+
+                    showBack={showBack}
+                    onBack={() => { setComponentIndex(componentIndex - 1) }}
+                    onNext={() => { setComponentIndex(componentIndex + 1) }}
+
+                    dialogOpen={dialogOpen}
+                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+
+                    onDismiss={() => { setDialogOpen(false); }}
+                    style={styles.componentStyle}
+                />
+
+            </ScrollView>
+        </View>
+    );
 }
 
 const windowWidth = Dimensions.get('window').width;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image, ToolbarAction } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
+import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 
 const HeaderBar = (props) => {
 
@@ -8,20 +9,6 @@ const HeaderBar = (props) => {
   useEffect(() => {
     // console.warn("show componentIndex: ", props.componentIndex)
   }, [props.componentIndex]);
-
-  // onAddCategory = name => {
-  //   this.dismissShowDialog();
-  //   console.log(`CategoryScreen: inserted category name is ${name}`);
-  //   if (!name || name.length == 0) {
-  //     toastMaker('Please insert category name');
-  //     return;
-  //   }
-  //   if (isCategoryExists({name}, this.props.categories)) {
-  //     toastMaker('Category already exists');
-  //     return;
-  //   }
-  //   this.props.addCategory({name});
-  // };
 
   return (
     <View style={[styles.container, props.style]}>
@@ -33,10 +20,10 @@ const HeaderBar = (props) => {
             <TouchableOpacity
               onPress={() => { props.onBack() }} >
 
-              <Icon
-                name="left"
+              <FontAwesomeIcon
+                name="chevron-left"
                 style={styles.bachIcon}>
-              </Icon>
+              </FontAwesomeIcon>
 
             </TouchableOpacity>
           }
@@ -51,7 +38,26 @@ const HeaderBar = (props) => {
                   ?
                   <Icon name="close" style={styles.icon} />
                   :
-                  <Icon name="plus" style={styles.icon} />
+                  <FontAwesomeIcon name="add-location" style={styles.icon} />
+                }
+              </TouchableOpacity>
+            </View>
+          }
+          {props.componentIndex === 1 &&
+            <View style={styles.createbuttonRow}>
+              {/* todoL rigt toolbar */}
+              <ToolbarAction icon="more-vert"
+              //  onPress={null}
+              />
+              <TouchableOpacity
+                onPress={() => { props.setDialogOpen(); }}
+                style={styles.createbutton}>
+
+                {props.dialogOpen
+                  ?
+                  <Icon name="close" style={styles.icon} />
+                  :
+                  <FontAwesomeIcon name="add-location" style={styles.icon} />
                 }
               </TouchableOpacity>
             </View>
@@ -104,11 +110,11 @@ const styles = StyleSheet.create({
   },
   bachIcon: {
     color: "rgba(0,88,155,1)",
-    fontSize: 28,
+    fontSize: 35,
     width: "100%",
     height: 30,
-    top: 7,
-    left: 8
+    top: 0,
+    left: 4
   },
   textCteate: {
     color: "rgba(0,88,155,1)",
