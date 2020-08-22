@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image, ToolbarAction } from "react-native";
+import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image, } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
+import Hamburger from 'react-native-animated-hamburger';
+import ActionMenu from '../components/ActionMenu';
 
 const HeaderBar = (props) => {
 
-
   useEffect(() => {
+    // todo: validate currect index
     // console.warn("show componentIndex: ", props.componentIndex)
   }, [props.componentIndex]);
 
   return (
-    <View style={[styles.container, props.style]}>
+    <View style={styles.container}>
       <View style={styles.headerStack}>
         <Text style={styles.bsD1}>BS&quot;D</Text>
         <Text style={styles.header}>{props.header}</Text>
@@ -28,7 +30,7 @@ const HeaderBar = (props) => {
             </TouchableOpacity>
           }
 
-          {props.componentIndex === 0 &&
+          {props.componentIndex === 0 ?
             <View style={styles.createbuttonRow}>
               <TouchableOpacity
                 onPress={() => { props.setDialogOpen(); }}
@@ -42,27 +44,43 @@ const HeaderBar = (props) => {
                 }
               </TouchableOpacity>
             </View>
-          }
-          {props.componentIndex === 1 &&
+            :
+            props.componentIndex === 1 &&
             <View style={styles.createbuttonRow}>
               {/* todoL right toolbar */}
-              {/* <ToolbarAction icon="more-vert" onPress={null} /> */}
               <TouchableOpacity
+                onPress={() => { props.setShowMenu() }}
+                style={styles.hamburgerMenu} >
+                <Hamburger
+                  type="cross"
+                  active={props.showMenu}
+                  // onPress={() => { props.onPress(); }}
+                  onPress={() => { props.setShowMenu() }}
+                  underlayColor="transparent"
+                />
+              </TouchableOpacity>
+
+              {props.showMenu &&
+                <ActionMenu
+                  onActionMenu={props.onActionMenu}
+                  style={styles.actionMenu}
+                />
+              }
+
+              {/* <TouchableOpacity
                 onPress={() => { props.setDialogOpen(); }}
                 style={styles.createbutton}>
-
-                {props.dialogOpen
-                  ?
+                {props.dialogOpen ?
                   <Icon name="close" style={styles.icon} />
                   :
                   <FontAwesomeIcon name="add-location" style={styles.icon} />
                 }
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </View>
           }
         </View>
       </View>
-    </View>
+    </View >
   );
 }
 
@@ -74,7 +92,6 @@ const styles = StyleSheet.create({
     width: windowWidth,
   },
   headerStack: {
-    height: 91,
     borderColor: "rgba(0,88,155,1)",
     borderWidth: 0,
     borderBottomWidth: .7,
@@ -95,12 +112,27 @@ const styles = StyleSheet.create({
   },
   createbuttonRow: {
     position: "absolute",
+    flexDirection: "row",
+  },
+  actionMenu: {
+    // position: "absolute",
+    // width: windowWidth,
+    // right: windowWidth,
+    // left: 0,
+    // top: 64
+  },
+  hamburgerMenu: {
+    zIndex: 100,
+    height: 30,
+    top: 3,
+    left: windowWidth - 50,
+    fontSize: 28,
   },
   createbutton: {
     width: "100%",
     height: 30,
     top: 7,
-    left: windowWidth - 42
+    left: windowWidth - 42,
   },
   icon: {
     color: "rgba(0,88,155,1)",

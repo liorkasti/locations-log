@@ -30,37 +30,48 @@ export default function Index(props) {
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [showBack, setShowBack] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
 
     const componentKeys = ["MyLocationController", "Category", "Location"];
     const headers = { MyLocationController: "My Locations", Category: currentCategories, Location: currentCategories };
 
 
     useEffect(() => {
-        // console.warn("Component Index: ", componentIndex);
-
-        if (componentIndex > componentKeys.length - 1) { history.push("/"); }
-
-        if (myLocationList) {
-            // console.warn("My Location List:", myLocationList);
-            // console.log("Current Category: ", currentCategories.id , " Name: ", currentCategories.name);
-        }
-
-        if (currentCategories) {
-            // console.warn("Current Category:", currentCategories);
-            // console.log("Current Category: ", currentCategories.id , " Name: ", currentCategories.name);
-        }
-
         if (componentIndex < 0) { setShowBack(false); }
         if (componentIndex > 0) { setShowBack(true); }
-
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
     }, [])
+
+    useEffect(() => {
+        console.log("Root Current Category: ", currentCategories);
+        console.log("Root List Category: ", myLocationList);
+        console.log("Root componentIndex: ", componentIndex);
+        // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
+    }, [componentIndex])
 
     let history = useHistory();
 
     const onCreate = (name) => {
         categories(name)
     }
+
+    const handleAction = (action, backHistory) => {
+        switch (action) {
+            case "addLocation":
+                onEdit(stay);
+                break;
+            case "editCategory":
+                onEdit(stay);
+                break;
+            case "deleteCategory":
+                onDelete();
+                break;
+            case "onOpenLocation":
+                onDelete();
+                break;
+        }
+    };
+
 
     const addMyLocationHandler = currentCategories => {
         setMyLocationList(myLocationList => [
@@ -79,8 +90,17 @@ export default function Index(props) {
                 currentCategories={currentCategories}
 
                 header={headers[componentKeys[componentIndex]]}
-                onBack={() => { setComponentIndex(componentIndex - 1) }}
+                onBack={() => {
+                    if (showMenu) setShowMenu(false);
+                    addMyLocationHandler;
+                    setCurrentCategories;
+                    setComponentIndex(componentIndex - 1);
+                }}
 
+                onActionMenu={(_action) => { handleAction(action); }}
+                showMenu={showMenu}
+
+                setShowMenu={() => { setShowMenu(!showMenu); }}
                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
                 dialogOpen={dialogOpen}
 
@@ -88,30 +108,31 @@ export default function Index(props) {
 
             />
 
-            <ScrollView style={styles.scrollView}>
-                <CurrentComponentRouter
-                    currentComponent={components[componentKeys[componentIndex]]}
-                    componentIndex={componentIndex}
+            {/* <ScrollView style={styles.scrollView}> */}
+            <CurrentComponentRouter
+                currentComponent={components[componentKeys[componentIndex]]}
+                componentIndex={componentIndex}
 
-                    // myLocationList={myLocationList}
-                    onUpdateList={() => { addMyLocationHandler }}
+                // myLocationList={myLocationList}
+                onUpdateList={() => { addMyLocationHandler }}
+                // currentCategories={currentCategories}
+                onUpdateCategory={setCurrentCategories}
 
-                    // currentCategories={currentCategories}
-                    onUpdateCategory={setCurrentCategories}
+                showMenu={showMenu}
+                onActionMenu={(_action) => { handleAction(action); }}
+                
+                showBack={showBack}
+                onBack={() => { setComponentIndex(componentIndex - 1) }}
+                onNext={() => { setComponentIndex(componentIndex + 1) }}
 
+                dialogOpen={dialogOpen}
+                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                    showBack={showBack}
-                    onBack={() => { setComponentIndex(componentIndex - 1) }}
-                    onNext={() => { setComponentIndex(componentIndex + 1) }}
+                onDismiss={() => { setDialogOpen(false); }}
+                style={styles.componentStyle}
+            />
 
-                    dialogOpen={dialogOpen}
-                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
-
-                    onDismiss={() => { setDialogOpen(false); }}
-                    style={styles.componentStyle}
-                />
-
-            </ScrollView>
+            {/* </ScrollView> */}
         </View>
     );
 }

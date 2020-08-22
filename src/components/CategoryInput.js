@@ -4,6 +4,11 @@ import toastMaker from '../utils/toastMaker';
 
 const CategoryInput = props => {
   const [enteredCategory, setEnteredCategory] = useState("");
+  const [inputValue, setInputValue] = useState("");
+  
+  const onChangeText = (newText) => {
+    setInputValue(newText);
+  }
 
   useEffect(() => {
     // console.warn("CategoryInput props: ", props);
