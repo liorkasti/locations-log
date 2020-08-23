@@ -4,6 +4,8 @@ import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 
 import InputDialog from '../components/InputDialog';
+import CategoryItem from '../components/CategoryItem';
+import CategoryInput from '../components/CategoryInput';
 
 // import EmptyView from './components/EmptyView';
 
@@ -64,19 +66,82 @@ export default function MyLocationController({ props }) {
 
   return (
     <View style={styles.container}>
+      <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
 
-      <View style={styles.textContainer}>
-        {
-          categoryList.length ?
-            <Text style={styles.textPrompt}>Your Categiries</Text>
-            :
+        <View style={styles.textContainer}>
+          {
+            categoryList.length ?
+              <Text style={styles.textPrompt}>Your Categiries</Text>
+              :
+              <View style={styles.welcomeContainer}>
+                <Text style={styles.textPrompt}>Please add your{"\n"}places categories</Text>
+                <FontAwesomeIcon name="add-location" style={styles.icon} />
+              </View>
+          }
+        </View>
+        {/* {props.dialogOpen == false &&
+          <View style={styles.welcomeContainer}>
+          </View>
+        } */}
+
+        {/* {props.dialogOpen && */}
+
+        < Dialog
+          visible={props.dialogOpen}
+          onTouchOutside={() => {
+            this.setState({ visible: false });
+          }}
+          dialogAnimation={
+            new SlideAnimation({
+              slideFrom: 'bottom',
+            })
+          }
+          dialogStyle={styles.dialog}
+        >
+          <DialogContent>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.textPrompt}>Please add your{"\n"}places categories</Text>
-              <FontAwesomeIcon name="add-location" style={styles.icon} />
+              <CategoryInput
+                visible={isAddMode}
+                onAddCategory={addCategoryHandler}
+                onCreate={() => { props.setCurrentCategory() }}
+                onCancel={cancelCategoryAdditionHandler}
+                dialogOpen={props.dialogOpen}
+                onDismiss={() => { props.setDialogOpen() }}
+                initialValue=""
+                windowWidth={windowWidth}
+                windowHeight={windowHeight}
+              />
             </View>
+          </DialogContent>
+        </Dialog>
+
+        {/* } */}
+
+        {/* {categoryList.length ? */}
+        {
+          // props.showAdd &&
+          categoryList.length ?
+
+            <FlatList
+              keyExtractor={(item, index) => item.id}
+              data={categoryList}
+              renderItem={itemData => (
+                <CategoryItem
+                  id={itemData.item.id}
+                  // onDelete={removeCategoryHandler}
+                  onPress={props.onNext}
+                  title={itemData.item.name}
+                  style={styles.categoryItem}
+                />
+              )}
+            />
+            :
+            null
         }
-      </View>
-      <InputDialog
+
+      </ScrollView>
+
+      {/* <InputDialog
         categoryList={categoryList}
         currentCategory={currentCategory}
         componentIndex={props.componentIndex}
@@ -102,7 +167,7 @@ export default function MyLocationController({ props }) {
 
         onDismiss={props.onDismiss}
         style={styles.componentStyle}
-      />
+      /> */}
     </View >
   );
 }

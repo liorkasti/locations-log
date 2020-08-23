@@ -113,7 +113,7 @@ export default function Index(props) {
                 currentComponent={components[componentKeys[componentIndex]]}
                 componentIndex={componentIndex}
 
-                // myLocationList={myLocationList}
+                myLocationList={myLocationList}
                 onUpdateList={() => { addMyLocationHandler }}
                 // currentCategories={currentCategories}
                 onUpdateCategory={setCurrentCategories}
