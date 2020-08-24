@@ -4,6 +4,8 @@ import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 import toastMaker from '../utils/toastMaker';
 
+import {KEY} from '../router/index';
+
 import InputDialog from '../components/InputDialog';
 import CategoryItem from '../components/CategoryItem';
 import MyInputText from '../components/MyInputText';
@@ -28,21 +30,26 @@ export default function MyLocationController({ props }) {
     // return {  };
   }, [categoryList])
 
+  // useEffect(() => {
+  //   if (isUpdateList) {
+  //     // Fetch data 
+
+  //   }
+
+  //   // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
+  // }, [])
+
   const addCategoryHandler = categoryName => {
 
     setCategoryList(currentCategory => [
       ...currentCategory,
-      { id: Math.random().toString(), name: categoryName }
+      { id: (Math.random().toString()*10000)%2, name: categoryName }
     ]);
     setIsAddMode(false);
     setIsUpdateList(true);
     setCurrentCategory(categoryName);
-
-    updateStorage(categoryName, categoryList)
+    updateStorage(categoryName)
     setIsUpdateList(true);
-
-    console.log("props List Category: ", props.myLocationList);
-    console.log("props Current Category: ", props.popLatastCategory);
     if (isUpdateList) {
       // reloadStorage();      
       console.log("List update on chancge? ", isUpdateList);
@@ -50,9 +57,8 @@ export default function MyLocationController({ props }) {
     setIsUpdateList(false);
   };
 
-  const updateStorage = (currentCategory, categoryList) => {
-    props.onUpdateCategory(currentCategory);
-    // props.onUpdateList({categoryList})
+  const updateStorage = (newListItem) => {
+    props.onUpdateCategory(newListItem)
   };
 
   const removeCategoryHandler = categoryId => {
@@ -81,7 +87,9 @@ export default function MyLocationController({ props }) {
 
         <View style={styles.textContainer}>
           {
-            categoryList.length ?
+            (categoryList.length || props.myLocationList) ?
+            // categoryList.length ?
+
               <Text style={styles.textPrompt}>Your Categiries</Text>
               :
               <View style={styles.welcomeContainer}>
@@ -139,7 +147,22 @@ export default function MyLocationController({ props }) {
               )}
             />
             :
-            null
+            props.myLocationList ?
+              <FlatList
+                keyExtractor={(item, index) => item.id}
+                data={props.myLocationList}
+                renderItem={itemData => (
+                  <CategoryItem
+                    id={itemData.item.id}
+                    // onDelete={removeCategoryHandler}
+                    onPress={props.onNext}
+                    title={itemData.item.name}
+                    style={styles.categoryItem}
+                  />
+                )}
+              />
+              :
+              null
         }
 
       </ScrollView>

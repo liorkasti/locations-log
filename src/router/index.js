@@ -22,8 +22,8 @@ const CurrentComponentRouter = (props) => {
 export default function Index(props) {
 
     const [componentIndex, setComponentIndex] = useState(0);
-    const [myLocationList, setMyLocationList] = useState([]);
     const [currentCategories, setCurrentCategories] = useState([]);
+    const [myLocationList, setMyLocationList] = useState([]);
 
     const [isAddMode, setIsAddMode] = useState(false);
     const [isCancelMode, setIsCancelMode] = useState(false);
@@ -74,11 +74,15 @@ export default function Index(props) {
     };
 
 
-    const addMyLocationHandler = currentCategories => {
+    const addCategoriesHandler = categoryListNode => {
+        setCurrentCategories(categoryListNode);
         setMyLocationList(myLocationList => [
             ...myLocationList,
-            { id: Math.random().toString(), name: currentCategories }
+            { id: Math.random().toString(), name: categoryListNode }
         ]);
+    }
+
+    const addMyLocationHandler = categoryListNode => {
     }
 
 
@@ -116,14 +120,14 @@ export default function Index(props) {
 
                 myLocationList={myLocationList}
                 currentCategories={currentCategories}
-                
-                onUpdateList={addMyLocationHandler }
-                onUpdateCategory={setCurrentCategories}
+
+                // onUpdateList={addMyLocationHandler}
+                onUpdateCategory={addCategoriesHandler}
 
 
                 showMenu={showMenu}
                 onActionMenu={(_action) => { handleAction(action); }}
-                
+
                 showBack={showBack}
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
                 onNext={() => { setComponentIndex(componentIndex + 1) }}
