@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 4
   },
-  textCteate: {
+  textCreate: {
     color: "rgba(0,88,155,1)",
     fontSize: 16,
     right: 26
