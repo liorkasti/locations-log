@@ -22,7 +22,8 @@ const CurrentComponentRouter = (props) => {
 export default function Index(props) {
 
     const [componentIndex, setComponentIndex] = useState(0);
-    const [currentCategories, setCurrentCategories] = useState([]);
+    const [renderedCategory, setRenderedCategory] = useState([]);
+    const [renderedLocation, setRenderedLocation] = useState([]);
     const [myLocationList, setMyLocationList] = useState([]);
 
     const [isAddMode, setIsAddMode] = useState(false);
@@ -33,7 +34,7 @@ export default function Index(props) {
     const [showMenu, setShowMenu] = useState(false);
 
     const componentKeys = ["MyLocationController", "Category", "Location"];
-    const headers = { MyLocationController: "My Locations", Category: currentCategories, Location: currentCategories };
+    const headers = { MyLocationController: "My Locations", Category: renderedCategory, Location: renderedLocation };
 
 
     useEffect(() => {
@@ -43,7 +44,7 @@ export default function Index(props) {
     }, [])
 
     useEffect(() => {
-        console.log("Root Current Category: ", currentCategories);
+        console.log("Root Current Category: ", renderedCategory);
         console.log("Root List Category: ", myLocationList);
         console.log("HEADER NAME: ", headers[componentKeys[componentIndex]]);
         console.log("Root componentIndex: ", componentIndex);
@@ -75,7 +76,7 @@ export default function Index(props) {
 
 
     const addCategoriesHandler = categoryListNode => {
-        setCurrentCategories(categoryListNode);
+        setRenderedCategory(categoryListNode);
         setMyLocationList(myLocationList => [
             ...myLocationList,
             { id: Math.random().toString(), name: categoryListNode }
@@ -92,13 +93,13 @@ export default function Index(props) {
 
             <HeaderBar
                 componentIndex={componentIndex}
-                currentCategories={currentCategories}
+                renderedCategory={renderedCategory}
 
                 header={headers[componentKeys[componentIndex]]}
                 onBack={() => {
                     if (showMenu) setShowMenu(false);
                     // addMyLocationHandler;
-                    // setCurrentCategories;
+                    // setRenderedCategory;
                     setComponentIndex(componentIndex - 1);
                 }}
 
@@ -119,16 +120,17 @@ export default function Index(props) {
                 componentIndex={componentIndex}
 
                 myLocationList={myLocationList}
-                currentCategories={currentCategories}
+                renderedCategory={renderedCategory}
 
                 // onUpdateList={addMyLocationHandler}
                 onUpdateCategory={addCategoriesHandler}
-
+                setRenderedCategory={setRenderedCategory}
 
                 showMenu={showMenu}
                 onActionMenu={(_action) => { handleAction(action); }}
 
                 showBack={showBack}
+                
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
                 onNext={() => { setComponentIndex(componentIndex + 1) }}
 

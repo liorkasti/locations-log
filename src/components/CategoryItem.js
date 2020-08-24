@@ -6,14 +6,19 @@ const CategoryItem = props => {
     return (
         // <TouchableOpacity activeOpacity={0.8} onPress={props.onDelete}>
         <TouchableNativeFeedback
-            onPress={() => props.onPress()}  >
+            onPress={() => {
+                props.onPress()
+                props.setRenderedCategory(props.title)
+                console.error("props.title", props.title)
+            }}
+        >
             {/* onPress={props.onDelete.bind(this, props.id)} > */}
-            <View style={styles.rowItem} >
+            < View style={styles.rowItem} >
                 {/* itemData.item.value */}
-                <Text>{props.title}</Text>
+                < Text > {props.title}</Text >
                 <FontAwesomeIcon name="map-marker" style={styles.icon} />
-            </View>
-        </TouchableNativeFeedback>
+            </View >
+        </TouchableNativeFeedback >
 
     );
 };

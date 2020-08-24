@@ -4,7 +4,7 @@ import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 import toastMaker from '../utils/toastMaker';
 
-import {KEY} from '../router/index';
+import { KEY } from '../router/index';
 
 import InputDialog from '../components/InputDialog';
 import CategoryItem from '../components/CategoryItem';
@@ -30,20 +30,11 @@ export default function MyLocationController({ props }) {
     // return {  };
   }, [categoryList])
 
-  // useEffect(() => {
-  //   if (isUpdateList) {
-  //     // Fetch data 
-
-  //   }
-
-  //   // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
-  // }, [])
-
   const addCategoryHandler = categoryName => {
 
     setCategoryList(currentCategory => [
       ...currentCategory,
-      { id: (Math.random().toString()*10000)%2, name: categoryName }
+      { id: (Math.random().toString() * 10000) % 2, name: categoryName }
     ]);
     setIsAddMode(false);
     setIsUpdateList(true);
@@ -77,7 +68,7 @@ export default function MyLocationController({ props }) {
   const reloadStorage = () => {
     setCurrentCategory(props.popLatastCategory);
     setCategoryList(props.myLocationList);
-    console.log("Reload Category: ", props.currentCategories);
+    console.log("Reload Category: ", props.renderedCategory);
     console.log("Reload List: ", props.myLocationList);
   }
 
@@ -87,8 +78,8 @@ export default function MyLocationController({ props }) {
 
         <View style={styles.textContainer}>
           {
-            (categoryList.length || props.myLocationList) ?
-            // categoryList.length ?
+            (categoryList.length || props.myLocationList.length) ?
+              // categoryList.length ?
 
               <Text style={styles.textPrompt}>Your Categiries</Text>
               :
@@ -116,7 +107,6 @@ export default function MyLocationController({ props }) {
               <Text style={styles.textDialog}>Create a new Category</Text>
               <MyInputText
                 visible={isAddMode}
-                screen={props.screen}
                 onAdd={addCategoryHandler}
                 onCreate={() => { props.setCurrentCategory() }}
                 onCancel={cancelCategoryAdditionHandler}
@@ -140,6 +130,14 @@ export default function MyLocationController({ props }) {
                 <CategoryItem
                   id={itemData.item.id}
                   // onDelete={removeCategoryHandler}
+                  setRenderedCategory={props.setRenderedCategory}
+
+                  // setIsSelectedCategory={setIsSelectedCategory}
+                  // isSelectedCategory={isSelectedCategory}
+
+                  // setSelectedCategory={props.setSelectedCategory}
+                  // selectedCategory={props.selectedCategory}                  
+
                   onPress={props.onNext}
                   title={itemData.item.name}
                   style={styles.categoryItem}
@@ -154,6 +152,15 @@ export default function MyLocationController({ props }) {
                 renderItem={itemData => (
                   <CategoryItem
                     id={itemData.item.id}
+
+                    setRenderedCategory={props.setRenderedCategory}
+
+                    // setIsSelectedCategory={props.setIsSelectedCategory}
+                    // isSelectedCategory={isSelectedCategory}
+  
+                    // setSelectedCategory={props.setSelectedCategory}
+                    // selectedCategory={props.selectedCategory}   
+
                     // onDelete={removeCategoryHandler}
                     onPress={props.onNext}
                     title={itemData.item.name}

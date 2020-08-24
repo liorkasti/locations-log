@@ -30,7 +30,7 @@ export default function MyLocationController({ props }) {
   const reloadStorage = () => {
     setCurrentCategory(props.popLatastCategory);
     setCategoryList(props.myLocationList);
-    console.log("Reload Category: ", props.currentCategories);
+    console.log("Reload Category: ", props.renderedCategory);
     console.log("Reload List: ", props.myLocationList);
   }
 
@@ -155,7 +155,7 @@ export default function MyLocationController({ props }) {
         addCategoryHandler={addCategoryHandler}
         // myLocationList={myLocationList}
         onUpdateList={props.onUpdateList}
-        // currentCategories={currentCategories}
+        // renderedCategory={renderedCategory}
         onUpdateCategory={props.onUpdateCategory}
         showMenu={props.showMenu}
         onActionMenu={props.onActionMenu}

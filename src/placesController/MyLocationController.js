@@ -171,7 +171,7 @@ export default function MyLocationController({ props }) {
         addCategoryHandler={addCategoryHandler}
         // myLocationList={myLocationList}
         onUpdateList={props.onUpdateList}
-        // currentCategories={currentCategories}
+        // renderedCategory={renderedCategory}
         onUpdateCategory={props.onUpdateCategory}
 
         showMenu={props.showMenu}
