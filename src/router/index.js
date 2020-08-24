@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { View, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Text, ScrollView, SafeAreaView, Constants } from "react-native"
 import { useHistory } from "react-router-dom";
 
-import MyLocationController from "../placesController/MyLocationController";
+import MyLocationController from "../actionController/MyLocationController";
 import Category from "../screens/Category";
 import Location from "../screens/Location";
 
@@ -45,6 +45,7 @@ export default function Index(props) {
     useEffect(() => {
         console.log("Root Current Category: ", currentCategories);
         console.log("Root List Category: ", myLocationList);
+        console.log("HEADER NAME: ", headers[componentKeys[componentIndex]]);
         console.log("Root componentIndex: ", componentIndex);
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
     }, [componentIndex])
@@ -74,9 +75,12 @@ export default function Index(props) {
 
 
     const addMyLocationHandler = currentCategories => {
+        setCurrentCategories
+        console.warn("Root props: ", props);
+        console.warn("Root {props}: ", {props});
         setMyLocationList(myLocationList => [
             ...myLocationList,
-            { id: Math.random().toString(), name: currentCategories.name }
+            { id: Math.random().toString(), name: currentCategories }
         ]);
     }
 
@@ -92,8 +96,8 @@ export default function Index(props) {
                 header={headers[componentKeys[componentIndex]]}
                 onBack={() => {
                     if (showMenu) setShowMenu(false);
-                    addMyLocationHandler;
-                    setCurrentCategories;
+                    // addMyLocationHandler;
+                    // setCurrentCategories;
                     setComponentIndex(componentIndex - 1);
                 }}
 
@@ -114,13 +118,15 @@ export default function Index(props) {
                 componentIndex={componentIndex}
 
                 myLocationList={myLocationList}
-                onUpdateList={() => { addMyLocationHandler }}
-                // currentCategories={currentCategories}
-                onUpdateCategory={setCurrentCategories}
+                currentCategories={currentCategories}
+
+                onUpdateList={() => { setMyLocationList }}
+                onUpdateCategory={addMyLocationHandler}
+
 
                 showMenu={showMenu}
                 onActionMenu={(_action) => { handleAction(action); }}
-                
+
                 showBack={showBack}
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
                 onNext={() => { setComponentIndex(componentIndex + 1) }}
@@ -136,6 +142,7 @@ export default function Index(props) {
         </View>
     );
 }
+
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;

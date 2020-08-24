@@ -2,43 +2,44 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import toastMaker from '../utils/toastMaker';
 
-const CategoryInput = props => {
-  const [enteredCategory, setEnteredCategory] = useState("");
+const MyInputText = props => {
+  const [enteredInput, setEnteredInput] = useState("");
 
   useEffect(() => {
     // console.warn("CategoryInput props: ", props);
   }, [])
 
-  // console.warn("enteredText: ", enteredCategory);
+  // console.warn("enteredText: ", enteredInput);
 
-  const categoryInputHandler = enteredText => {
-    setEnteredCategory(enteredText);
+  const textInputHandler = enteredText => {
+    setEnteredInput(enteredText);
   };
 
-  const addCategoryHandler = () => {
-      // console.warn("enteredText: ", enteredCategory);
-      if (enteredCategory.length > 0) {
-        props.onAddCategory(enteredCategory);
+  const addTextHandler = () => {
+    // console.warn("enteredText: ", enteredInput);
+    if (enteredInput.length > 0) {
+      props.onAdd(enteredInput);
 
-        setEnteredCategory('');
-      } else {
-        // todo: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
-        Alert.alert("No name has been entered.");
-        console.log("No name has been entered.");
-        toastMaker("No name has been entered");
-        setEnteredCategory('');
-      }
+      setEnteredInput('');
+    } else {
+      // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
+      Alert.alert("No input.");
+      console.log("No name has been entered.");
+      toastMaker("No name has been entered");
+      setEnteredInput('');
+    }
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.textDialog}>Create a new Category</Text>
+      {/* TODO: Add dinamic screen title for the message below*/}
+      {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Category name"
           style={styles.input}
-          onChangeText={categoryInputHandler}
-          value={enteredCategory}
+          onChangeText={textInputHandler}
+          value={enteredInput}
         />
       </View>
       <View style={styles.buttonContainer}>
@@ -49,7 +50,7 @@ const CategoryInput = props => {
           <Text style={styles.textButton}>CANCEL</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={addCategoryHandler} style={styles.addButton} >
+        <TouchableOpacity onPress={addTextHandler} style={styles.addButton} >
           <Text style={styles.textButton}> ADD</Text>
         </TouchableOpacity>
 
@@ -67,11 +68,6 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: 300,
-  },
-  textDialog: {
-    padding: 20,
-    fontSize: 20,
-    textAlign: 'center'
   },
   input: {
     borderColor: 'black',
@@ -106,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CategoryInput;
+export default MyInputText;

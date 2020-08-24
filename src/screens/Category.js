@@ -3,10 +3,13 @@ import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimens
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 
-import CategoryItem from '../components/CategoryItem';
-import CategoryInput from '../components/CategoryInput';
+import LocationItem from '../components/LocationItem';
+import CategoryInput from '../components/MyInputText';
 
 export default function Location(props) {
+  const [LocationList, setLocationList] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState([]);
+
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
 
@@ -17,32 +20,27 @@ export default function Location(props) {
   useEffect(() => {
     console.log("List update? ", updateList);
     if (updateList) {
-      // todo: validate add asynch starage and sorting capabiliteis
+      // TODO: validate add asynch starage and sorting capabiliteis
       // initStorage();
     }
   }, [])
 
-  const initStorage = () => {
-    setCurrentCategory(props.popLatastCategory);
-    setCategoryList(props.myLocationList);
-  }
-
-  const addCategoryHandler = categoryName => {
-    setCategoryList(currentCategory => [
-      ...currentCategory,
-      { id: Math.random().toString(), name: categoryName }
+  const addLocationHandler = locationName => {
+    setLocationList(currentLocation => [
+      ...currentLocation,
+      { id: Math.random().toString(), name: locationName }
     ]);
     setIsAddMode(false);
     setUpdateList(true);
-    setCurrentCategory(categoryName);
-    console.log("The Current Category: ", currentCategory);
-    console.log("The List Category: ", categoryList);
+    setCurrentLocation(locationName);
+    console.log("The Current Category: ", currentLocation);
+    console.log("The List Category: ", LocationList);
 
-    updateStorage(categoryName)
+    // updateStorage(categoryName)
   };
 
   const updateStorage = newCategory => {
-    props.onUpdateCategory(newCategory);
+    props.onUpdateLocation(newCategory);
     props.onUpdateList(newCategory)
     console.log("props List Category: ", props.myLocationList);
     console.log("props Current Category: ", props.popLatastCategory);
@@ -85,7 +83,7 @@ export default function Location(props) {
           }
         </View>
 
-        < Dialog
+        {/* < Dialog
           visible={props.dialogOpen}
           onTouchOutside={() => {
             this.setState({ visible: false });
@@ -101,7 +99,7 @@ export default function Location(props) {
             <View style={styles.welcomeContainer}>
               <CategoryInput
                 visible={isAddMode}
-                onAddCategory={addCategoryHandler}
+                onAddCategory={addLocationHandler}
                 onCreate={() => { props.setCurrentCategory() }}
                 onCancel={cancelCategoryAdditionHandler}
                 dialogOpen={props.dialogOpen}
@@ -119,7 +117,7 @@ export default function Location(props) {
               //toso: get data from storage
               data={props.myLocationList}
               renderItem={itemData => (
-                <CategoryItem
+                <LocationItem
                   id={itemData.item.id}
                   // onDelete={removeCategoryHandler}
                   onPress={props.onNext}
@@ -129,7 +127,7 @@ export default function Location(props) {
               )}
             />
             : null
-        }
+        } */}
 
       </ScrollView>
     </View>

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
+// import {addStorageCategoryList, retrieveStorage,addCategoryList} from '../utils/myLocationsStorage';
+// import {isCategoryExists} from '../utils/myStorageHelper';
+
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 
@@ -10,20 +15,25 @@ import CategoryInput from '../components/CategoryInput';
 // import EmptyView from './components/EmptyView';
 
 export default function MyLocationController({ props }) {
+
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
 
-  const [updateList, setUpdateList] = useState(false);
+  const [isUpdateList, setIsUpdateList] = useState(false);
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
-    console.log("List update? ", updateList);
-    if (updateList) {
-      // todo: validate add asynch starage and sorting capabiliteis
-      // initStorage();
-    }
+    // console.log("List update? ", updateList);
+    // if (isUpdateList) {
+    // TODO: validate add asynch starage and sorting capabiliteis
+    // initStorage();
+    // updateStorage(currentCategory)
+    // }
+    // return updateStorage(categoryName)
   }, [])
+
+  let KEY = 1;
 
   const initStorage = () => {
     setCurrentCategory(props.popLatastCategory);
@@ -31,24 +41,33 @@ export default function MyLocationController({ props }) {
   }
 
   const addCategoryHandler = categoryName => {
-    setCategoryList(currentCategory => [
-      ...currentCategory,
-      { id: Math.random().toString(), name: categoryName }
-    ]);
+
+    setCurrentCategory(currentCategory => [...currentCategory, { id: KEY++, name: categoryName }]);
+    setCategoryList(categoryList => [...categoryList, { id: KEY + 4000, category: { currentCategory } }])
+
+    // addStorageCategoryList(categoryList).then(
+    // { id: Math.random().toString(), name: categoryName }
+    // );
+
     setIsAddMode(false);
-    setUpdateList(true);
-    setCurrentCategory(categoryName);
-    console.log("The Current Category: ", currentCategory);
+    setIsUpdateList(true);
+
+    console.warn("The Current Category: ", currentCategory);
     console.log("The List Category: ", categoryList);
 
-    updateStorage(categoryName)
+    // if (isUpdateList) { updateStorage(currentCategory, categoryList); }
+    updateStorage(categoryName, categoryList);
+    // updateStorage(currentCategory[currentCategory.length-1], categoryList);
+    // console.log("The Current Category: " + currentCategory.id + ', ' , currentCategory.name);
+    // console.log("The List Category: " + categoryList.id + ', ' , categoryList.name);
   };
 
-  const updateStorage = newCategory => {
+  const updateStorage = (newCategory, categoryList) => {
     props.onUpdateCategory(newCategory);
-    props.onUpdateList(newCategory)
-    console.log("props List Category: ", props.myLocationList);
-    console.log("props Current Category: ", props.popLatastCategory);
+    props.onUpdateList(categoryList)
+    // console.log("props List Category: ", props.myLocationList);
+    // console.log("props Current Category: ", props.onUpdateCategory);
+    setIsUpdateList(false);
   };
 
   const removeCategoryHandler = categoryId => {
@@ -57,7 +76,7 @@ export default function MyLocationController({ props }) {
     setCategoryList(currentCategory => {
       return currentCategory.filter(category => category.id !== categoryId);
     });
-    setUpdateList(true);
+    setIsUpdateList(true);
   };
 
   const cancelCategoryAdditionHandler = () => {
@@ -71,7 +90,7 @@ export default function MyLocationController({ props }) {
         <View style={styles.textContainer}>
           {
             categoryList.length ?
-              <Text style={styles.textPrompt}>Your Categiries</Text>
+              <Text style={styles.textPrompt}>Your Categories</Text>
               :
               <View style={styles.welcomeContainer}>
                 <Text style={styles.textPrompt}>Please add your{"\n"}places categories</Text>
@@ -103,7 +122,7 @@ export default function MyLocationController({ props }) {
               <CategoryInput
                 visible={isAddMode}
                 onAddCategory={addCategoryHandler}
-                onCreate={() => { props.setCurrentCategory() }}
+                onCreate={() => { setCurrentCategory() }}
                 onCancel={cancelCategoryAdditionHandler}
                 dialogOpen={props.dialogOpen}
                 onDismiss={() => { props.setDialogOpen() }}

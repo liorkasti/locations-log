@@ -22,11 +22,17 @@ export default function MyLocationController({ props }) {
     console.log("The Current Category: ", currentCategory);
     console.log("The List Category: ", categoryList);
     if (isUpdateList) {
-      reloadStorage()
       console.log("List update on chancge? ", isUpdateList);
     }
-    // return {  };
+    // return { initStorage() };
   }, [categoryList])
+
+  const reloadStorage = () => {
+    setCurrentCategory(props.popLatastCategory);
+    setCategoryList(props.myLocationList);
+    console.log("Reload Category: ", props.currentCategories);
+    console.log("Reload List: ", props.myLocationList);
+  }
 
   const addCategoryHandler = categoryName => {
 
@@ -37,22 +43,23 @@ export default function MyLocationController({ props }) {
     setIsAddMode(false);
     setIsUpdateList(true);
     setCurrentCategory(categoryName);
-
-    updateStorage(categoryName, categoryList)
+    
+    updateStorage(currentCategory, categoryList)
     setIsUpdateList(true);
-
-    console.log("props List Category: ", props.myLocationList);
-    console.log("props Current Category: ", props.popLatastCategory);
+    
     if (isUpdateList) {
-      // reloadStorage();      
+      // reloadStorage();  
       console.log("List update on chancge? ", isUpdateList);
+      setIsUpdateList(false);    
     }
     setIsUpdateList(false);
+    // console.log("props List Category: ", props.myLocationList);
+    // console.log("props Current Category: ", props.popLatastCategory);
   };
 
   const updateStorage = (currentCategory, categoryList) => {
     props.onUpdateCategory(currentCategory);
-    props.onUpdateList({categoryList})
+    props.onUpdateList(categoryList)
   };
 
   const removeCategoryHandler = categoryId => {
@@ -67,13 +74,6 @@ export default function MyLocationController({ props }) {
   const cancelCategoryAdditionHandler = () => {
     setIsCancelMode(true);
   };
-
-  const reloadStorage = () => {
-    setCurrentCategory(props.popLatastCategory);
-    setCategoryList(props.myLocationList);
-    console.log("Reload Category: ", props.currentCategories);
-    console.log("Reload List: ", props.myLocationList);
-  }
 
   return (
     <View style={styles.container}>

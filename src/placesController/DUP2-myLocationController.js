@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
+import AsyncStorage from '@react-native-community/async-storage';
+
+// import {addStorageCategoryList, retrieveStorage,addCategoryList} from '../utils/myLocationsStorage';
+// import {isCategoryExists} from '../utils/myStorageHelper';
+
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
-import toastMaker from '../utils/toastMaker';
 
 import InputDialog from '../components/InputDialog';
 import CategoryItem from '../components/CategoryItem';
-import MyInputText from '../components/MyInputText';
+import CategoryInput from '../components/TextInput';
 
 // import EmptyView from './components/EmptyView';
 
 export default function MyLocationController({ props }) {
+
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
 
@@ -19,40 +24,50 @@ export default function MyLocationController({ props }) {
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
-    console.log("The Current Category: ", currentCategory);
-    console.log("The List Category: ", categoryList);
-    if (isUpdateList) {
-      reloadStorage()
-      console.log("List update on chancge? ", isUpdateList);
-    }
-    // return {  };
-  }, [categoryList])
+    // console.log("List update? ", updateList);
+    // if (isUpdateList) {
+    // TODO: validate add asynch starage and sorting capabiliteis
+    // initStorage();
+    // updateStorage(currentCategory)
+    // }
+    // return updateStorage(categoryName)
+  }, [])
+
+  let KEY = 1;
+
+  const initStorage = () => {
+    setCurrentCategory(props.popLatastCategory);
+    setCategoryList(props.myLocationList);
+  }
 
   const addCategoryHandler = categoryName => {
 
-    setCategoryList(currentCategory => [
-      ...currentCategory,
-      { id: Math.random().toString(), name: categoryName }
-    ]);
+    setCurrentCategory(currentCategory => [...currentCategory, { id: KEY++, name: categoryName }]);
+    setCategoryList(categoryList => [...categoryList, { id: KEY + 4000, category: { currentCategory } }])
+
+    // addStorageCategoryList(categoryList).then(
+    // { id: Math.random().toString(), name: categoryName }
+    // );
+
     setIsAddMode(false);
     setIsUpdateList(true);
-    setCurrentCategory(categoryName);
 
-    updateStorage(categoryName, categoryList)
-    setIsUpdateList(true);
+    console.warn("The Current Category: ", currentCategory);
+    console.log("The List Category: ", categoryList);
 
-    console.log("props List Category: ", props.myLocationList);
-    console.log("props Current Category: ", props.popLatastCategory);
-    if (isUpdateList) {
-      // reloadStorage();      
-      console.log("List update on chancge? ", isUpdateList);
-    }
-    setIsUpdateList(false);
+    // if (isUpdateList) { updateStorage(currentCategory, categoryList); }
+    updateStorage(categoryName, categoryList);
+    // updateStorage(currentCategory[currentCategory.length-1], categoryList);
+    // console.log("The Current Category: " + currentCategory.id + ', ' , currentCategory.name);
+    // console.log("The List Category: " + categoryList.id + ', ' , categoryList.name);
   };
 
-  const updateStorage = (currentCategory, categoryList) => {
-    props.onUpdateCategory(currentCategory);
-    props.onUpdateList({categoryList})
+  const updateStorage = (newCategory, categoryList) => {
+    props.onUpdateCategory(newCategory);
+    props.onUpdateList(categoryList)
+    // console.log("props List Category: ", props.myLocationList);
+    // console.log("props Current Category: ", props.onUpdateCategory);
+    setIsUpdateList(false);
   };
 
   const removeCategoryHandler = categoryId => {
@@ -68,13 +83,6 @@ export default function MyLocationController({ props }) {
     setIsCancelMode(true);
   };
 
-  const reloadStorage = () => {
-    setCurrentCategory(props.popLatastCategory);
-    setCategoryList(props.myLocationList);
-    console.log("Reload Category: ", props.currentCategories);
-    console.log("Reload List: ", props.myLocationList);
-  }
-
   return (
     <View style={styles.container}>
       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
@@ -82,7 +90,7 @@ export default function MyLocationController({ props }) {
         <View style={styles.textContainer}>
           {
             categoryList.length ?
-              <Text style={styles.textPrompt}>Your Categiries</Text>
+              <Text style={styles.textPrompt}>Your Categories</Text>
               :
               <View style={styles.welcomeContainer}>
                 <Text style={styles.textPrompt}>Please add your{"\n"}places categories</Text>
@@ -90,6 +98,12 @@ export default function MyLocationController({ props }) {
               </View>
           }
         </View>
+        {/* {props.dialogOpen == false &&
+          <View style={styles.welcomeContainer}>
+          </View>
+        } */}
+
+        {/* {props.dialogOpen && */}
 
         < Dialog
           visible={props.dialogOpen}
@@ -105,12 +119,10 @@ export default function MyLocationController({ props }) {
         >
           <DialogContent>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.textDialog}>Create a new Category</Text>
-              <MyInputText
+              <CategoryInput
                 visible={isAddMode}
-                screen={props.screen}
-                onAdd={addCategoryHandler}
-                onCreate={() => { props.setCurrentCategory() }}
+                onAddCategory={addCategoryHandler}
+                onCreate={() => { setCurrentCategory() }}
                 onCancel={cancelCategoryAdditionHandler}
                 dialogOpen={props.dialogOpen}
                 onDismiss={() => { props.setDialogOpen() }}
@@ -122,7 +134,11 @@ export default function MyLocationController({ props }) {
           </DialogContent>
         </Dialog>
 
+        {/* } */}
+
+        {/* {categoryList.length ? */}
         {
+          // props.showAdd &&
           categoryList.length ?
 
             <FlatList
@@ -157,13 +173,17 @@ export default function MyLocationController({ props }) {
         onUpdateList={props.onUpdateList}
         // currentCategories={currentCategories}
         onUpdateCategory={props.onUpdateCategory}
+
         showMenu={props.showMenu}
         onActionMenu={props.onActionMenu}
+
         showBack={props.showBack}
         onBack={props.onBack}
         onNext={props.onNext}
+
         dialogOpen={props.dialogOpen}
         setDialogOpen={props.setDialogOpen}
+
         onDismiss={props.onDismiss}
         style={styles.componentStyle}
       /> */}
@@ -179,11 +199,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     maxHeight: "98%"
-  },
-  textDialog: {
-    padding: 20,
-    fontSize: 20,
-    textAlign: 'center'
   },
   dialog: {
     justifyContent: 'center',

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
+
+import {addCategoryList} from '../utils/myLocationsStorage';
+import {isCategoryExists} from '../utils/myStorageHelper';
+
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
-import toastMaker from '../utils/toastMaker';
-
 import InputDialog from '../components/InputDialog';
 import CategoryItem from '../components/CategoryItem';
-import MyInputText from '../components/MyInputText';
+import CategoryInput from '../components/CategoryInput';
 
 // import EmptyView from './components/EmptyView';
 
@@ -14,45 +16,48 @@ export default function MyLocationController({ props }) {
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
 
-  const [isUpdateList, setIsUpdateList] = useState(false);
+  const [updateList, setUpdateList] = useState(false);
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
-    console.log("The Current Category: ", currentCategory);
-    console.log("The List Category: ", categoryList);
-    if (isUpdateList) {
-      reloadStorage()
-      console.log("List update on chancge? ", isUpdateList);
+    console.log("List update? ", updateList);
+    if (updateList) {
+      // TODO: validate add asynch starage and sorting capabiliteis
+      // initStorage();
     }
-    // return {  };
-  }, [categoryList])
+  }, [])
+
+  const initStorage = () => {
+    setCurrentCategory(props.popLatastCategory);
+    setCategoryList(props.myLocationList);
+  }
 
   const addCategoryHandler = categoryName => {
-
-    setCategoryList(currentCategory => [
-      ...currentCategory,
-      { id: Math.random().toString(), name: categoryName }
-    ]);
-    setIsAddMode(false);
-    setIsUpdateList(true);
+    
     setCurrentCategory(categoryName);
 
-    updateStorage(categoryName, categoryList)
-    setIsUpdateList(true);
+    // if (!isCategoryExists(currentCategory, categoryName)) {
+      addCategoryList(categoryList).then(
+        setCategoryList(categoryList => [
+          ...categoryList,
+          { id: Math.random().toString(), name: categoryName }
+        ])
+      );
+    // }
+    setIsAddMode(false);
+    setUpdateList(true);
+    console.log("The Current Category: ", currentCategory);
+    console.log("The List Category: ", categoryList);
 
-    console.log("props List Category: ", props.myLocationList);
-    console.log("props Current Category: ", props.popLatastCategory);
-    if (isUpdateList) {
-      // reloadStorage();      
-      console.log("List update on chancge? ", isUpdateList);
-    }
-    setIsUpdateList(false);
+    updateStorage(categoryName)
   };
 
-  const updateStorage = (currentCategory, categoryList) => {
-    props.onUpdateCategory(currentCategory);
-    props.onUpdateList({categoryList})
+  const updateStorage = newCategory => {
+    props.onUpdateCategory(newCategory);
+    props.onUpdateList(newCategory)
+    console.log("props List Category: ", props.myLocationList);
+    console.log("props Current Category: ", props.popLatastCategory);
   };
 
   const removeCategoryHandler = categoryId => {
@@ -61,19 +66,12 @@ export default function MyLocationController({ props }) {
     setCategoryList(currentCategory => {
       return currentCategory.filter(category => category.id !== categoryId);
     });
-    setIsUpdateList(true);
+    setUpdateList(true);
   };
 
   const cancelCategoryAdditionHandler = () => {
     setIsCancelMode(true);
   };
-
-  const reloadStorage = () => {
-    setCurrentCategory(props.popLatastCategory);
-    setCategoryList(props.myLocationList);
-    console.log("Reload Category: ", props.currentCategories);
-    console.log("Reload List: ", props.myLocationList);
-  }
 
   return (
     <View style={styles.container}>
@@ -90,6 +88,12 @@ export default function MyLocationController({ props }) {
               </View>
           }
         </View>
+        {/* {props.dialogOpen == false &&
+          <View style={styles.welcomeContainer}>
+          </View>
+        } */}
+
+        {/* {props.dialogOpen && */}
 
         < Dialog
           visible={props.dialogOpen}
@@ -105,11 +109,9 @@ export default function MyLocationController({ props }) {
         >
           <DialogContent>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.textDialog}>Create a new Category</Text>
-              <MyInputText
+              <CategoryInput
                 visible={isAddMode}
-                screen={props.screen}
-                onAdd={addCategoryHandler}
+                onAddCategory={addCategoryHandler}
                 onCreate={() => { props.setCurrentCategory() }}
                 onCancel={cancelCategoryAdditionHandler}
                 dialogOpen={props.dialogOpen}
@@ -122,7 +124,11 @@ export default function MyLocationController({ props }) {
           </DialogContent>
         </Dialog>
 
+        {/* } */}
+
+        {/* {categoryList.length ? */}
         {
+          // props.showAdd &&
           categoryList.length ?
 
             <FlatList
@@ -157,13 +163,17 @@ export default function MyLocationController({ props }) {
         onUpdateList={props.onUpdateList}
         // currentCategories={currentCategories}
         onUpdateCategory={props.onUpdateCategory}
+
         showMenu={props.showMenu}
         onActionMenu={props.onActionMenu}
+
         showBack={props.showBack}
         onBack={props.onBack}
         onNext={props.onNext}
+
         dialogOpen={props.dialogOpen}
         setDialogOpen={props.setDialogOpen}
+
         onDismiss={props.onDismiss}
         style={styles.componentStyle}
       /> */}
@@ -179,11 +189,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     maxHeight: "98%"
-  },
-  textDialog: {
-    padding: 20,
-    fontSize: 20,
-    textAlign: 'center'
   },
   dialog: {
     justifyContent: 'center',

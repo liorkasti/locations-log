@@ -8,8 +8,8 @@ import ActionMenu from '../components/ActionMenu';
 const HeaderBar = (props) => {
 
   useEffect(() => {
-    // todo: validate currect index
-    // console.warn("show componentIndex: ", props.componentIndex)
+    // TODO: validate currect index
+    console.warn("show componentIndex: ", props)
   }, [props.componentIndex]);
 
   return (
@@ -47,7 +47,7 @@ const HeaderBar = (props) => {
             :
             props.componentIndex === 1 &&
             <View style={styles.createbuttonRow}>
-              {/* todoL right toolbar */}
+              {/* TODOL right toolbar */}
               <TouchableOpacity
                 onPress={() => { props.setShowMenu() }}
                 style={styles.hamburgerMenu} >
