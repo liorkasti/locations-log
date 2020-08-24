@@ -52,7 +52,7 @@ export default function MyLocationController({ props }) {
 
   const updateStorage = (currentCategory, categoryList) => {
     props.onUpdateCategory(currentCategory);
-    props.onUpdateList({categoryList})
+    // props.onUpdateList({categoryList})
   };
 
   const removeCategoryHandler = categoryId => {

@@ -75,9 +75,6 @@ export default function Index(props) {
 
 
     const addMyLocationHandler = currentCategories => {
-        setCurrentCategories
-        console.warn("Root props: ", props);
-        console.warn("Root {props}: ", {props});
         setMyLocationList(myLocationList => [
             ...myLocationList,
             { id: Math.random().toString(), name: currentCategories }
@@ -119,14 +116,14 @@ export default function Index(props) {
 
                 myLocationList={myLocationList}
                 currentCategories={currentCategories}
-
-                onUpdateList={() => { setMyLocationList }}
-                onUpdateCategory={addMyLocationHandler}
+                
+                onUpdateList={addMyLocationHandler }
+                onUpdateCategory={setCurrentCategories}
 
 
                 showMenu={showMenu}
                 onActionMenu={(_action) => { handleAction(action); }}
-
+                
                 showBack={showBack}
                 onBack={() => { setComponentIndex(componentIndex - 1) }}
                 onNext={() => { setComponentIndex(componentIndex + 1) }}
