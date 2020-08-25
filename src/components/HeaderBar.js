@@ -9,7 +9,7 @@ const HeaderBar = (props) => {
 
   useEffect(() => {
     // TODO: validate currect index
-    console.warn("show componentIndex: ", props)
+    // console.warn("show componentIndex: ", props)
   }, [props.componentIndex]);
 
   return (
@@ -19,9 +19,10 @@ const HeaderBar = (props) => {
         <Text style={styles.header}>{props.header}</Text>
         <View style={styles.buttonstack}>
           {props.componentIndex > 0 &&
-            <TouchableOpacity
-              onPress={() => { props.onBack() }} >
-
+            <TouchableOpacity onPress={() => {
+              props.onBack()
+              props.setMyLocationList(props.myLocationList)
+            }} >
               <FontAwesomeIcon
                 name="chevron-left"
                 style={styles.bachIcon}>
@@ -62,6 +63,10 @@ const HeaderBar = (props) => {
 
               {props.showMenu &&
                 <ActionMenu
+                  onActionMenu={props.onActionMenu}
+                  onDelete={props.onDelete}
+                  myLocationList={props.myLocationList}
+                  renderedCategory={props.renderedCategory}
                   onActionMenu={props.onActionMenu}
                   style={styles.actionMenu}
                 />

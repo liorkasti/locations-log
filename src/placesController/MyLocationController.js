@@ -14,7 +14,7 @@ import CategoryInput from '../components/CategoryInput';
 
 // import EmptyView from './components/EmptyView';
 
-export default function MyLocationController({ props }) {
+export default function MyCategoriesController({ props }) {
 
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
@@ -23,22 +23,16 @@ export default function MyLocationController({ props }) {
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
-  useEffect(() => {
-    // console.log("List update? ", updateList);
-    // if (isUpdateList) {
-    // TODO: validate add asynch starage and sorting capabiliteis
-    // initStorage();
-    // updateStorage(currentCategory)
-    // }
-    // return updateStorage(categoryName)
-  }, [])
-
-  let KEY = 1;
-
-  const initStorage = () => {
-    setCurrentCategory(props.popLatastCategory);
-    setCategoryList(props.myLocationList);
-  }
+  // useEffect(() => {
+  //   console.log("List update? ", updateList);
+  //   if (props.comp) {
+  //     console.log("Is props.componentIndex ? ", props.componentIndex);
+  //     TODO: validate add asynch starage and sorting capabiliteis
+  //     initStorage();
+  //     updateStorage(currentCategory)
+  //     }
+  //     return updateStorage(categoryName)
+  //   }, [])
 
   const addCategoryHandler = categoryName => {
 
@@ -55,11 +49,8 @@ export default function MyLocationController({ props }) {
     console.warn("The Current Category: ", currentCategory);
     console.log("The List Category: ", categoryList);
 
-    // if (isUpdateList) { updateStorage(currentCategory, categoryList); }
     updateStorage(categoryName, categoryList);
-    // updateStorage(currentCategory[currentCategory.length-1], categoryList);
-    // console.log("The Current Category: " + currentCategory.id + ', ' , currentCategory.name);
-    // console.log("The List Category: " + categoryList.id + ', ' , categoryList.name);
+    initStorage(categoryName, categoryList);
   };
 
   const updateStorage = (newCategory, categoryList) => {
@@ -69,6 +60,11 @@ export default function MyLocationController({ props }) {
     // console.log("props Current Category: ", props.onUpdateCategory);
     setIsUpdateList(false);
   };
+
+  const initStorage = (category, categoryList) => {
+    props.setRenderedCategory(category);
+    props.setMyLocationList(categoryList);
+  }
 
   const removeCategoryHandler = categoryId => {
     console.log('TO BE DELETED: ' + categoryId);
@@ -87,9 +83,9 @@ export default function MyLocationController({ props }) {
     <View style={styles.container}>
       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
 
-        <View style={styles.textContainer}>
+        <View style={styles.textContainyer}>
           {
-            categoryList.length ?
+            props.myLocationList.length ?
               <Text style={styles.textPrompt}>Your Categories</Text>
               :
               <View style={styles.welcomeContainer}>

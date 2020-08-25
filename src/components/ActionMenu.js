@@ -4,7 +4,8 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    Button
 } from "react-native";
 // import Icon from "react-native-vector-icons/Feather";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -13,27 +14,47 @@ import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 
 
 const ActionMenu = (props) => {
+
+    // useEffect(() => {
+    //     // TODO: validate currect index
+    //     console.log("show componentIndex: ", props)
+    //     console.warn("show props.renderedCategory): ", props.renderedCategory);
+    //     //             props.myLocationList.filter((props.renderedCategory => props.renderedCategory === props.renderedCategory)))
+    //     // console.warn("show props.myLocationList[renderedCategory]: ", props.myLocationList)
+    // }, [props.componentIndex]);
+
+
+
+    const onDeleteHandler = (category) => {
+        console.log('TO BE DELETED: ' + category);
+        let newMyStays = [];
+        for (let i = 0; i < myLocationList.length; i++) {
+            if (i !== myLocationList.indexOf(deletItem)) {
+                console.log('Iterate VALUE ', myLocationList);
+                newLocationList.push(myLocationList[i])
+            }
+        }
+        props.setMyLocationList(newLocationList)
+        // const _myLocationList = props.myLocationList.filter((name) => props.renderedCategory !== category)
+        console.log("newLocationList: ", newLocationList);
+        return _myLocationList
+    };
+    // setIsUpdateList(true);
+
     return (
         <View style={styles.container}>
             <View style={styles.group}>
-                {/* <TouchableOpacity
-                    onPress={() => { props.onActionMenu("onOpenLocation") }}
-                    tag="Open Location"
-                    style={styles.actionButton}
-                >
-                    <Text style={styles.textMenuItem}>{props.tag || 'Open Location'}</Text>
-                    <FontAwesomeIcon name="add-location" style={styles.icon} />
-                </TouchableOpacity> */}
                 <TouchableOpacity
-                    onPress={() => { props.onActionMenu("addLocation") }}
+                    // onPress={() => { props.onDelete(props.renderedCategory) }}
+                    // onPress={() => { props.onActionMenu("addLocation") }}
                     tag="Add Location"
                     style={styles.actionButton}
                 >
                     <Text style={styles.textMenuItem}>{props.tag || 'Add Location'}</Text>
-                <FontAwesomeIcon name="add-location" style={styles.icon} />
+                    <FontAwesomeIcon name="add-location" style={styles.icon} />
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => { props.onActionMenu("editCategory") }}
+                    // onPress={() => { props.onActionMenu("editCategory") }}
                     tag='Edit Location'
                     style={styles.actionButton}
                 >
@@ -43,12 +64,16 @@ const ActionMenu = (props) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => { props.onActionMenu("deleteCategory") }}
+                    // onPress={props.onActionMenu('deleteCategory', props.renderedCategory) }
+                    // onPress={(menuItem) => { props.onActionMenu("addLocation") }}
+                    // onPress={() => { props.onDelete(props.renderedCategory) }}
+                    // onPress={() => { props.onActionMenu("deleteCategory"), props.myLocationList[renderedCategory] }}
+                    onPress={() => { onDeleteHandler(props.renderedCategory) }}
                     tag="Delete Location"
                     style={styles.actionButton}
                 >
-                    <Text style={styles.textMenuItem}>{props.tag || 'Delete Location'}</Text>
-                    <Icon name="map-marker-off-outline" style={styles.icon} />
+                    <Text style={styles.textMenuItem}>{props.tag || 'Delete Category'}</Text>
+                    <Icon name="map-marker-off" style={styles.icon} />
                 </TouchableOpacity>
             </View>
         </View>
@@ -65,8 +90,8 @@ const styles = StyleSheet.create({
         width: 'auto',
         height: 'auto',
         top: 62,
-        zIndex: 5000,
-        left: windowWidth - 170,
+        zIndex: 1000,
+        left: windowWidth - 175,
         // left: 0,
         // alignItems: 'center',
         // right: -2000,
@@ -75,17 +100,17 @@ const styles = StyleSheet.create({
         alignItems: "flex-end",
         zIndex: 20,
         justifyContent: "center",
-        width: 170,    
-        height: 140        
+        width: 180,
+        height: 140
     },
     textMenuItem: {
-        textAlign: 'right', 
+        textAlign: 'right',
         alignSelf: 'stretch',
         color: 'white',
         fontSize: 16,
-        borderBottomWidth:0.7,  
+        borderBottomWidth: 0.7,
         borderColor: 'white',
-        width: 200,
+        width: 130,
     },
     actionButton: {
         padding: 8,
@@ -96,8 +121,9 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         paddingHorizontal: 5,
-        textAlign: 'right', 
+        textAlign: 'right',
         alignSelf: 'stretch',
-      },});
+    },
+});
 
 export default ActionMenu;

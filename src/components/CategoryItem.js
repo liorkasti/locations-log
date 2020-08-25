@@ -9,7 +9,8 @@ const CategoryItem = props => {
             onPress={() => {
                 props.onPress()
                 props.setRenderedCategory(props.title)
-                console.error("props.title", props.title)
+                props.setMyLocationList(props.myLocationList)
+                // console.log("props.title", props.title)
             }}
         >
             {/* onPress={props.onDelete.bind(this, props.id)} > */}

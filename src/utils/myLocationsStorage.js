@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { Alert } from "react-native"
 import AsyncStorage from '@react-native-community/async-storage';
 
 import {
@@ -8,95 +8,88 @@ import {
     filterLocationsByCategory,
 } from './myStorageHelper';
 
-const KEYS = {
+export const KEYS = {
     CATEGORIES: 'categories',
+    CATEGORY: 'category',
     LOCATIONS: 'locations',
 }
 
-const [categoryList, setCategoryList] = useState([]);
-
-export const addStorageCategoryList = async => {
-    console.log("sssssssssssssssssssssssstorage");
+export const setItem = async (key, item) => {
     try {
-        return appendItemToArray(CATEGORIES, category);
+        const result = await AsyncStorage.setItem(KEYS.CATEGORY, JSON.stringify(item))
+        // console.log(key + ": ", items)
+        console.log('result: ', item)
+        return result;
     } catch (error) {
-        // console.error(`localStorageUtility.addCategory: ${error}`);
-    }
-}
-
-const appendItemToArray = async (key, item) => {
-    try {
-        const savedItems = await getItem(key);
-        savedItems.unshift(item);
-        await AsyncStorage.setItem(key, JSON.stringify(savedItems));
-        return savedItems;
-    } catch (error) {
-        console.error(`localStorageUtility.appendItemToArray: ${error}`);
+        console.error('saving data error');
+        // Alert.alert('saving data error');
+        // console.error(`localStorageUtility.getItem: ${error}`);
     }
 };
 
-const getItem = async key => {
+export const setItems = async (key, items) => {
+    try {
+        const result = await AsyncStorage.setItem(KEYS.CATEGORIES, JSON.stringify(items))
+        // console.log(key + ": ", item)
+        console.log('result: ', JSON.stringify(items))
+        return result;
+    } catch (error) {
+        console.error('saving data error');
+        // Alert.alert('saving data error');
+        // console.error(`localStorageUtility.getItem: ${error}`);
+    }
+};
+
+export const getItem = async key => {
     try {
         const rawSavedItem = await AsyncStorage.getItem(key);
-        let savedItem = getDefaultValuePerKey(key);
-        if (!!rawSavedItem) {
-            savedItem = JSON.parse(rawSavedItem);
-        }
-        return savedItem;
+        // let savedItem = getDefaultValuePerKey(key);
+        // if (!!rawSavedItem) {
+        //     savedItem = JSON.parse(rawSavedItem);
+        // }
+        return JSON.parse(rawSavedItem);
     } catch (error) {
-        console.error(`localStorageUtility.getItem: ${error}`);
+        console.error('saving data error');
     }
 };
 
-const getAllStorage = async () => {
+export const getItems = async key => {
     try {
-        let storage = {};
-        const rawData = await AsyncStorage.multiGet(Object.values(KEYS));
-        rawData.forEach(data => {
-            const key = data[0];
-            let value = data[1];
-            if (!value) {
-                storage[key] = getDefaultValuePerKey(key);
-            } else {
-                switch (key) {
-                    case KEYS.CATEGORIES:
-                    case KEYS.LOCATIONS:
-                        storage[key] = JSON.parse(value);
-                        break;
-                    case SETTINGS.LOCATIONS_SORT:
-                    case SETTINGS.CATEGORIES_SORT:
-                        storage[key] = value;
-                        break;
-                    case SETTINGS.GROUP_LOCATIONS:
-                        storage[key] = value;
-                        break;
-                }
-            }
-        });
-        return storage;
+        const rawSavedItem = await AsyncStorage.getItems(key);
+        // let savedItem = getDefaultValuePerKey(key);
+        // if (!!rawSavedItem) {
+        //     savedItem = JSON.parse(rawSavedItem);
+        // }
+        return JSON.stringify(rawSavedItem);
     } catch (error) {
-        console.error(`localStorageUtility.getAllStorage: ${error}`);
+        console.error('saving data error');
     }
 };
 
-export const getInitialStore = async () => {
+
+
+// export const storeState = async (key, items) => {
+//     const [storeState, setStoreState] = useState([]);
+
+//     console.log('JSON.parse([...storeState, { items }]', JSON.parse([...storeState, { items }]);
+
+//     try {
+//         storeState = () => {
+//             this.setStoreState(key, JSON.parse([...storeState, { items }]));
+//         }
+//         return storeState;
+//     } catch (error) {
+//         Alert.alert('saving data error');
+//         console.error(`localStorageUtility.getItem: ${error}`);
+//     }
+// };
+
+export const deleteCategory = async key => {
     try {
-        const store = {
-            categoryReducer: [],
-            locationReducer: [],
-            settingsReducer: {},
-        };
-        const storage = await getAllStorage();
-        store.categoryReducer.categories = storage[CATEGORIES];
-        store.locationReducer.locations = storage[LOCATIONS];
-        //   store.settingsReducer[SETTINGS.CATEGORIES_SORT] =
-        //     storage[SETTINGS.CATEGORIES_SORT];
-        //   store.settingsReducer[SETTINGS.LOCATIONS_SORT] =
-        //     storage[SETTINGS.LOCATIONS_SORT];
-        //   store.settingsReducer[SETTINGS.GROUP_LOCATIONS] =
-        //     storage[SETTINGS.GROUP_LOCATIONS];
-        return store;
+
+
+        return {};
     } catch (error) {
-        console.error(`localStorageUtility.getInitialState: ${error}`);
+        console.error('saving data error');
     }
 };
