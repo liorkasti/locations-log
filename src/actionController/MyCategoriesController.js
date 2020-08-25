@@ -52,10 +52,10 @@ export default function MyCategoriesController({ props }) {
 
   // call for local storing 
   const updateStorage = (newListItem) => {
-    // props.onUpdateCategory(newListItem)
     props.onUpdateCategory(newListItem)
+    props.onUpdateCategories(newListItem)
     if (isUpdateList) {
-      // reloadStorage();
+      reloadStorage();
       console.log("List update on chancge? ", isUpdateList);
     }
     // setIsUpdateList(false);
