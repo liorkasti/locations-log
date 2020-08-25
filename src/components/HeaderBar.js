@@ -21,7 +21,7 @@ const HeaderBar = (props) => {
           {props.componentIndex > 0 &&
             <TouchableOpacity onPress={() => {
               props.onBack()
-              props.setMyLocationList(props.myLocationList)
+              props.onUpdateCategories(props.renderedCategories)
             }} >
               <FontAwesomeIcon
                 name="chevron-left"
@@ -65,7 +65,7 @@ const HeaderBar = (props) => {
                 <ActionMenu
                   onActionMenu={props.onActionMenu}
                   onDelete={props.onDelete}
-                  myLocationList={props.myLocationList}
+                  renderedCategories={props.renderedCategories}
                   renderedCategory={props.renderedCategory}
                   onActionMenu={props.onActionMenu}
                   style={styles.actionMenu}

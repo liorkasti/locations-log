@@ -8,8 +8,8 @@ const CategoryItem = props => {
         <TouchableNativeFeedback
             onPress={() => {
                 props.onPress()
-                props.setRenderedCategory(props.title)
-                props.setMyLocationList(props.myLocationList)
+                props.onUpdateCategory(props.title)
+                props.onUpdateCategories(props.renderedCategories)
                 // console.log("props.title", props.title)
             }}
         >

@@ -26,7 +26,7 @@ const MyInputText = props => {
       console.log("No name has been entered.");
       toastMaker("No name has been entered");
       setEnteredInput('');
-      props.reloadStorage();
+      // props.reloadStorage();
     }
 
   }

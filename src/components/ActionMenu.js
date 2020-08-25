@@ -19,8 +19,8 @@ const ActionMenu = (props) => {
     //     // TODO: validate currect index
     //     console.log("show componentIndex: ", props)
     //     console.warn("show props.renderedCategory): ", props.renderedCategory);
-    //     //             props.myLocationList.filter((props.renderedCategory => props.renderedCategory === props.renderedCategory)))
-    //     // console.warn("show props.myLocationList[renderedCategory]: ", props.myLocationList)
+    //     //             props.renderedCategories.filter((props.renderedCategory => props.renderedCategory === props.renderedCategory)))
+    //     // console.warn("show props.renderedCategories[renderedCategory]: ", props.myLocationList)
     // }, [props.componentIndex]);
 
 
@@ -28,14 +28,14 @@ const ActionMenu = (props) => {
     const onDeleteHandler = (category) => {
         console.log('TO BE DELETED: ' + category);
         let newMyStays = [];
-        for (let i = 0; i < myLocationList.length; i++) {
-            if (i !== myLocationList.indexOf(deletItem)) {
-                console.log('Iterate VALUE ', myLocationList);
-                newLocationList.push(myLocationList[i])
+        for (let i = 0; i < props.renderedCategories.length; i++) {
+            if (i !== props.renderedCategories.indexOf(deletItem)) {
+                console.log('Iterate VALUE ', props.renderedCategories);
+                newLocationList.push(props.renderedCategories[i])
             }
         }
-        props.setMyLocationList(newLocationList)
-        // const _myLocationList = props.myLocationList.filter((name) => props.renderedCategory !== category)
+        props.onUpdateCategories(newLocationList)
+        // const _myLocationList = pprops.myLocationList.filter((name) => props.renderedCategory !== category)
         console.log("newLocationList: ", newLocationList);
         return _myLocationList
     };
@@ -50,7 +50,7 @@ const ActionMenu = (props) => {
                     tag="Add Location"
                     style={styles.actionButton}
                 >
-                    <Text style={styles.textMenuItem}>{props.tag || 'Add Location'}</Text>
+                    <Text style={styles.textMenuItem}>{tag || 'Add Location'}</Text>
                     <FontAwesomeIcon name="add-location" style={styles.icon} />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -58,7 +58,7 @@ const ActionMenu = (props) => {
                     tag='Edit Location'
                     style={styles.actionButton}
                 >
-                    <Text style={styles.textMenuItem}>{props.tag || 'Edit Location'}</Text>
+                    <Text style={styles.textMenuItem}>{tag || 'Edit Location'}</Text>
                     <FontAwesomeIcon name="edit-location" style={styles.icon} />
 
                 </TouchableOpacity>
@@ -67,12 +67,12 @@ const ActionMenu = (props) => {
                     // onPress={props.onActionMenu('deleteCategory', props.renderedCategory) }
                     // onPress={(menuItem) => { props.onActionMenu("addLocation") }}
                     // onPress={() => { props.onDelete(props.renderedCategory) }}
-                    // onPress={() => { props.onActionMenu("deleteCategory"), props.myLocationList[renderedCategory] }}
+                    // onPress={() => { props.onActionMenu("deleteCategory"), props.renderedCategories[renderedCategory] }}
                     onPress={() => { onDeleteHandler(props.renderedCategory) }}
                     tag="Delete Location"
                     style={styles.actionButton}
                 >
-                    <Text style={styles.textMenuItem}>{props.tag || 'Delete Category'}</Text>
+                    <Text style={styles.textMenuItem}>{tag || 'Delete Category'}</Text>
                     <Icon name="map-marker-off" style={styles.icon} />
                 </TouchableOpacity>
             </View>

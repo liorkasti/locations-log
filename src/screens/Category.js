@@ -66,7 +66,7 @@ export default function Location(props) {
     //     newLocationList.push(props.myLocationList[i])
     //   }
     // }
-    // props.setMyLocationList(newLocationList)
+    // props.onUpdateCategories(newLocationList)
     // // const _myLocationList = props.myLocationList.filter((name) => props.renderedCategory !== category)
     // console.log("newLocationList: ", newLocationList);
     // props.setComponentIndex(componentIndex - 1);  
@@ -125,7 +125,7 @@ export default function Location(props) {
                 onAdd={addLocationHandler}
                 reloadStorage={props.reloadStorage}
                 myLocationList={props.myLocationList}
-                setMyLocationList={props.setMyLocationList}
+                onUpdateCategories={props.onUpdateCategories}
                 // onCreate={() => { props.setCurrentCategory() }}
                 onCancel={cancelCategoryAdditionHandler}
                 dialogOpen={props.dialogOpen}
@@ -149,7 +149,7 @@ export default function Location(props) {
                   id={itemData.item.id}
 
                   myLocationList={props.myLocationList}
-                  setMyLocationList={props.setMyLocationList}
+                  onUpdateCategories={props.onUpdateCategories}
                   setRenderedCategory={props.setRenderedCategory}
 
                   onPress={props.onNext}

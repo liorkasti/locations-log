@@ -31,7 +31,7 @@ export default function Index(props) {
 
     const [componentIndex, setComponentIndex] = useState(0);
     const [renderedCategory, setRenderedCategory] = useState([]);
-    const [renderedCategories, setRenderedCategories] = useState([]);
+    const [storageContainer, setStorageContainer] = useState([]);
     const [renderedLocation, setRenderedLocation] = useState([]);
 
 
@@ -47,7 +47,7 @@ export default function Index(props) {
         console.log("Storage Rendered Category: ", item);
         console.log("Root Current Category: ", renderedCategory);
         console.log('Storage Rendered Categories: : ', items);
-        console.log("Root Current Category: ", renderedCategories);
+        console.log("Root Current Category: ", storageContainer);
         if (componentIndex < 0) { setShowBack(false); }
         if (componentIndex > 0) { setShowBack(true); }
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
@@ -65,15 +65,15 @@ export default function Index(props) {
     }
 
     // update the categories list
-    const renderedCategoriesHandler = async (categoryListNode) => {
+    const renderedStorageContainerHandler = async (categoryListNode) => {
 
-        setRenderedCategories(categoryListNode => [
-            ...renderedCategories,
+        setStorageContainer(categoryListNode => [
+            ...storageContainer,
             { id: Math.random().toString(), name: categoryListNode }
         ]);
 
-        items = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories))
-        const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories))
+        items = setItem(KEYS.CATEGORIES, JSON.stringify(storageContainer))
+        // const result = setItem(KEYS.CATEGORIES, JSON.stringify(storageContainer))
 
         console.warn("SET ITEMS", result)
     }
@@ -106,7 +106,7 @@ export default function Index(props) {
 
     const initStorage = () => {
         setRenderedCategory(renderedCategory);
-        setRenderedCategories(renderedCategories);
+        setStorageContainer(storageContainer);
     }
 
     return (
@@ -115,8 +115,8 @@ export default function Index(props) {
 
             <HeaderBar
                 componentIndex={componentIndex}
-                myLocationList={renderedCategories}
-                setMyLocationList={renderedCategoriesHandler}
+                renderedCategories={storageContainer}
+                onUpdateCategories={renderedStorageContainerHandler}
 
                 renderedCategory={renderedCategory}
 
@@ -145,8 +145,8 @@ export default function Index(props) {
                 currentComponent={components[componentKeys[componentIndex]]}
                 componentIndex={componentIndex}
 
-                myLocationList={renderedCategories}
-                onUpdateCategories={renderedCategoriesHandler}
+                renderedCategories={storageContainer}
+                onUpdateCategories={renderedStorageContainerHandler}
 
                 renderedCategory={renderedCategory}
                 onUpdateCategory={renderedCategoryHandler}

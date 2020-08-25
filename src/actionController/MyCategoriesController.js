@@ -63,9 +63,7 @@ export default function MyCategoriesController({ props }) {
 
   const reloadStorage = () => {
     setCurrentCategory(props.renderedCategory);
-    setCategoryList(props.myLocationList);
-    // console.log("Reload Category: ", props.renderedCategory);
-    // console.log("Reload List: ", props.myLocationList);
+    setCategoryList(props.renderedCategories);
   }
 
   const cancelCategoryAdditionHandler = () => {
@@ -88,7 +86,7 @@ export default function MyCategoriesController({ props }) {
 
         <View style={styles.textContainer}>
           {
-            (categoryList.length || props.myLocationList.length) ?
+            (categoryList.length || props.renderedCategories.length) ?
               <Text style={styles.textPrompt}>Your Categories List</Text>
               :
               <View style={styles.welcomeContainer}>
@@ -121,9 +119,11 @@ export default function MyCategoriesController({ props }) {
                 onCancel={cancelCategoryAdditionHandler}
                 onDismiss={() => { props.setDialogOpen() }}
 
-                reloadStorage={reloadStorage}
-                myLocationList={props.myLocationList}
-                setMyLocationList={props.setMyLocationList}
+                renderedCategory={props.renderedCategory}
+                onUpdateCategory={props.onUpdateCategory}
+                
+                renderedCategories={props.renderedCategories}
+                onUpdateCategories={props.onUpdateCategories}
 
                 windowWidth={windowWidth}
                 windowHeight={windowHeight}
@@ -133,17 +133,18 @@ export default function MyCategoriesController({ props }) {
         </Dialog>
 
         {
-          props.myLocationList ?
+          props.renderedCategories ?
 
             <FlatList
               keyExtractor={(item, index) => item.id}
-              data={props.myLocationList}
+              data={props.renderedCategories}
               renderItem={itemData => (
                 <CategoryItem
                   id={itemData.item.id}
-                  myLocationList={props.myLocationList}
-                  setMyLocationList={props.setMyLocationList}
-                  setRenderedCategory={props.setRenderedCategory}
+
+                  renderedCategories={props.renderedCategories}
+                  onUpdateCategories={props.onUpdateCategories}
+                  onUpdateCategory={props.onUpdateCategory}
 
                   onDelete={removeCategoryHandler}
                   onPress={props.onNext}
