@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Alert } from "react-native"
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {
-    findLocationIndex,
-    filterLocations,
-    filterLocationsByCategory,
-} from './myStorageHelper';
+// import {
+//     findLocationIndex,
+//     filterLocations,
+//     filterLocationsByCategory,
+// } from './myStorageHelper';
 
 export const KEYS = {
     CATEGORIES: 'categories',
@@ -17,8 +17,7 @@ export const KEYS = {
 export const setItem = async (key, item) => {
     try {
         const result = await AsyncStorage.setItem(key, JSON.stringify(item))
-        console.log(key + ": ", items)
-        console.log('result: ', item)
+        // console.log(key + ": ", item)
         return result;
     } catch (error) {
         console.error('saving data error');
@@ -66,3 +65,13 @@ export const deleteCategory = async key => {
         console.error('saving data error');
     }
 };
+
+export const clearAll = async () => {
+    try {
+      await AsyncStorage.clear()
+    } catch(e) {
+      // clear error
+    }
+  
+    console.log('LOGOUT DONE.')
+  }

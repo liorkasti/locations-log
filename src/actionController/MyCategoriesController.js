@@ -21,9 +21,9 @@ export default function MyCategoriesController({ props }) {
 
   useEffect(() => {
     if (isUpdateList) {
-      // console.log("The Current Category: ", currentCategory);
-      // console.log("The List Category: ", categoryList);
-      // reloadStorage()
+      console.log("The Current Category: ", currentCategory);
+      console.log("The List Category: ", categoryList);
+      reloadStorage()
       // console.log("List update on chancge? ", isUpdateList);
     }
     // return {  };
@@ -36,18 +36,19 @@ export default function MyCategoriesController({ props }) {
     //   { id: Math.random().toString(), name: categoryName }
     // ]);
 
+    setCurrentCategory(categoryName);
+
     setCategoryList(currentCategory => [
       ...currentCategory,
       { id: Math.random().toString(), name: categoryName }
     ]);
 
-    setCurrentCategory(categoryName);
 
     setIsAddMode(false);
     setIsUpdateList(true);
     updateStorage(categoryName);
-
-    props.setDialogOpen(false)
+    //TODO: set the line below to active before production.
+    // props.setDialogOpen(false)
   };
 
   // call for local storing 
@@ -55,15 +56,17 @@ export default function MyCategoriesController({ props }) {
     props.onUpdateCategory(newListItem)
     props.onUpdateCategories(newListItem)
     if (isUpdateList) {
-      reloadStorage();
+      // reloadStorage();
       console.log("List update on chancge? ", isUpdateList);
     }
-    // setIsUpdateList(false);
+    setIsUpdateList(false);
   };
 
   const reloadStorage = () => {
     setCurrentCategory(props.renderedCategory);
     setCategoryList(props.renderedCategories);
+    // console.log("Reload Category: ", props.renderedCategory);
+    // console.log("Reload List: ", props.myLocationList);
   }
 
   const cancelCategoryAdditionHandler = () => {
@@ -87,6 +90,7 @@ export default function MyCategoriesController({ props }) {
         <View style={styles.textContainer}>
           {
             (categoryList.length || props.renderedCategories.length) ?
+
               <Text style={styles.textPrompt}>Your Categories List</Text>
               :
               <View style={styles.welcomeContainer}>
@@ -99,7 +103,7 @@ export default function MyCategoriesController({ props }) {
         < Dialog
           visible={props.dialogOpen}
           onTouchOutside={() => {
-            this.setState({ visible: false });
+            visable = props.onDismiss();
           }}
           dialogAnimation={
             new SlideAnimation({
@@ -119,9 +123,7 @@ export default function MyCategoriesController({ props }) {
                 onCancel={cancelCategoryAdditionHandler}
                 onDismiss={() => { props.setDialogOpen() }}
 
-                renderedCategory={props.renderedCategory}
-                onUpdateCategory={props.onUpdateCategory}
-                
+                reloadStorage={reloadStorage}
                 renderedCategories={props.renderedCategories}
                 onUpdateCategories={props.onUpdateCategories}
 
@@ -133,7 +135,7 @@ export default function MyCategoriesController({ props }) {
         </Dialog>
 
         {
-          props.renderedCategories ?
+          (categoryList.length || props.renderedCategories.length) ?
 
             <FlatList
               keyExtractor={(item, index) => item.id}
@@ -141,12 +143,7 @@ export default function MyCategoriesController({ props }) {
               renderItem={itemData => (
                 <CategoryItem
                   id={itemData.item.id}
-
-                  renderedCategories={props.renderedCategories}
-                  onUpdateCategories={props.onUpdateCategories}
-                  onUpdateCategory={props.onUpdateCategory}
-
-                  onDelete={removeCategoryHandler}
+                  // onDelete={removeCategoryHandler}
                   onPress={props.onNext}
                   title={itemData.item.name}
                   style={styles.categoryItem}

@@ -3,7 +3,7 @@ import { View, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Text,
 import { useHistory } from "react-router-dom";
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { KEYS, setItem, getItem, } from '../utils/myLocationsStorage';
+import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
 
 import MyCategoriesController from "../actionController/MyCategoriesController";
 import Category from "../screens/Category";
@@ -26,32 +26,42 @@ const CurrentComponentRouter = (props) => {
 export default function Index(props) {
 
     // load from storage
-    const item = getItem(KEYS.CATEGORY) || [];
-    const items = getItem(KEYS.CATEGORIES) || [];
+    let item = getItem(KEYS.CATEGORY) || [];
+    let items = getItem(KEYS.CATEGORIES) || [];
 
     const [componentIndex, setComponentIndex] = useState(0);
     const [renderedCategory, setRenderedCategory] = useState([]);
-    const [storageContainer, setStorageContainer] = useState([]);
+    const [renderedCategories, setRenderedCategories] = useState([]);
     const [renderedLocation, setRenderedLocation] = useState([]);
 
 
     const componentKeys = ["MyCategoriesController", "Category", "Location"];
-    const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedCategory };
-    // const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedLocation };
+    // const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedCategory };
+    const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedLocation };
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [showBack, setShowBack] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
+    const [logout, setLogout] = useState(false);
 
     useEffect(() => {
+
         console.log("Storage Rendered Category: ", item);
         console.log("Root Current Category: ", renderedCategory);
         console.log('Storage Rendered Categories: : ', items);
-        console.log("Root Current Category: ", storageContainer);
-        if (componentIndex < 0) { setShowBack(false); }
-        if (componentIndex > 0) { setShowBack(true); }
+        console.log("Root Current Category: ", renderedCategories);
+        if (componentIndex < 0) {
+            setShowBack(false);
+            initStorage();
+        }
+        if (componentIndex > 0) {
+            // setShowBack(true); initStorage();
+        }
+        // if (logout) { clearAll(); }
+        // clearAll();
+
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
-    }, [])
+    }, [renderedCategory,componentIndex])
 
     useEffect(() => {
     }, [componentIndex])
@@ -65,17 +75,16 @@ export default function Index(props) {
     }
 
     // update the categories list
-    const renderedStorageContainerHandler = async (categoryListNode) => {
+    const renderedCategoriesHandler = async (categoryListNode) => {
 
-        setStorageContainer(categoryListNode => [
-            ...storageContainer,
+        setRenderedCategories(renderedCategories => [
+            ...renderedCategories,
             { id: Math.random().toString(), name: categoryListNode }
         ]);
 
-        items = setItem(KEYS.CATEGORIES, JSON.stringify(storageContainer))
-        // const result = setItem(KEYS.CATEGORIES, JSON.stringify(storageContainer))
-
-        console.warn("SET ITEMS", result)
+        items = setItem(KEYS.CATEGORIES, JSON.stringify(categoryListNode))
+        const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
+        // console.warn("SET ITEMS", result)
     }
 
     const menuBarActionHandler = (action) => {
@@ -106,7 +115,7 @@ export default function Index(props) {
 
     const initStorage = () => {
         setRenderedCategory(renderedCategory);
-        setStorageContainer(storageContainer);
+        setRenderedCategories(renderedCategories);
     }
 
     return (
@@ -115,10 +124,12 @@ export default function Index(props) {
 
             <HeaderBar
                 componentIndex={componentIndex}
-                renderedCategories={storageContainer}
-                onUpdateCategories={renderedStorageContainerHandler}
+
+                renderedCategories={renderedCategories}
+                onUpdateCategories={renderedCategoriesHandler}
 
                 renderedCategory={renderedCategory}
+                onUpdateCategory={renderedCategoryHandler}
 
                 header={headers[componentKeys[componentIndex]]}
                 onBack={() => {
@@ -145,8 +156,8 @@ export default function Index(props) {
                 currentComponent={components[componentKeys[componentIndex]]}
                 componentIndex={componentIndex}
 
-                renderedCategories={storageContainer}
-                onUpdateCategories={renderedStorageContainerHandler}
+                renderedCategories={renderedCategories}
+                onUpdateCategories={renderedCategoriesHandler}
 
                 renderedCategory={renderedCategory}
                 onUpdateCategory={renderedCategoryHandler}

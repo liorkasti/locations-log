@@ -8,9 +8,10 @@ const CategoryItem = props => {
         <TouchableNativeFeedback
             onPress={() => {
                 props.onPress()
-                props.onUpdateCategory(props.title)
-                props.onUpdateCategories(props.renderedCategories)
-                // console.log("props.title", props.title)
+                // props.onUpdateCategory(props.title)
+                // props.onUpdateCategories(props.renderedCategories)
+                console.log("props.title", props.title)
+                console.log("props.renderedCategories", props.renderedCategories)
             }}
         >
             {/* onPress={props.onDelete.bind(this, props.id)} > */}

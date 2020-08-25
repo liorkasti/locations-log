@@ -20,8 +20,7 @@ const HeaderBar = (props) => {
         <View style={styles.buttonstack}>
           {props.componentIndex > 0 &&
             <TouchableOpacity onPress={() => {
-              props.onBack()
-              props.onUpdateCategories(props.renderedCategories)
+              props.onBack()            
             }} >
               <FontAwesomeIcon
                 name="chevron-left"
@@ -35,7 +34,8 @@ const HeaderBar = (props) => {
             <View style={styles.createbuttonRow}>
               <TouchableOpacity
                 onPress={() => { props.setDialogOpen(); }}
-                style={styles.createbutton}>
+                style={styles.createbutton}
+                >
 
                 {props.dialogOpen
                   ?
@@ -65,8 +65,13 @@ const HeaderBar = (props) => {
                 <ActionMenu
                   onActionMenu={props.onActionMenu}
                   onDelete={props.onDelete}
+
                   renderedCategories={props.renderedCategories}
+                  onUpdateCategories={props.renderedCategoriesHandler}
+  
                   renderedCategory={props.renderedCategory}
+                  onUpdateCategory={props.renderedCategoryHandler}
+
                   onActionMenu={props.onActionMenu}
                   style={styles.actionMenu}
                 />

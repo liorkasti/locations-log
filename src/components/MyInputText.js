@@ -16,15 +16,16 @@ const MyInputText = props => {
   };
 
   const addTextHandler = () => {
-    // console.warn("enteredText: ", enteredInput);
+    // console.warn("enteredText: ", enteredInput);    
+
     if (enteredInput.length > 0) {
       props.onAdd(enteredInput);
       setEnteredInput('');
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
-      Alert.alert("No input.");
+      // Alert.alert("No input.");
       console.log("No name has been entered.");
-      toastMaker("No name has been entered");
+      // toastMaker("No name has been entered");
       setEnteredInput('');
       // props.reloadStorage();
     }
@@ -46,12 +47,16 @@ const MyInputText = props => {
       <View style={styles.buttonContainer}>
 
         <TouchableOpacity
-          onPress={props.onDismiss}
-          style={styles.cancleButton} >
+          onPress={props.onCancel}
+          style={styles.cancleButton}
+        >
           <Text style={styles.textButton}>CANCEL</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={addTextHandler} style={styles.addButton} >
+        <TouchableOpacity
+          onPress={addTextHandler}
+          style={styles.addButton}
+        >
           <Text style={styles.textButton}> ADD</Text>
         </TouchableOpacity>
 

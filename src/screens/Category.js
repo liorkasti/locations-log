@@ -108,7 +108,8 @@ export default function Location(props) {
         < Dialog
           visible={props.dialogOpen}
           onTouchOutside={() => {
-            this.setState({ visible: false });
+            // setState({ visible: false });
+            visable = props.onDismiss();
           }}
           dialogAnimation={
             new SlideAnimation({

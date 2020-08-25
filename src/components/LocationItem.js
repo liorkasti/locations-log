@@ -9,7 +9,7 @@ class LocationItem extends PureComponent {
   }
 
   onInternalClick = () => {
-    const {name, address, category, latitude, longitude, onClick} = this.props;
+    const {name, address, category, latitude, longitude, onClick} = props;
     if (!!onClick && onClick instanceof Function) {
       onClick({name, address, category, coordinates: {latitude, longitude}});
     }
