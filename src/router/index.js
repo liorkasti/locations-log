@@ -3,7 +3,8 @@ import { View, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Text,
 import { useHistory } from "react-router-dom";
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { KEYS, setItem, getItem, retrieveItem, setStringValue, getMyStringValue, getMyObject, clearAll } from '../utils/myLocationsStorage';
+// import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
+// import { KEYS, storeData, setItem, getItem, multiSet, multiGet, getMyStringValue, getMyObject, getAllKeys, clearAll } from '../utils/myLocationsStorage';
 
 import MyCategoriesController from "../actionController/MyCategoriesController";
 import Category from "../screens/Category";
@@ -25,10 +26,6 @@ const CurrentComponentRouter = (props) => {
 
 export default function Index(props) {
 
-    // load from storage
-    let item = getMyStringValue() || [];
-    let items = getMyStringValue(KEYS.CATEGORIES) || [];
-
     const [storageItem, setStoreItem] = useState([]);
     const [storageItems, setStoreItems] = useState([]);
 
@@ -47,11 +44,21 @@ export default function Index(props) {
     const [showMenu, setShowMenu] = useState(false);
     const [logout, setLogout] = useState(false);
 
+    
+    // load from storage
+    // let item = getItem(KEYS.CATEGORY) || [];
+    // let items = getItem(KEYS.CATEGORIES) || [];
+
     useEffect(() => {
 
-        console.log("Storage Rendered Category: ", item);
+        // return clearAll()
+    }, [])
+    
+    useEffect(() => {
+
+        // console.log("Storage Rendered Category: ", item);
         console.log("Root Current Category: ", renderedCategory);
-        console.log('Storage Rendered Categories: : ', items);
+        // console.log('Storage Rendered Categories: : ', items);
         console.log("Root Current Category: ", renderedCategories);
         if (componentIndex < 0) {
             setShowBack(false);
@@ -63,20 +70,18 @@ export default function Index(props) {
         }
         // clearAll();        
         //TODO: add logout item to top menu
-        if (logout) { clearAll(); }
+        if (logout) { clearAll() }
 
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
     }, [renderedCategory, componentIndex])
-
-    useEffect(() => {
-    }, [componentIndex])
 
     let history = useHistory();
 
     // set the new category
     const renderedCategoryHandler = async (categoryNode) => {
         setRenderedCategory(categoryNode);
-        item = setStringValue(categoryNode);
+        // item = setItem(KEYS.CATEGORIES, JSON.stringify(categoryNode))
+        // item = getItem(KEYS.CATEGORIES, JSON.stringify(categoryNode))
     }
 
     // update the categories list
@@ -87,8 +92,8 @@ export default function Index(props) {
             { id: Math.random().toString(36).substr(2, 5), name: categoryListNode }
         ]);
 
-        items = setItem(KEYS.CATEGORIES, JSON.stringify(categoryListNode))
-        const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
+        // items = multiSet(KEYS.CATEGORIES, item)
+        // const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
         // console.warn("SET ITEMS", result)
     }
 
@@ -102,7 +107,7 @@ export default function Index(props) {
                 break;
             case "deleteCategory":
                 console.log('777777777777777: ' + action);
-                onDeleteHandler(action);
+                onDeleteHandler(renderedCategory);
                 break;
             case "onOpenLocation":
                 onRead();
@@ -113,14 +118,19 @@ export default function Index(props) {
     };
 
 
-    const onDeleteHandler = deletItem => {
-        console.log('deletItem: ' + deletItem);
+    const onDeleteHandler = deleteItem => {
+        console.log('deleteItem: ' + deleteItem);
+        // removeValue(deleteItem);
     };
 
 
     const initStorage = () => {
-        setRenderedCategory(getItem(KEYS.CATEGORY) || []);
-        setRenderedCategories(getItem(KEYS.CATEGORIES) || []);
+        // setRenderedCategory(getItem(KEYS.CATEGORY) || []);
+        // setRenderedCategories(getItem(KEYS.CATEGORIES) || []);
+        // setRenderedCategory(getItem(KEYS.CATEGORY) || []);
+        // setRenderedCategories(multiGet(getItem(KEYS.CATEGORIES)) || []);
+        setRenderedCategory(renderedCategory);
+        setRenderedCategories(renderedCategories);
     }
 
     return (

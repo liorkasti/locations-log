@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
-import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
+import FontAwesomeIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 import toastMaker from '../utils/toastMaker';
 
 import { KEY } from '../router/index';
 
 import InputDialog from '../components/InputDialog';
-import CategoryItem from '../components/CategoryItem';
+import CardItem from '../components/CardItem';
 import MyInputText from '../components/MyInputText';
 
 export default function MyCategoriesController({ props }) {
@@ -95,7 +95,7 @@ export default function MyCategoriesController({ props }) {
               :
               <View style={styles.welcomeContainer}>
                 <Text style={styles.textPrompt}>Please add your{"\n"}places categories</Text>
-                <FontAwesomeIcon name="add-location" style={styles.icon} />
+                <FontAwesomeIcon name="map-marker" style={styles.icon} />
               </View>
           }
         </View>
@@ -141,7 +141,7 @@ export default function MyCategoriesController({ props }) {
               keyExtractor={(item, index) => item.id}
               data={props.renderedCategories}
               renderItem={itemData => (
-                <CategoryItem
+                <CardItem
                   id={itemData.item.id}
                   // onDelete={removeCategoryHandler}
                   onPress={props.onNext}

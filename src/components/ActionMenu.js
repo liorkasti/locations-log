@@ -64,15 +64,20 @@ const ActionMenu = (props) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    // onPress={props.onActionMenu('deleteCategory', props.renderedCategory) }
-                    // onPress={(menuItem) => { props.onActionMenu("addLocation") }}
-                    // onPress={() => { props.onDelete(props.renderedCategory) }}
-                    // onPress={() => { props.onActionMenu("deleteCategory"), props.renderedCategory }}
-                    // onPress={() => { onDeleteHandler(props.renderedCategory) }}
+                    onPress={() => { props.onActionMenu("deleteCategory"), props.renderedCategory }}
                     tag="Delete Location"
                     style={styles.actionButton}
                 >
                     <Text style={styles.textMenuItem}>{props.tag || 'Delete Category'}</Text>
+                    <Icon name="map-marker-remove-variant" style={styles.icon} />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    onPress={() => { props.onActionMenu("resetCategories"), props.renderedCategory }}
+                    tag="Reset Categories"
+                    style={styles.actionButton}
+                >
+                    <Text style={styles.textMenuItem}>{props.tag || 'Reset Categories'}</Text>
                     <Icon name="map-marker-off" style={styles.icon} />
                 </TouchableOpacity>
             </View>
@@ -101,7 +106,7 @@ const styles = StyleSheet.create({
         zIndex: 20,
         justifyContent: "center",
         width: 180,
-        height: 140
+        height: 170
     },
     textMenuItem: {
         textAlign: 'right',

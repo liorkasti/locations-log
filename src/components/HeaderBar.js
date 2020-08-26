@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image, } from "react-native";
 import Icon from "react-native-vector-icons/AntDesign";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
-import Hamburger from 'react-native-animated-hamburger';
+// import Hamburger from 'react-native-animated-hamburger';
+import Hamburger from '../components/Hamburger';
 import ActionMenu from '../components/ActionMenu';
 
 const HeaderBar = (props) => {

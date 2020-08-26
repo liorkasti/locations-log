@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Picker } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { myLocationList } from '../router/index';
 
 import InputDialog from '../components/InputDialog';
-import CategoryItem from '../components/CategoryItem';
+import CardItem from '../components/CardItem';
 import MyInputText from '../components/MyInputText';
 import ActionMenu from '../components/ActionMenu';
 
@@ -98,7 +99,7 @@ export default function Location(props) {
                 <TouchableOpacity
                   onPress={onDeleteHandler(props.renderedCategory)}
                 >
-                  <FontAwesomeIcon name="add-location" style={styles.icon} />
+                  <Icon name="map-marker-multiple" style={styles.icon} />
                 </TouchableOpacity>
               </View>
           }
@@ -146,7 +147,7 @@ export default function Location(props) {
               keyExtractor={(item, index) => item.id}
               data={props.myLocationList}
               renderItem={itemData => (
-                <CategoryItem
+                <CardItem
                   id={itemData.item.id}
 
                   myLocationList={props.myLocationList}

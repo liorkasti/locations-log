@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const CategoryItem = props => {
+const CardItem = props => {
     return (
         // <TouchableOpacity activeOpacity={0.8} onPress={props.onDelete}>
         <TouchableNativeFeedback
@@ -18,7 +19,7 @@ const CategoryItem = props => {
             < View style={styles.rowItem} >
                 {/* itemData.item.value */}
                 < Text > {props.title}</Text >
-                <FontAwesomeIcon name="map-marker" style={styles.icon} />
+                <Icon name="map-marker-right" style={styles.icon} />
             </View >
         </TouchableNativeFeedback >
 
@@ -41,4 +42,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CategoryItem;
+export default CardItem;
