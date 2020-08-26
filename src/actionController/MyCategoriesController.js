@@ -40,7 +40,7 @@ export default function MyCategoriesController({ props }) {
 
     setCategoryList(currentCategory => [
       ...currentCategory,
-      { id: Math.random().toString(), name: categoryName }
+      { id: Math.random().toString(36).substr(2, 5), name: categoryName }
     ]);
 
 

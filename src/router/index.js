@@ -3,7 +3,7 @@ import { View, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Text,
 import { useHistory } from "react-router-dom";
 import AsyncStorage from '@react-native-community/async-storage';
 
-import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
+import { KEYS, setItem, getItem, retrieveItem, setStringValue, getMyStringValue, getMyObject, clearAll } from '../utils/myLocationsStorage';
 
 import MyCategoriesController from "../actionController/MyCategoriesController";
 import Category from "../screens/Category";
@@ -26,8 +26,11 @@ const CurrentComponentRouter = (props) => {
 export default function Index(props) {
 
     // load from storage
-    let item = getItem(KEYS.CATEGORY) || [];
-    let items = getItem(KEYS.CATEGORIES) || [];
+    let item = getMyStringValue() || [];
+    let items = getMyStringValue(KEYS.CATEGORIES) || [];
+
+    const [storageItem, setStoreItem] = useState([]);
+    const [storageItems, setStoreItems] = useState([]);
 
     const [componentIndex, setComponentIndex] = useState(0);
     const [renderedCategory, setRenderedCategory] = useState([]);
@@ -55,13 +58,15 @@ export default function Index(props) {
             initStorage();
         }
         if (componentIndex > 0) {
-            // setShowBack(true); initStorage();
+            // setShowBack(true); 
+            initStorage();
         }
-        // if (logout) { clearAll(); }
-        // clearAll();
+        // clearAll();        
+        //TODO: add logout item to top menu
+        if (logout) { clearAll(); }
 
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
-    }, [renderedCategory,componentIndex])
+    }, [renderedCategory, componentIndex])
 
     useEffect(() => {
     }, [componentIndex])
@@ -71,7 +76,7 @@ export default function Index(props) {
     // set the new category
     const renderedCategoryHandler = async (categoryNode) => {
         setRenderedCategory(categoryNode);
-        item = setItem(KEYS.CATEGORY, JSON.stringify(categoryNode));
+        item = setStringValue(categoryNode);
     }
 
     // update the categories list
@@ -79,7 +84,7 @@ export default function Index(props) {
 
         setRenderedCategories(renderedCategories => [
             ...renderedCategories,
-            { id: Math.random().toString(), name: categoryListNode }
+            { id: Math.random().toString(36).substr(2, 5), name: categoryListNode }
         ]);
 
         items = setItem(KEYS.CATEGORIES, JSON.stringify(categoryListNode))
@@ -114,8 +119,8 @@ export default function Index(props) {
 
 
     const initStorage = () => {
-        setRenderedCategory(renderedCategory);
-        setRenderedCategories(renderedCategories);
+        setRenderedCategory(getItem(KEYS.CATEGORY) || []);
+        setRenderedCategories(getItem(KEYS.CATEGORIES) || []);
     }
 
     return (
