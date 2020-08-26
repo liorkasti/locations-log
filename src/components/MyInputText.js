@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import toastMaker from '../utils/toastMaker';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const MyInputText = props => {
   const [enteredInput, setEnteredInput] = useState("");
@@ -50,6 +51,7 @@ const MyInputText = props => {
           onPress={props.onCancel}
           style={styles.cancleButton}
         >
+          <Icon name="map-marker-down" style={styles.icon} />
           <Text style={styles.textButton}>CANCEL</Text>
         </TouchableOpacity>
 
@@ -57,7 +59,8 @@ const MyInputText = props => {
           onPress={addTextHandler}
           style={styles.addButton}
         >
-          <Text style={styles.textButton}> ADD</Text>
+          <Icon name="map-marker-check" style={styles.icon} />
+          <Text style={styles.textAddButton}>ADD</Text>
         </TouchableOpacity>
 
       </View>
@@ -72,6 +75,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  icon: {
+    color: 'white',
+    fontSize: 20,
+    paddingHorizontal: 5,
+    textAlign: 'right',
+    alignSelf: 'stretch',
+  },
   inputContainer: {
     width: 300,
   },
@@ -85,8 +95,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 300,
     justifyContent: 'space-around',
+    // justifyContent: "center",
   },
   cancleButton: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "center",
     backgroundColor: '#ccc',
     padding: 10,
     marginVertical: 10,
@@ -95,6 +109,9 @@ const styles = StyleSheet.create({
     width: '45%',
   },
   addButton: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "center",
     backgroundColor: "rgba(0,88,155,1)",
     padding: 10,
     marginVertical: 10,
@@ -102,9 +119,20 @@ const styles = StyleSheet.create({
     borderWidth: 0.7,
     width: '45%',
   },
-  textButton: {
+  textAddButton: {
     textAlign: 'center',
     justifyContent: 'center',
+    color: 'white',
+    fontWeight: 'bold',
+    paddingHorizontal: 10,
+  },
+  textButton: {
+    justifyContent: 'center',
+    textAlign: 'center',
+    color: 'rgba(0,88,155,1)',
+    fontWeight: 'bold',
+    paddingHorizontal: 10,
+
   },
 });
 

@@ -105,8 +105,8 @@ const styles = StyleSheet.create({
     },
     group: {
         alignItems: "flex-end",
-        zIndex: 20,
         justifyContent: "center",
+        zIndex: 20,
         width: 180,
         height: 170
     },

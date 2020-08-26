@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, Dimensions, Button, TextInput } from "react-native";
 // import EmptyView from './components/EmptyView';
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default function Categories(props) {
   const [inputValue, setInputValue] = useState("");
