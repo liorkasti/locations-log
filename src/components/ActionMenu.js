@@ -64,7 +64,8 @@ const ActionMenu = (props) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => { props.onActionMenu("deleteCategory"), props.renderedCategory }}
+                    onPress={() => { props.onDelete(props.renderedCategory); }}
+                    // onPress={() => { props.onActionMenu("deleteCategory"), props.renderedCategory }}
                     tag="Delete Location"
                     style={styles.actionButton}
                 >
@@ -73,7 +74,8 @@ const ActionMenu = (props) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => { props.onActionMenu("resetCategories"), props.renderedCategory }}
+                    onPress={() => { props.onLogout(); }}
+                    // onPress={() => { props.onActionMenu("resetCategories") }}
                     tag="Reset Categories"
                     style={styles.actionButton}
                 >

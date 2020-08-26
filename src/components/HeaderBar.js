@@ -66,10 +66,11 @@ const HeaderBar = (props) => {
                 <ActionMenu
                   onActionMenu={props.onActionMenu}
                   onDelete={props.onDelete}
+                  onLogout={props.onLogout}
 
                   renderedCategories={props.renderedCategories}
                   onUpdateCategories={props.renderedCategoriesHandler}
-  
+
                   renderedCategory={props.renderedCategory}
                   onUpdateCategory={props.renderedCategoryHandler}
 

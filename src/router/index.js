@@ -50,7 +50,9 @@ export default function Index(props) {
     // let items = getItem(KEYS.CATEGORIES) || [];
 
     useEffect(() => {
-
+        // clearAll();        
+        //TODO: add logout item to top menu
+        if (logout) { clearAll(); console.log('logout: ' + logout); setLogout(false); }
         // return clearAll()
     }, [])
     
@@ -68,10 +70,6 @@ export default function Index(props) {
             // setShowBack(true); 
             initStorage();
         }
-        // clearAll();        
-        //TODO: add logout item to top menu
-        if (logout) { clearAll() }
-
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
     }, [renderedCategory, componentIndex])
 
@@ -108,6 +106,9 @@ export default function Index(props) {
             case "deleteCategory":
                 console.log('777777777777777: ' + action);
                 onDeleteHandler(renderedCategory);
+                break;
+            case "resetCategories":
+                setLogout(true);
                 break;
             case "onOpenLocation":
                 onRead();
@@ -158,6 +159,7 @@ export default function Index(props) {
 
                 onDelete={onDeleteHandler}
                 onActionMenu={(action) => { menuBarActionHandler(action); }}
+                onLogout={setLogout}
 
                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
                 dialogOpen={dialogOpen}
