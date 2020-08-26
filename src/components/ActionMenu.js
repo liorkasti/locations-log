@@ -1,45 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-    StyleSheet,
-    View,
-    Text,
-    TouchableOpacity,
-    Dimensions,
-    Button
-} from "react-native";
-// import Icon from "react-native-vector-icons/Feather";
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Button } from "react-native";
+
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
-// import Feather from "react-native-vector-icons/MaterialIcons";
 
 
 const ActionMenu = (props) => {
 
-    // useEffect(() => {
-    //     // TODO: validate currect index
-    //     console.log("show componentIndex: ", props)
-    //     console.warn("show props.renderedCategory): ", props.renderedCategory);
-    //     //             props.renderedCategories.filter((props.renderedCategory => props.renderedCategory === props.renderedCategory)))
-    //     // console.warn("show props.renderedCategories[renderedCategory]: ", props.myLocationList)
-    // }, [props.componentIndex]);
-
-
-
-    // const onDeleteHandler = (category) => {
-    //     console.log('TO BE DELETED: ' + category);
-    //     let newMyStays = [];
-    //     for (let i = 0; i < props.renderedCategories.length; i++) {
-    //         if (i !== props.renderedCategories.indexOf(deletItem)) {
-    //             console.log('Iterate VALUE ', props.renderedCategories);
-    //             newLocationList.push(props.renderedCategories[i])
-    //         }
-    //     }
-    //     props.onUpdateCategories(newLocationList)
-    //     // const _myLocationList = pprops.myLocationList.filter((name) => props.renderedCategory !== category)
-    //     console.log("newLocationList: ", newLocationList);
-    //     return _myLocationList
-    // };
-    // setIsUpdateList(true);
 
     return (
         <View style={styles.container}>
@@ -66,7 +33,7 @@ const ActionMenu = (props) => {
                 <TouchableOpacity
                     onPress={() => { props.onDelete(props.renderedCategory); }}
                     // onPress={() => { props.onActionMenu("deleteCategory"), props.renderedCategory }}
-                    tag="Delete Location"
+                    tag="Delete Category"
                     style={styles.actionButton}
                 >
                     <Text style={styles.textMenuItem}>{props.tag || 'Delete Category'}</Text>

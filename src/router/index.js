@@ -44,7 +44,7 @@ export default function Index(props) {
     const [showMenu, setShowMenu] = useState(false);
     const [logout, setLogout] = useState(false);
 
-    
+
     // load from storage
     // let item = getItem(KEYS.CATEGORY) || [];
     // let items = getItem(KEYS.CATEGORIES) || [];
@@ -52,10 +52,10 @@ export default function Index(props) {
     useEffect(() => {
         // clearAll();        
         //TODO: add logout item to top menu
-        if (logout) { clearAll(); console.log('logout: ' + logout); setLogout(false); }
+        // if (logout) { clearAll(); console.log('logout: ' + logout); setLogout(false); }
         // return clearAll()
     }, [])
-    
+
     useEffect(() => {
 
         // console.log("Storage Rendered Category: ", item);
@@ -98,6 +98,7 @@ export default function Index(props) {
     const menuBarActionHandler = (action) => {
         switch (action) {
             case "addLocation":
+                console.warn("SET NEW Location", action)
                 onAddHandler(action);
                 break;
             case "editCategory":
@@ -108,6 +109,7 @@ export default function Index(props) {
                 onDeleteHandler(renderedCategory);
                 break;
             case "resetCategories":
+                console.log('777777777777777: ' + action);
                 setLogout(true);
                 break;
             case "onOpenLocation":

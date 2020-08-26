@@ -10,7 +10,6 @@ import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
 import MyInputText from '../components/MyInputText';
 import ActionMenu from '../components/ActionMenu';
-
 export default function Location(props) {
 
   const [LocationList, setLocationList] = useState([]);
@@ -78,29 +77,16 @@ export default function Location(props) {
       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
 
         <View style={styles.textContainer}>
-    
-              {props.showMenu &&
-                <ActionMenu
-                  onActionMenu={props.onActionMenu}
-                  onDelete={props.onDelete}
-                  myLocationList={props.myLocationList}
-                  renderedCategory={props.renderedCategory}
-                  onActionMenu={props.onActionMenu}
-                  style={styles.actionMenu}
-                />
-              }
 
           {
-            props.myLocationList ?
+            props.myLocationList ? 
+            
               <Text style={styles.textPrompt}>Your locations list</Text>
               :
+
               <View style={styles.welcomeContainer}>
                 <Text style={styles.textPrompt}>Please create{"\n"}your locations</Text>
-                <TouchableOpacity
-                  onPress={onDeleteHandler(props.renderedCategory)}
-                >
-                  <Icon name="map-marker-multiple" style={styles.icon} />
-                </TouchableOpacity>
+                <Icon name="map-marker-multiple" style={styles.icon} />
               </View>
           }
         </View>
@@ -108,10 +94,7 @@ export default function Location(props) {
 
         < Dialog
           visible={props.dialogOpen}
-          onTouchOutside={() => {
-            // setState({ visible: false });
-            visable = props.onDismiss();
-          }}
+          onTouchOutside={() => { visable = props.onDismiss(); }}
           dialogAnimation={
             new SlideAnimation({
               slideFrom: 'bottom',
@@ -122,7 +105,7 @@ export default function Location(props) {
           <DialogContent>
             <View style={styles.welcomeContainer}>
               <Text style={styles.textDialog}>Create New Location</Text>
-              <MyInputText
+              {/* <MyInputText
                 visible={isAddMode}
                 onAdd={addLocationHandler}
                 reloadStorage={props.reloadStorage}
@@ -135,7 +118,7 @@ export default function Location(props) {
                 initialValue=""
                 windowWidth={windowWidth}
                 windowHeight={windowHeight}
-              />
+              /> */}
             </View>
           </DialogContent>
         </Dialog>
@@ -164,7 +147,7 @@ export default function Location(props) {
             null
         }
       </ScrollView>
-    </View>
+    </View >
   );
 }
 

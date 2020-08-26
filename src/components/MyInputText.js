@@ -51,15 +51,15 @@ const MyInputText = props => {
           onPress={props.onCancel}
           style={styles.cancleButton}
         >
-          <Icon name="map-marker-down" style={styles.icon} />
-          <Text style={styles.textButton}>CANCEL</Text>
+          <Icon name="map-marker-down" style={styles.icon2} />
+          <Text style={styles.textButton}>DONE</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           onPress={addTextHandler}
           style={styles.addButton}
         >
-          <Icon name="map-marker-check" style={styles.icon} />
+          <Icon name="map-marker-check" style={styles.icon1} />
           <Text style={styles.textAddButton}>ADD</Text>
         </TouchableOpacity>
 
@@ -74,13 +74,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  icon: {
-    color: 'white',
-    fontSize: 20,
-    paddingHorizontal: 5,
-    textAlign: 'right',
-    alignSelf: 'stretch',
   },
   inputContainer: {
     width: 300,
@@ -104,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     padding: 10,
     marginVertical: 10,
-    borderColor: 'black',
+    borderColor: 'rgba(0,88,155,1)',
     borderWidth: 0.7,
     width: '45%',
   },
@@ -115,7 +108,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,88,155,1)",
     padding: 10,
     marginVertical: 10,
-    borderColor: 'black',
+    borderColor: 'rgba(0,88,155,1)',
     borderWidth: 0.7,
     width: '45%',
   },
@@ -124,15 +117,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     color: 'white',
     fontWeight: 'bold',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
+    left: -5
   },
   textButton: {
     justifyContent: 'center',
     textAlign: 'center',
     color: 'rgba(0,88,155,1)',
     fontWeight: 'bold',
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
+    left: -5
+  },
+  icon1: {
+    color: 'white',
+    fontSize: 20,
+    left: -5
 
+    // paddingHorizontal: 5,
+    // textAlign: 'right',
+    // alignSelf: 'stretch',
+  },
+  icon2: {
+    color: 'rgba(0,88,155,1)',
+    fontSize: 20,
+    left: -5
+    // paddingHorizontal: 5,
+    // textAlign: 'right',
+    // alignSelf: 'stretch',
   },
 });
 

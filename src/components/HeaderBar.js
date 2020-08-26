@@ -5,6 +5,10 @@ import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 // import Hamburger from 'react-native-animated-hamburger';
 import Hamburger from '../components/Hamburger';
 import ActionMenu from '../components/ActionMenu';
+import TopActionMenu from '../components/TopActionMenu';
+import { MenuProvider } from 'react-native-popup-menu';
+import { Menu, MenuOptions, MenuOption, MenuTrigger, SomeCustomContainer } from 'react-native-popup-menu';
+
 
 const HeaderBar = (props) => {
 
@@ -18,10 +22,10 @@ const HeaderBar = (props) => {
       <View style={styles.headerStack}>
         <Text style={styles.bsD1}>BS&quot;D</Text>
         <Text style={styles.header}>{props.header}</Text>
-        <View style={styles.buttonstack}>
+        <View style={styles.buttonStack}>
           {props.componentIndex > 0 &&
             <TouchableOpacity onPress={() => {
-              props.onBack()            
+              props.onBack()
             }} >
               <FontAwesomeIcon
                 name="chevron-left"
@@ -36,7 +40,7 @@ const HeaderBar = (props) => {
               <TouchableOpacity
                 onPress={() => { props.setDialogOpen(); }}
                 style={styles.createbutton}
-                >
+              >
 
                 {props.dialogOpen
                   ?
@@ -62,32 +66,26 @@ const HeaderBar = (props) => {
                 />
               </TouchableOpacity>
 
-              {props.showMenu &&
-                <ActionMenu
-                  onActionMenu={props.onActionMenu}
-                  onDelete={props.onDelete}
-                  onLogout={props.onLogout}
+              <View style={styles.container}>
+                {/* <View style={styles.group}> */}
+                  <TopActionMenu
+                    // onOpenMenu={props.setShowMenu()}
+                    // showMenu={props.showMenu}
+                    // onActionMenu={props.onActionMenu}
+                    // onDelete={props.onDelete}
+                    // onLogout={props.onLogout}
 
-                  renderedCategories={props.renderedCategories}
-                  onUpdateCategories={props.renderedCategoriesHandler}
+                    // renderedCategories={props.renderedCategories}
+                    // onUpdateCategories={props.renderedCategoriesHandler}
 
-                  renderedCategory={props.renderedCategory}
-                  onUpdateCategory={props.renderedCategoryHandler}
+                    // renderedCategory={props.renderedCategory}
+                    // onUpdateCategory={props.renderedCategoryHandler}
 
-                  onActionMenu={props.onActionMenu}
-                  style={styles.actionMenu}
-                />
-              }
-
-              {/* <TouchableOpacity
-                onPress={() => { props.setDialogOpen(); }}
-                style={styles.createbutton}>
-                {props.dialogOpen ?
-                  <Icon name="close" style={styles.icon} />
-                  :
-                  <FontAwesomeIcon name="add-location" style={styles.icon} />
-                }
-              </TouchableOpacity> */}
+                    // onActionMenu={props.onActionMenu}
+                    // style={styles.actionMenu}
+                  />
+                {/* </View> */}
+              </View>
             </View>
           }
         </View>
@@ -140,6 +138,39 @@ const styles = StyleSheet.create({
     left: windowWidth - 50,
     fontSize: 28,
   },
+  menuContainer: {
+    // position: "absolute",
+    // flex: 0,
+    // backgroundColor: "rgba(0,88,155,1.0)",
+    // width: 'auto',
+    // height: 'auto',
+    // top: 62,
+    // zIndex: 1000,
+    // left: windowWidth - 175,
+  },
+  group: {
+    alignItems: "flex-end",
+    justifyContent: "center",
+    zIndex: 20,
+    width: 200,
+    height: 180,
+    marginTop: 0,
+    marginLeft: 0,
+  },
+  menuOptions: {
+    flex: 0,
+    zIndex: 5000,
+    // fontSize: 20,
+    borderBottomWidth: 0.7,
+    // borderColor: 'white',
+    // borderColor: 'rgba(0,88,155,1.0',
+    // width: 130,
+    // flexDirection: "row",
+    marginLeft: 10,
+    color: 'white',
+    padding: 10,
+  },
+
   createbutton: {
     width: "100%",
     height: 30,
@@ -171,10 +202,31 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     textAlign: "center",
   },
-  buttonstack: {
+  buttonStack: {
     height: 62,
     flexDirection: "row",
-  }
+  }, textMenuItem: {
+    textAlign: 'right',
+    alignSelf: 'stretch',
+    color: 'white',
+    fontSize: 16,
+    borderBottomWidth: 0.7,
+    borderColor: 'white',
+    width: 130,
+  },
+  actionButton: {
+    padding: 8,
+    flexDirection: "row",
+    // paddingHorizontal: 10
+  },
+  menuIcon: {
+    color: 'white',
+    fontSize: 20,
+    paddingHorizontal: 5,
+    textAlign: 'right',
+    alignSelf: 'stretch',
+  },
+
 });
 
 export default HeaderBar;

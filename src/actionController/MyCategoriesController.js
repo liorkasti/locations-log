@@ -102,9 +102,7 @@ export default function MyCategoriesController({ props }) {
 
         < Dialog
           visible={props.dialogOpen}
-          onTouchOutside={() => {
-            visable = props.onDismiss();
-          }}
+          onTouchOutside={() => { visable = props.onDismiss(); }}
           dialogAnimation={
             new SlideAnimation({
               slideFrom: 'bottom',
