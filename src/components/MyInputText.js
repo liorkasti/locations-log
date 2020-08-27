@@ -24,7 +24,7 @@ const MyInputText = props => {
       setEnteredInput('');
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
-      // Alert.alert("No input.");
+      Alert.alert("No input.");
       console.log("No name has been entered.");
       // toastMaker("No name has been entered");
       setEnteredInput('');

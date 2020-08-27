@@ -21,8 +21,8 @@ export default function MyCategoriesController({ props }) {
   useEffect(() => {
     if (categoryList) {
       reloadStorage()
-      console.log("The Current Category: ", currentCategory);
-      console.log("The List Category: ", categoryList);
+      // console.log("The Current Category: ", currentCategory);
+      // console.log("The List Category: ", categoryList);
     }
     // return {  };
   }, [categoryList])
@@ -99,7 +99,7 @@ export default function MyCategoriesController({ props }) {
                 onDismiss={() => { props.setDialogOpen() }}
 
                 reloadStorage={reloadStorage}
-                renderedCategories={props.renderedCategories}
+                renderedCategory={props.renderedCategory}
                 onUpdateCategories={props.onUpdateCategories}
 
                 windowWidth={windowWidth}
@@ -118,6 +118,7 @@ export default function MyCategoriesController({ props }) {
               renderItem={itemData => (
                 <CardItem
                   id={itemData.item.id}
+                  onUpdateCategory={props.onUpdateCategory}
                   // onDelete={removeCategoryHandler}
                   onPress={props.onNext}
                   title={itemData.item.name}
