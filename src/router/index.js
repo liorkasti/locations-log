@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 // import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
 // import { KEYS, storeData, setItem, getItem, multiSet, multiGet, getMyStringValue, getMyObject, getAllKeys, clearAll } from '../utils/myLocationsStorage';
-
+import { addCategory, removeCategoryHandler } from '../action/modifyActions';
 import MyCategoriesController from "../actionController/MyCategoriesController";
 import Category from "../screens/Category";
 import Location from "../screens/Location";
@@ -84,11 +84,7 @@ export default function Index(props) {
 
     // update the categories list
     const renderedCategoriesHandler = async (categoryListNode) => {
-
-        setRenderedCategories(renderedCategories => [
-            ...renderedCategories,
-            { id: Math.random().toString(36).substr(2, 5), name: categoryListNode }
-        ]);
+        setRenderedCategories(addCategory(renderedCategories,categoryListNode));
 
         // items = multiSet(KEYS.CATEGORIES, item)
         // const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
@@ -96,9 +92,9 @@ export default function Index(props) {
     }
 
     const menuBarActionHandler = (action) => {
+        console.warn("SET NEW Location", action)
         switch (action) {
             case "addLocation":
-                console.warn("SET NEW Location", action)
                 onAddHandler(action);
                 break;
             case "editCategory":
@@ -167,7 +163,6 @@ export default function Index(props) {
                 dialogOpen={dialogOpen}
 
                 style={styles.header}
-
             />
 
             {/* <ScrollView style={styles.scrollView}> */}
@@ -193,6 +188,7 @@ export default function Index(props) {
                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
                 onDismiss={() => { setDialogOpen(false); }}
+
                 style={styles.componentStyle}
             />
 
@@ -200,10 +196,6 @@ export default function Index(props) {
         </View>
     );
 }
-
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {

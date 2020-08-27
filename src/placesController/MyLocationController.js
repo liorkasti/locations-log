@@ -81,7 +81,7 @@
 
 //   return (
 //     <View style={styles.container}>
-//       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
+//       <ScrollView style={{ zIndex: 1, width: props.windowWidth * .7, height: props.windowHeight * .95 }}>
 
 //         <View style={styles.textContainyer}>
 //           {
@@ -123,8 +123,8 @@
 //                 dialogOpen={props.dialogOpen}
 //                 onDismiss={() => { props.setDialogOpen() }}
 //                 initialValue=""
-//                 windowWidth={windowWidth}
-//                 windowHeight={windowHeight}
+//                 windowWidth={props.windowWidth}
+//                 windowHeight={props.windowHeight}
 //               />
 //             </View>
 //           </DialogContent>

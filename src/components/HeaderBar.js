@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image, } from "react-native";
+
 import Icon from "react-native-vector-icons/AntDesign";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
-// import Hamburger from 'react-native-animated-hamburger';
 import Hamburger from '../components/Hamburger';
+
 import ActionMenu from '../components/ActionMenu';
 import TopActionMenu from '../components/TopActionMenu';
 import { MenuProvider } from 'react-native-popup-menu';
 import { Menu, MenuOptions, MenuOption, MenuTrigger, SomeCustomContainer } from 'react-native-popup-menu';
-
 
 const HeaderBar = (props) => {
 
@@ -65,27 +65,32 @@ const HeaderBar = (props) => {
                   underlayColor="transparent"
                 />
               </TouchableOpacity>
+              {props.showMenu ?
+                <View style={styles.container}>
+                  <View style={styles.group}>
+                    <TopActionMenu
+                      // onOpenMenu={props.setShowMenu()}
+                      showMenu={props.showMenu}
+                      onActionMenu={(action) => { onActionMenu(action); }}
+                      // onDelete={props.onDelete}
+                      // onLogout={props.onLogout}
 
-              <View style={styles.container}>
-                {/* <View style={styles.group}> */}
-                  <TopActionMenu
-                    // onOpenMenu={props.setShowMenu()}
-                    // showMenu={props.showMenu}
-                    // onActionMenu={props.onActionMenu}
-                    // onDelete={props.onDelete}
-                    // onLogout={props.onLogout}
+                      // renderedCategories={props.renderedCategories}
+                      // onUpdateCategories={props.renderedCategoriesHandler}
 
-                    // renderedCategories={props.renderedCategories}
-                    // onUpdateCategories={props.renderedCategoriesHandler}
+                      // renderedCategory={props.renderedCategory}
+                      // onUpdateCategory={props.renderedCategoryHandler}
+                      // style={styles.actionMenu}
+                      windowWidth={windowWidth}
+                      windowHeight={windowHeight}
 
-                    // renderedCategory={props.renderedCategory}
-                    // onUpdateCategory={props.renderedCategoryHandler}
+                    />
 
-                    // onActionMenu={props.onActionMenu}
-                    // style={styles.actionMenu}
-                  />
-                {/* </View> */}
-              </View>
+                  </View>
+                </View>
+                :
+                null
+              }
             </View>
           }
         </View>

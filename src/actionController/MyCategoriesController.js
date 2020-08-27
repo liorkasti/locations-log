@@ -5,7 +5,7 @@ import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog
 import toastMaker from '../utils/toastMaker';
 
 import { KEY } from '../router/index';
-
+import { addCategory, removeCategoryHandler } from '../action/modifyActions';
 import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
 import MyInputText from '../components/MyInputText';
@@ -15,37 +15,21 @@ export default function MyCategoriesController({ props }) {
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
 
-  const [isUpdateList, setIsUpdateList] = useState(false);
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
-    if (isUpdateList) {
+    if (categoryList) {
+      reloadStorage()
       console.log("The Current Category: ", currentCategory);
       console.log("The List Category: ", categoryList);
-      reloadStorage()
-      // console.log("List update on chancge? ", isUpdateList);
     }
     // return {  };
   }, [categoryList])
 
   const addCategoryHandler = categoryName => {
 
-    // setCurrentCategory(currentCategory => [
-    //   ...currentCategory,
-    //   { id: Math.random().toString(), name: categoryName }
-    // ]);
-
-    setCurrentCategory(categoryName);
-
-    setCategoryList(currentCategory => [
-      ...currentCategory,
-      { id: Math.random().toString(36).substr(2, 5), name: categoryName }
-    ]);
-
-
     setIsAddMode(false);
-    setIsUpdateList(true);
     updateStorage(categoryName);
     //TODO: set the line below to active before production.
     // props.setDialogOpen(false)
@@ -55,18 +39,12 @@ export default function MyCategoriesController({ props }) {
   const updateStorage = (newListItem) => {
     props.onUpdateCategory(newListItem)
     props.onUpdateCategories(newListItem)
-    if (isUpdateList) {
-      // reloadStorage();
-      console.log("List update on chancge? ", isUpdateList);
-    }
-    setIsUpdateList(false);
+
   };
 
   const reloadStorage = () => {
     setCurrentCategory(props.renderedCategory);
     setCategoryList(props.renderedCategories);
-    // console.log("Reload Category: ", props.renderedCategory);
-    // console.log("Reload List: ", props.myLocationList);
   }
 
   const cancelCategoryAdditionHandler = () => {
@@ -80,7 +58,6 @@ export default function MyCategoriesController({ props }) {
     setCategoryList(currentCategory => {
       return currentCategory.filter(category => category.id !== categoryId);
     });
-    setIsUpdateList(true);
   };
 
   return (
