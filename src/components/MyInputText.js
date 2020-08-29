@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Modal } from 'react-native';
-import toastMaker from '../utils/toastMaker';
+import toastMaker from '../utils/feedbackGenerator';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const MyInputText = props => {
@@ -28,43 +28,93 @@ const MyInputText = props => {
       console.log("No name has been entered.");
       // toastMaker("No name has been entered");
       setEnteredInput('');
-      // props.reloadStorage();
     }
+  }
 
+  const updateTextHandler = () => {
+    // console.warn("enteredText: ", enteredInput);    
+    if (enteredInput.length > 0) {
+      props.onUpdate(enteredInput);
+      setEnteredInput('');
+    } else {
+      // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
+      Alert.alert("No input.");
+      console.log("No name has been entered.");
+      // toastMaker("No name has been entered");
+      setEnteredInput('');
+    }
   }
 
   return (
+
     <View style={styles.container}>
-      {/* TODO: Add dinamic screen title for the message below*/}
-      {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Category name"
-          style={styles.input}
-          onChangeText={textInputHandler}
-          value={enteredInput}
-        />
-      </View>
-      <View style={styles.buttonContainer}>
+      {props.dialogOpen ?
+        <>
+          <Text style={styles.textDialog}>Create a new Category</Text>
+          {/* TODO: Add dinamic screen title for the message below*/}
+          {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Category name"
+              style={styles.input}
+              onChangeText={textInputHandler}
+              value={enteredInput}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={props.onCancel}
+              style={styles.cancelButton}
+            >
+              <Icon name="map-marker-down" style={styles.icon2} />
+              <Text style={styles.textButton}>DONE</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={addTextHandler}
+              style={styles.addButton}
+            >
+              <Icon name="map-marker-check" style={styles.icon1} />
+              <Text style={styles.textAddButton}>ADD</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+        :
+        <>
+          {
+            props.updateOpen &&
+            <>
+              <Text style={styles.textDialog}>Edit Category Name</Text>
+              {/* TODO: Add dinamic screen title for the message below*/}
+              {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
+              <View style={styles.inputContainer}>
+                <TextInput
+                  placeholder="Category name"
+                  style={styles.input}
+                  onChangeText={textInputHandler}
+                  value={enteredInput}
+                />
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  onPress={props.onCancel}
+                  style={styles.cancelButton}
+                >
+                  <Icon name="map-marker-down" style={styles.icon2} />
+                  <Text style={styles.textButton}>CANCEL</Text>
+                </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={props.onCancel}
-          style={styles.cancleButton}
-        >
-          <Icon name="map-marker-down" style={styles.icon2} />
-          <Text style={styles.textButton}>DONE</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPress={addTextHandler}
-          style={styles.addButton}
-        >
-          <Icon name="map-marker-check" style={styles.icon1} />
-          <Text style={styles.textAddButton}>ADD</Text>
-        </TouchableOpacity>
-
-      </View>
-
+                <TouchableOpacity
+                  onPress={updateTextHandler}
+                  style={styles.addButton}
+                >
+                  <Icon name="map-marker-check" style={styles.icon1} />
+                  <Text style={styles.textAddButton}>UPDATE</Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          }
+        </>
+      }
     </View>
   );
 };
@@ -74,6 +124,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+
+  },
+  textDialog: {
+    padding: 20,
+    fontSize: 20,
+    textAlign: 'center'
   },
   inputContainer: {
     width: 300,
@@ -88,10 +144,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: 300,
     justifyContent: 'space-around',
-    // justifyContent: "center",
   },
-  cancleButton: {
-    flexDirection: "row",
+  cancelButton: {
+    flexDirection: 'row',
     alignItems: "flex-end",
     justifyContent: "center",
     backgroundColor: '#ccc',

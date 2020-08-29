@@ -10,7 +10,9 @@ import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
 import MyInputText from '../components/MyInputText';
 import ActionMenu from '../components/ActionMenu';
-export default function Location(props) {
+
+
+export default function Category(props) {
 
   const [LocationList, setLocationList] = useState([]);
   const [currentLocation, setCurrentLocation] = useState([]);
@@ -20,8 +22,9 @@ export default function Location(props) {
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
-    console.log('props: ' + props);
+    console.log('Category.props: ' + JSON.stringify(props));
     console.log('dialogOpen props: ' + props.dialogOpen);
+    console.log('updateOpen props: ' + props.updateOpen);
     console.log('showMenu props: ' + props.showMenu);
 
     if (updateList) {
@@ -106,7 +109,7 @@ export default function Location(props) {
           <DialogContent>
             <View style={styles.welcomeContainer}>
               <Text style={styles.textDialog}>Create New Location</Text>
-              {/* <MyInputText
+              <MyInputText
                 visible={isAddMode}
                 onAdd={addLocationHandler}
                 reloadStorage={props.reloadStorage}
@@ -119,7 +122,7 @@ export default function Location(props) {
                 initialValue=""
                 windowWidth={windowWidth}
                 windowHeight={windowHeight}
-              /> */}
+              />
             </View>
           </DialogContent>
         </Dialog>

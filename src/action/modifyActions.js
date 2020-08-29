@@ -3,12 +3,11 @@ export const addCategory = (items, item) => {
   return [...items, { id: Math.random().toString(36).substr(2, 5), name: item }];
 };
 
-export const updateCategory = categoryId => {
-  console.log('TO BE DELETED: ' + categoryId);
-  // console.log("Current Category: ", currentCategory);
-  setCategoryList(currentCategory => {
-    return currentCategory.filter(category => category.id !== categoryId);
-  });
+export const updateCategory = (items, item, newName) => {
+  console.log('TO BE UPDATE: ' + item);
+
+  items[item.id] = newName;
+  return items;
 };
 
 export const removeCategory = (items, item) => {

@@ -34,12 +34,12 @@ export default function Index(props) {
     const [storageItem, setStoreItem] = useState([]);
     const [storageItems, setStoreItems] = useState([]);
 
-
     const componentKeys = ["MyCategoriesController", "Category", "Location"];
     // const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedCategory };
     const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedLocation };
 
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [updateOpen, setUpdateOpen] = useState(false);
     const [showBack, setShowBack] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
     const [logout, setLogout] = useState(false);
@@ -59,6 +59,7 @@ export default function Index(props) {
     }, [])
 
     useEffect(() => {
+        console.log("componentKeys[componentIndex]: ", componentKeys[componentIndex]);
 
         // console.log("Storage Rendered Category: ", item);
         console.log("Root Current Category: ", renderedCategory);
@@ -70,7 +71,7 @@ export default function Index(props) {
             initStorage();
         }
         if (componentIndex > 0) {
-            // setShowBack(true); 
+            setShowBack(true);
             initStorage();
         }
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
@@ -94,9 +95,24 @@ export default function Index(props) {
         // console.warn("SET ITEMS", result)
     }
 
+    const onUpdateHandler = (renderedCategories, renderedCategory, editCategory) => {
+        console.log("updateOpen: ", updateOpen)
+
+        // Alert.alert("Update Category", "Are you sure you want to delete '" + editCategory + "'?");
+        // TODO: confirmationAlert cancelable
+        // confirmation = confirmationAlert("Delete Category", "Are you sure you want to delete");
+        // if (confirmation) {
+        setRenderedCategories(updateCategory(renderedCategories, renderedCategory, editCategory));
+        if (showMenu) setShowMenu(false);
+        setComponentIndex(componentIndex - 1);
+        // removeValue(deleteItem);
+    };
+
     const onDeleteHandler = deleteItem => {
-        console.log('deleteItem: ' + deleteItem);
-        Alert.alert("Are you sure you want to delete '" + deleteItem + "' ?");
+        Alert.alert("Delete Category", "Are you sure you want to delete '" + deleteItem + "'?");
+        // TODO: confirmationAlert cancelable
+        // confirmation = confirmationAlert("Delete Category", "Are you sure you want to delete");
+        // if (confirmation) {
         setRenderedCategories(removeCategory(renderedCategories, deleteItem));
         if (showMenu) setShowMenu(false);
         setComponentIndex(componentIndex - 1);
@@ -120,7 +136,8 @@ export default function Index(props) {
                 onAddHandler(action);
                 break;
             case "editCategory":
-                onUpdateHandler(action);
+                setUpdateOpen(true);
+                // onUpdateHandler(action);
                 break;
             case "deleteCategory":
                 console.log('action: ' + action);
@@ -169,39 +186,47 @@ export default function Index(props) {
                 onActionMenu={(action) => { menuBarActionHandler(action); }}
                 onLogout={setLogout}
 
-                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
                 dialogOpen={dialogOpen}
+                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+
+                updateOpen={updateOpen}
+                setUpdateOpen={() => { setUpdateOpen(!updateOpen); }}
 
                 style={styles.header}
             />
 
             {/* <ScrollView style={styles.scrollView}> */}
 
-            <CurrentComponentRouter
-                currentComponent={components[componentKeys[componentIndex]]}
-                componentIndex={componentIndex}
+                <CurrentComponentRouter
+                    currentComponent={components[componentKeys[componentIndex]]}
+                    componentIndex={componentIndex}
 
-                renderedCategories={renderedCategories}
-                onUpdateCategories={renderedCategoriesHandler}
+                    renderedCategories={renderedCategories}
+                    onUpdateCategories={renderedCategoriesHandler}
 
-                renderedCategory={renderedCategory}
-                onUpdateCategory={renderedCategoryHandler}
+                    renderedCategory={renderedCategory}
+                    onUpdateCategory={renderedCategoryHandler}
 
-                showMenu={showMenu}
-                setShowMenu={() => { setShowMenu(!showMenu); }}
-                onActionMenu={(_action) => { handleAction(action); }}
+                    showMenu={showMenu}
+                    setShowMenu={() => { setShowMenu(!showMenu); }}
+                    onActionMenu={(_action) => { handleAction(action); }}
 
-                showBack={showBack}
-                onBack={() => { setComponentIndex(componentIndex - 1) }}
-                onNext={() => { setComponentIndex(componentIndex + 1) }}
+                    showBack={showBack}
+                    onBack={() => { setComponentIndex(componentIndex - 1) }}
+                    onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                dialogOpen={dialogOpen}
-                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                    dialogOpen={dialogOpen}
+                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                onDismiss={() => { setDialogOpen(false); }}
+                    onUpdateHandler={onUpdateHandler}
 
-                style={styles.componentStyle}
-            />
+                    updateOpen={updateOpen}
+                    setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
+
+                    onDismiss={() => { setDialogOpen(false); }}
+
+                    style={styles.componentStyle}
+                />
 
             {/* </ScrollView> */}
         </View>

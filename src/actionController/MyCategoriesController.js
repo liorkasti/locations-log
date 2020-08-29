@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialCommunityIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
-import toastMaker from '../utils/toastMaker';
+import toastMaker from '../utils/feedbackGenerator';
 
 import { KEY } from '../router/index';
 import { addCategory, removeCategory } from '../action/modifyActions';
@@ -16,6 +16,7 @@ export default function MyCategoriesController({ props }) {
   const [currentCategory, setCurrentCategory] = useState([]);
 
   const [isAddMode, setIsAddMode] = useState(false);
+  const [isUpdatelMode, setIsUpdateMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
@@ -35,6 +36,15 @@ export default function MyCategoriesController({ props }) {
     // props.setDialogOpen(false)
   };
 
+  const onUpdateHandler = categoryName => {
+    
+    // props.onUpdateCategory(newListItem)
+    props.onUpdateHandler(props.renderedCategories, props.renderedCategory, categoryName);
+    //TODO: set the line below to active before production.
+    props.setUpdateOpen(false)
+    setIsUpdateMode(false);
+  };
+
   // call for local storing 
   const updateStorage = (newListItem) => {
     props.onUpdateCategory(newListItem)
@@ -46,9 +56,10 @@ export default function MyCategoriesController({ props }) {
     setCategoryList(props.renderedCategories);
   }
 
-  const cancelCategoryAdditionHandler = () => {
+  const cancelCategoryHandler = () => {
     setIsCancelMode(true);
     props.setDialogOpen(false)
+    props.setUpdateOpen(false)
   };
 
   const removeCategoryHandler = categoryId => {
@@ -73,7 +84,7 @@ export default function MyCategoriesController({ props }) {
         </View>
 
         < Dialog
-          visible={props.dialogOpen}
+          visible={props.dialogOpen || props.updateOpen}
           onTouchOutside={() => { visable = props.onDismiss(); }}
           dialogAnimation={
             new SlideAnimation({
@@ -84,15 +95,21 @@ export default function MyCategoriesController({ props }) {
         >
           <DialogContent>
             <View style={styles.welcomeContainer}>
-              <Text style={styles.textDialog}>Create a new Category</Text>
               <MyInputText
                 initialValue=""
-                visible={isAddMode}
+                visible={props.dialogOpen || props.updateOpen}
                 dialogOpen={props.dialogOpen}
-                onAdd={addCategoryHandler}
-                onCancel={cancelCategoryAdditionHandler}
-                onDismiss={() => { props.setDialogOpen() }}
 
+                onAdd={addCategoryHandler}
+                onUpdate={onUpdateHandler}
+                
+                onCancel={cancelCategoryHandler}
+                onDismiss={() => { props.setDialogOpen() }}
+                
+                setIsUpdateMode={() => {setIsUpdateMode()}}
+                setUpdateOpen={props.setUpdateOpen}
+                isUpdatelMode={isUpdatelMode}
+                
                 reloadStorage={reloadStorage}
                 renderedCategory={props.renderedCategory}
                 onUpdateCategories={props.onUpdateCategories}
