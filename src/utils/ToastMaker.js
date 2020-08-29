@@ -2,7 +2,7 @@ import Toast from 'react-native-root-toast';
 
 
 // const toastMaker = props => {
-const toastMaker = message => {
+export const toastMaker = message => {
   Toast.show(message, {
     duration: Toast.durations.LONG,
     position: Toast.positions.BOTTOM,

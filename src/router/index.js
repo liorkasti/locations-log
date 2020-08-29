@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, StatusBar, Dimensions, Image, TouchableOpacity, Text, ScrollView, SafeAreaView, Constants } from "react-native"
+import { View, StyleSheet, StatusBar, Dimensions, Alert, Image, TouchableOpacity, Text, ScrollView, SafeAreaView, Constants } from "react-native"
 import { useHistory } from "react-router-dom";
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -50,9 +50,8 @@ export default function Index(props) {
     // let items = getItem(KEYS.CATEGORIES) || [];
 
     useEffect(() => {
-
         // console.log('componentIndex props: ' + componentIndex);
-        console.log('showMenu props: ' + showMenu);
+        // console.log('showMenu props: ' + showMenu);
         // clearAll();        
         //TODO: add logout item to top menu
         // if (logout) { clearAll(); console.log('logout: ' + logout); setLogout(false); }
@@ -89,28 +88,46 @@ export default function Index(props) {
     // update the categories list
     const renderedCategoriesHandler = async (categoryListNode) => {
         setRenderedCategories(addCategory(renderedCategories, categoryListNode));
-
+        // TODO: Asynch Storage
         // items = multiSet(KEYS.CATEGORIES, item)
         // const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
         // console.warn("SET ITEMS", result)
     }
 
+    const onDeleteHandler = deleteItem => {
+        console.log('deleteItem: ' + deleteItem);
+        Alert.alert("Are you sure you want to delete '" + deleteItem + "' ?");
+        setRenderedCategories(removeCategory(renderedCategories, deleteItem));
+        if (showMenu) setShowMenu(false);
+        setComponentIndex(componentIndex - 1);
+        // removeValue(deleteItem);
+    };
+
+
+    const initStorage = () => {
+        // setRenderedCategory(getItem(KEYS.CATEGORY) || []);
+        // setRenderedCategories(getItem(KEYS.CATEGORIES) || []);
+        // setRenderedCategories(multiGet(getItem(KEYS.CATEGORIES)) || []);
+        setRenderedCategory(renderedCategory);
+        setRenderedCategories(renderedCategories);
+    }
+
+
     const menuBarActionHandler = (action, backHistory) => {
         console.warn("SET NEW Location", action)
         switch (action) {
             case "addLocation":
-                Alert.alert("Selected add menu item");
-                // onAddHandler(action);
+                onAddHandler(action);
                 break;
             case "editCategory":
                 onUpdateHandler(action);
                 break;
             case "deleteCategory":
-                console.log('777777777777777: ' + action);
+                console.log('action: ' + action);
                 onDeleteHandler(renderedCategory);
                 break;
             case "resetCategories":
-                console.log('777777777777777: ' + action);
+                console.log('action: ' + action);
                 setLogout(true);
                 break;
             case "onOpenLocation":
@@ -120,23 +137,6 @@ export default function Index(props) {
                 return next(action);
         }
     };
-
-
-    const onDeleteHandler = deleteItem => {
-        console.log('deleteItem: ' + deleteItem);
-        // removeValue(deleteItem);
-    };
-
-
-    const initStorage = () => {
-        // setRenderedCategory(getItem(KEYS.CATEGORY) || []);
-        // setRenderedCategories(getItem(KEYS.CATEGORIES) || []);
-        // setRenderedCategory(getItem(KEYS.CATEGORY) || []);
-        // setRenderedCategories(multiGet(getItem(KEYS.CATEGORIES)) || []);
-        setRenderedCategory(renderedCategory);
-        setRenderedCategories(renderedCategories);
-    }
-
 
     return (
         <View style={styles.container}>
@@ -177,31 +177,31 @@ export default function Index(props) {
 
             {/* <ScrollView style={styles.scrollView}> */}
 
-                <CurrentComponentRouter
-                    currentComponent={components[componentKeys[componentIndex]]}
-                    componentIndex={componentIndex}
+            <CurrentComponentRouter
+                currentComponent={components[componentKeys[componentIndex]]}
+                componentIndex={componentIndex}
 
-                    renderedCategories={renderedCategories}
-                    onUpdateCategories={renderedCategoriesHandler}
+                renderedCategories={renderedCategories}
+                onUpdateCategories={renderedCategoriesHandler}
 
-                    renderedCategory={renderedCategory}
-                    onUpdateCategory={renderedCategoryHandler}
+                renderedCategory={renderedCategory}
+                onUpdateCategory={renderedCategoryHandler}
 
-                    showMenu={showMenu}
-                    setShowMenu={() => { setShowMenu(!showMenu); }}
-                    onActionMenu={(_action) => { handleAction(action); }}
+                showMenu={showMenu}
+                setShowMenu={() => { setShowMenu(!showMenu); }}
+                onActionMenu={(_action) => { handleAction(action); }}
 
-                    showBack={showBack}
-                    onBack={() => { setComponentIndex(componentIndex - 1) }}
-                    onNext={() => { setComponentIndex(componentIndex + 1) }}
+                showBack={showBack}
+                onBack={() => { setComponentIndex(componentIndex - 1) }}
+                onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                    dialogOpen={dialogOpen}
-                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                dialogOpen={dialogOpen}
+                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                    onDismiss={() => { setDialogOpen(false); }}
+                onDismiss={() => { setDialogOpen(false); }}
 
-                    style={styles.componentStyle}
-                />
+                style={styles.componentStyle}
+            />
 
             {/* </ScrollView> */}
         </View>
