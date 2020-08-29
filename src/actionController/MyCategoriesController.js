@@ -10,7 +10,7 @@ import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
 import MyInputText from '../components/MyInputText';
 
-export default function MyCategoriesController( props ) {
+export default function MyCategoriesController(props) {
 
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
@@ -37,7 +37,7 @@ export default function MyCategoriesController( props ) {
   };
 
   const onUpdateHandler = categoryName => {
-    
+    console.warn("onUpdateHandler in MyCategoriesController!")
     // props.onUpdateCategory(newListItem)
     props.onUpdateHandler(props.renderedCategories, props.renderedCategory, categoryName);
     //TODO: set the line below to active before production.
@@ -59,7 +59,6 @@ export default function MyCategoriesController( props ) {
   const cancelCategoryHandler = () => {
     setIsCancelMode(true);
     props.setDialogOpen(false)
-    props.setUpdateOpen(false)
   };
 
   const removeCategoryHandler = categoryId => {
@@ -73,8 +72,24 @@ export default function MyCategoriesController( props ) {
         <View style={styles.textContainer}>
           {
             (categoryList.length || props.renderedCategories.length) ?
+              <>
+                <Text style={styles.textPrompt}>Your Categories List</Text>
 
-              <Text style={styles.textPrompt}>Your Categories List</Text>
+                <FlatList
+                  keyExtractor={(item, index) => item.id}
+                  data={props.renderedCategories}
+                  renderItem={itemData => (
+                    <CardItem
+                      id={itemData.item.id}
+                      onSelectedCategory={props.onUpdateCategory}
+                      // onDelete={removeCategoryHandler}
+                      onPress={props.onNext}
+                      title={itemData.item.name}
+                      style={styles.categoryItem}
+                    />
+                  )}
+                />
+              </>
               :
               <View style={styles.welcomeContainer}>
                 <Text style={styles.textPrompt}>Please add your{"\n"}places categories</Text>
@@ -84,8 +99,8 @@ export default function MyCategoriesController( props ) {
         </View>
 
         < Dialog
-          visible={props.dialogOpen || props.updateOpen}
-          onTouchOutside={() => { visable = props.onDismiss(); }}
+          visible={props.dialogOpen}
+          onTouchOutside={() => { visible = props.onDismiss(); }}
           dialogAnimation={
             new SlideAnimation({
               slideFrom: 'bottom',
@@ -97,19 +112,19 @@ export default function MyCategoriesController( props ) {
             <View style={styles.welcomeContainer}>
               <MyInputText
                 initialValue=""
-                visible={props.dialogOpen || props.updateOpen}
+                visible={props.dialogOpen}
                 dialogOpen={props.dialogOpen}
 
                 onAdd={addCategoryHandler}
-                onUpdate={onUpdateHandler}
-                
+                // onUpdate={onUpdateHandler}
+
                 onCancel={cancelCategoryHandler}
                 onDismiss={() => { props.setDialogOpen() }}
-                
-                setIsUpdateMode={() => {setIsUpdateMode()}}
-                setUpdateOpen={props.setUpdateOpen}
-                isUpdatelMode={isUpdatelMode}
-                
+
+                // setIsUpdateMode={() => { setIsUpdateMode() }}
+                // setUpdateOpen={props.setUpdateOpen}
+                // isUpdateMode={isUpdateMode}
+
                 reloadStorage={reloadStorage}
                 renderedCategory={props.renderedCategory}
                 onUpdateCategories={props.onUpdateCategories}
@@ -120,28 +135,6 @@ export default function MyCategoriesController( props ) {
             </View>
           </DialogContent>
         </Dialog>
-
-        {
-          (categoryList.length || props.renderedCategories.length) ?
-
-            <FlatList
-              keyExtractor={(item, index) => item.id}
-              data={props.renderedCategories}
-              renderItem={itemData => (
-                <CardItem
-                  id={itemData.item.id}
-                  onSelectedCategory={props.onUpdateCategory}
-                  // onDelete={removeCategoryHandler}
-                  onPress={props.onNext}
-                  title={itemData.item.name}
-                  style={styles.categoryItem}
-                />
-              )}
-            />
-            :
-            null
-        }
-
       </ScrollView>
     </View >
   );
@@ -178,7 +171,7 @@ const styles = StyleSheet.create({
   },
   categoryItem: {
     alignItems: 'center',
-    width: '80%',
+    // width: '80%',
   },
   welcomeContainer: {
     // flex: 1,

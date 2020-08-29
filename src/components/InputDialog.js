@@ -13,7 +13,7 @@ export default function Categories(props) {
   return (
     <View style={styles.container}>
       {
-        props.visible &&
+        props.dialogOpen &&
         <>
           <Text>dialog</Text>
           <TextInput

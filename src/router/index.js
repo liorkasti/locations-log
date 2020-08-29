@@ -14,22 +14,13 @@ import HeaderBar from "../components/HeaderBar";
 
 const components = { MyCategoriesController, Category, Location };
 
-// const CurrentComponentRouter = (props) => {
-//     const CurrentComponent = props.currentComponent;
-//     if (!CurrentComponent) return <View />
-//     return (
-//         <CurrentComponent
-//             props={props}
-//         />)
-// };
-
-
 export default function Index(props) {
 
     const [componentIndex, setComponentIndex] = useState(0);
     const [renderedCategory, setRenderedCategory] = useState([]);
     const [renderedCategories, setRenderedCategories] = useState([]);
     const [renderedLocation, setRenderedLocation] = useState([]);
+    const [renderedLocations, setRenderedLocations] = useState([]);
 
     const [storageItem, setStoreItem] = useState([]);
     const [storageItems, setStoreItems] = useState([]);
@@ -38,6 +29,7 @@ export default function Index(props) {
     const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedLocation };
 
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [dialogLocationOpen, setLocationDialogOpen] = useState(false);
     const [updateOpen, setUpdateOpen] = useState(false);
     const [showBack, setShowBack] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -49,11 +41,15 @@ export default function Index(props) {
     // let items = getItem(KEYS.CATEGORIES) || [];
 
     useEffect(() => {
-        // console.log('componentIndex props: ' + CurrentComponent);
         // console.log('showMenu props: ' + showMenu);
         // clearAll();        
         //TODO: add logout item to top menu
-        // if (logout) { clearAll(); console.log('logout: ' + logout); setLogout(false); }
+        if (logout) {
+            clearAll();
+            console.log('logout: ' + logout);
+            setComponentIndex(componentIndex - 1);
+            setLogout(false);
+        }
         // return clearAll()
     }, [])
 
@@ -91,16 +87,25 @@ export default function Index(props) {
         // const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
         // console.warn("SET ITEMS", result)
     }
+    // update the categories list
+    const renderedLocationHandler = async (categoryListNode) => {
+        setRenderedLocation(addCategory(renderedCategories, categoryListNode));
+
+    }
+    // update the categories list
+    const renderedLocationsHandler = async (categoryListNode) => {
+        setRenderedLocations(addCategory(renderedCategories, categoryListNode));
+    }
 
     const onUpdateHandler = (renderedCategories, renderedCategory, editCategory) => {
         console.log("updateOpen: ", updateOpen)
 
-        // Alert.alert("Update Category", "Are you sure you want to delete '" + editCategory + "'?");
+        Alert.alert("Update Category", "Are you sure you want to update to '" + editCategory + "'?");
         // TODO: confirmationAlert cancelable
         // confirmation = confirmationAlert("Delete Category", "Are you sure you want to delete");
         // if (confirmation) {
         setRenderedCategories(updateCategory(renderedCategories, renderedCategory, editCategory));
-        if (showMenu) setShowMenu(false);
+        if (updateOpen) setUpdateOpen(false)
         setComponentIndex(componentIndex - 1);
         // removeValue(deleteItem);
     };
@@ -127,7 +132,7 @@ export default function Index(props) {
 
 
     const menuBarActionHandler = (action, backHistory) => {
-        console.warn("SET NEW Location", action)
+        console.log("SET NEW Location", action)
         switch (action) {
             case "addLocation":
                 onAddHandler(action);
@@ -186,6 +191,9 @@ export default function Index(props) {
                 dialogOpen={dialogOpen}
                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
+                dialogLocationOpen={dialogLocationOpen}
+                setDialogLocationOpen={() => { setDialogLocationOpen(!dialogLocationOpen); }}
+
                 updateOpen={updateOpen}
                 setUpdateOpen={() => { setUpdateOpen(!updateOpen); }}
 
@@ -194,68 +202,80 @@ export default function Index(props) {
 
             {/* <ScrollView style={styles.scrollView}> */}
             {componentKeys[componentIndex] === "MyCategoriesController" &&
-            <MyCategoriesController
-                currentComponent={components[componentKeys[componentIndex]]}
-                componentIndex={componentIndex}
+                <MyCategoriesController
+                    currentComponent={components[componentKeys[componentIndex]]}
+                    componentIndex={componentIndex}
 
-                renderedCategories={renderedCategories}
-                onUpdateCategories={renderedCategoriesHandler}
+                    renderedCategories={renderedCategories}
+                    onUpdateCategories={renderedCategoriesHandler}
 
-                renderedCategory={renderedCategory}
-                onUpdateCategory={renderedCategoryHandler}
+                    renderedCategory={renderedCategory}
+                    onUpdateCategory={renderedCategoryHandler}
 
-                showMenu={showMenu}
-                setShowMenu={() => { setShowMenu(!showMenu); }}
-                onActionMenu={(_action) => { handleAction(action); }}
+                    renderedLocation={renderedLocation}
+                    onUpdateLocation={renderedLocationHandler}
 
-                showBack={showBack}
-                onBack={() => { setComponentIndex(componentIndex - 1) }}
-                onNext={() => { setComponentIndex(componentIndex + 1) }}
+                    renderedLocations={renderedLocations}
+                    onUpdateLocations={renderedLocationsHandler}
 
-                dialogOpen={dialogOpen}
-                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                    showMenu={showMenu}
+                    setShowMenu={() => { setShowMenu(!showMenu); }}
+                    onActionMenu={(_action) => { handleAction(action); }}
 
-                onUpdateHandler={onUpdateHandler}
+                    showBack={showBack}
+                    onBack={() => { setComponentIndex(componentIndex - 1) }}
+                    onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                updateOpen={updateOpen}
-                setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
+                    dialogOpen={dialogOpen}
+                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                onDismiss={() => { setDialogOpen(false); }}
+                    // onUpdateHandler={onUpdateHandler}
 
-                style={styles.componentStyle}
-            />            
+                    updateOpen={updateOpen}
+                    setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
+
+                    onDismiss={() => { setDialogOpen(false); }}
+
+                    style={styles.componentStyle}
+                />
             }
             {componentKeys[componentIndex] === "Category" &&
-            <Category
-                currentComponent={components[componentKeys[componentIndex]]}
-                componentIndex={componentIndex}
+                <Category
+                    currentComponent={components[componentKeys[componentIndex]]}
+                    componentIndex={componentIndex}
 
-                renderedCategories={renderedCategories}
-                onUpdateCategories={renderedCategoriesHandler}
+                    renderedCategories={renderedCategories}
+                    onUpdateCategories={renderedCategoriesHandler}
 
-                renderedCategory={renderedCategory}
-                onUpdateCategory={renderedCategoryHandler}
+                    renderedCategory={renderedCategory}
+                    onUpdateCategory={renderedCategoryHandler}
 
-                showMenu={showMenu}
-                setShowMenu={() => { setShowMenu(!showMenu); }}
-                onActionMenu={(_action) => { handleAction(action); }}
+                    renderedLocation={renderedLocation}
+                    onUpdateLocation={renderedLocationHandler}
 
-                showBack={showBack}
-                onBack={() => { setComponentIndex(componentIndex - 1) }}
-                onNext={() => { setComponentIndex(componentIndex + 1) }}
+                    renderedLocations={renderedLocations}
+                    onUpdateLocations={renderedLocationsHandler}
 
-                dialogOpen={dialogOpen}
-                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                    showMenu={showMenu}
+                    setShowMenu={() => { setShowMenu(!showMenu); }}
+                    onActionMenu={(_action) => { handleAction(action); }}
 
-                onUpdateHandler={onUpdateHandler}
+                    showBack={showBack}
+                    onBack={() => { setComponentIndex(componentIndex - 1) }}
+                    onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                updateOpen={updateOpen}
-                setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
+                    dialogOpen={dialogOpen}
+                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                onDismiss={() => { setDialogOpen(false); }}
+                    onUpdateHandler={onUpdateHandler}
 
-                style={styles.componentStyle}
-            />     
+                    updateOpen={updateOpen}
+                    setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
+
+                    onDismiss={() => { setUpdateOpen(false); }}
+
+                    style={styles.componentStyle}
+                />
             }
 
             {/* </ScrollView> */}

@@ -49,9 +49,9 @@ const HeaderBar = (props) => {
                   <View style={styles.buttonRow}>
 
                     <TouchableOpacity
-                      onPress={() => { props.onActionMenu("addLocation"), props.renderedCategory }}
+                      onPress={() => { props.onActionMenu("addLocation") }}
                       style={styles.actionMenu}>
-                      {props.dialogOpen ?
+                      {props.dialogLocationOpen ?
                         <Icon name="close" style={styles.icon} />
                         :
                         <FontAwesomeIcon name="add-location" style={styles.icon} />
@@ -59,20 +59,28 @@ const HeaderBar = (props) => {
                     </TouchableOpacity>
 
                     <TouchableOpacity
-                      onPress={() => { props.onActionMenu("editCategory"), props.renderedCategory }}
+                      onPress={() => { props.onActionMenu("editCategory") }}
                       style={styles.actionMenu}>
-                      {props.dialogOpen ?
+                      {props.updateOpen ?
                         <Icon name="close" style={styles.icon} />
                         :
                         <FontAwesomeIcon name="edit-location" style={styles.icon} />
                       }
                     </TouchableOpacity>
                     <TouchableOpacity
-                      onPress={() => { props.onActionMenu("deleteCategory"), props.renderedCategory }}
+                      onPress={() => { props.onActionMenu("deleteCategory") }}
                       style={styles.actionMenu}
                     >
                       <Icon name="map-marker-remove-variant" style={styles.icon} />
                     </TouchableOpacity>
+                    
+                    <TouchableOpacity
+                    onPress={() => { props.onActionMenu("resetCategories"); }}
+                    tag="Reset Categories"
+                    style={styles.actionMenu}
+                >
+                    <Icon name="map-marker-off" style={styles.icon} />
+                </TouchableOpacity>
                   </View>
                 }
               </View>

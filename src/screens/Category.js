@@ -14,56 +14,76 @@ import ActionMenu from '../components/ActionMenu';
 
 export default function Category(props) {
 
-  const [LocationList, setLocationList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState([]);
+  const [locationList, setLocationList] = useState([]);
   const [currentLocation, setCurrentLocation] = useState([]);
 
   const [updateList, setUpdateList] = useState(false);
-  const [isAddMode, setIsAddMode] = useState(false);
+  const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
     console.log('Category.props: ' + JSON.stringify(props));
-    console.log('currentComponent props: ' + JSON.stringify(props).currentComponent);
-    console.log('dialogOpen props: ' + JSON.stringify(props.dialogOpen));
+    console.log('dialogOpen props: ' + props.dialogOpen);
     console.log('updateOpen props: ' + props.updateOpen);
-    console.log('showMenu props: ' + props.showMenu);
+    console.log('LocationList: ' + locationList);
 
-    if (updateList) {
+    if (props.updateOpen) {
       // TODO: validate add asynch starage and sorting capabiliteis
       // initStorage();
     }
   }, [])
 
-  const addLocationHandler = locationName => {
-    setLocationList(currentLocation => [
-      ...currentLocation,
-      { id: Math.random().toString(), name: locationName }
-    ]);
-    setIsAddMode(false);
-    setUpdateList(true);
-    setCurrentLocation(locationName);
-    console.log("The Current Category: ", currentLocation);
-    console.log("The List Category: ", LocationList);
+  useEffect(() => {
+    if (isUpdateMode) {
+      // props.setUpdateOpen(false);
+      reloadStorage()
+    }
+  }, [])
 
-    updateStorage(locationName)
+  useEffect(() => {
+    if (categoryList) {
+      reloadStorage()
+      // console.log("The Current Category: ", currentCategory);
+      // console.log("The List Category: ", categoryList);
+    }
+    // return {  };
+  }, [categoryList])
+
+  const onUpdateHandler = categoryName => {
+    console.warn("onUpdateHandler in Category!")
+    props.onUpdateCategory(categoryName)
+    const index = props.renderedCategories.findIndex(category => category.name === props.renderedCategory);
+    props.onUpdateHandler(props.renderedCategories, index, categoryName);
+    //TODO: set the line below to active before production.
+    // props.setUpdateOpen(false)
+    // setIsUpdateMode(false);    
   };
 
-  const updateStorage = newLocation => {
-    props.onUpdateLocation(newLocation);
-    props.onUpdateList(newLocation)
-    console.log("props List Category: ", props.myLocationList);
-    console.log("props Current Category: ", props.popLatastCategory);
+  // call for local storing 
+  const updateStorage = (newListItem) => {
+    props.onUpdateCategory(newListItem)
+    props.onUpdateCategories(newListItem)
   };
 
-  const cancelCategoryAdditionHandler = () => {
+  const reloadStorage = () => {
+    // props.onDismiss();
+    setCurrentCategory(props.renderedCategory);
+    setCategoryList(props.renderedCategories);
+  }
+
+  const cancelCategoryHandler = () => {
+    props.onDismiss();
     setIsCancelMode(true);
+    // props.setUpdateOpen(false);
   };
 
   return (
     <View style={styles.container}>
       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
 
-        {props.showMenu &&
+        {/* {props.showMenu &&
         <View style={styles.manuContainer}>
           <ActionMenu
             onActionMenu={props.onActionMenu}
@@ -79,14 +99,33 @@ export default function Category(props) {
             style={styles.actionMenu}
           />
         </View>
-        }
+        } */}
 
         <View style={styles.textContainer}>
 
           {
-            props.myLocationList ?
+            props.locationList ?
 
-              <Text style={styles.textPrompt}>Your locations list</Text>
+              <>
+                <Text style={styles.textPrompt}>Your locations list</Text>
+                <FlatList
+                  keyExtractor={(item, index) => item.id}
+                  data={locationList}
+                  renderItem={itemData => (
+                    <CardItem
+                      id={itemData.item.id}
+
+                      myLocationList={props.myLocationList}
+                      onUpdateCategories={props.onUpdateCategories}
+                      setRenderedCategory={props.setRenderedCategory}
+
+                      onPress={props.onNext}
+                      title={itemData.item.name}
+                      style={styles.categoryItem}
+                    />
+                  )}
+                />
+              </>
               :
 
               <View style={styles.welcomeContainer}>
@@ -96,61 +135,50 @@ export default function Category(props) {
           }
         </View>
 
+        {props.updateOpen &&
+          < Dialog
+            visible={props.updateOpen}
+            onTouchOutside={() => { visible = props.onDismiss(); }}
+            dialogAnimation={
+              new SlideAnimation({
+                slideFrom: 'bottom',
+              })
+            }
+            dialogStyle={styles.dialog}
+          >
+            <DialogContent>
+              <View style={styles.welcomeContainer}>
+                <MyInputText
+                  initialValue=""
+                  visible={props.updateOpen}
+                  updateOpen={props.updateOpen}
+                  setUpdateOpen={props.setUpdateOpen}
 
-        < Dialog
-          visible={props.dialogOpen}
-          onTouchOutside={() => { visable = props.onDismiss(); }}
-          dialogAnimation={
-            new SlideAnimation({
-              slideFrom: 'bottom',
-            })
-          }
-          dialogStyle={styles.dialog}
-        >
-          <DialogContent>
-            <View style={styles.welcomeContainer}>
-              <Text style={styles.textDialog}>Create New Location</Text>
-              <MyInputText
-                visible={isAddMode}
-                onAdd={addLocationHandler}
-                reloadStorage={props.reloadStorage}
-                myLocationList={props.myLocationList}
-                onUpdateCategories={props.onUpdateCategories}
-                // onCreate={() => { props.setCurrentCategory() }}
-                onCancel={cancelCategoryAdditionHandler}
-                dialogOpen={props.dialogOpen}
-                onDismiss={() => { props.setDialogOpen() }}
-                initialValue=""
-                windowWidth={windowWidth}
-                windowHeight={windowHeight}
-              />
-            </View>
-          </DialogContent>
-        </Dialog>
-
-        {
-          props.myLocationList ?
-
-            <FlatList
-              keyExtractor={(item, index) => item.id}
-              data={props.myLocationList}
-              renderItem={itemData => (
-                <CardItem
-                  id={itemData.item.id}
+                  onUpdate={onUpdateHandler}
+                  reloadStorage={props.reloadStorage}
 
                   myLocationList={props.myLocationList}
                   onUpdateCategories={props.onUpdateCategories}
-                  setRenderedCategory={props.setRenderedCategory}
 
-                  onPress={props.onNext}
-                  title={itemData.item.name}
-                  style={styles.categoryItem}
+                  onCancel={cancelCategoryHandler}
+                  onDismiss={() => { props.onDismiss }}
+
+
+                  setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
+                  isUpdateMode={isUpdateMode}
+
+                  // reloadStorage={reloadStorage}
+                  // renderedCategory={props.renderedCategory}
+                  // onUpdateCategories={props.onUpdateCategories}
+
+                  windowWidth={windowWidth}
+                  windowHeight={windowHeight}
                 />
-              )}
-            />
-            :
-            null
+              </View>
+            </DialogContent>
+          </Dialog>
         }
+
       </ScrollView>
     </View >
   );

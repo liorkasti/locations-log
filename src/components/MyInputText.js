@@ -7,7 +7,7 @@ const MyInputText = props => {
   const [enteredInput, setEnteredInput] = useState("");
 
   useEffect(() => {
-    // console.warn("CategoryInput props: ", props);
+    console.log("CategoryInput props: ", props);
   }, [])
 
   // console.warn("enteredText: ", enteredInput);
@@ -18,7 +18,6 @@ const MyInputText = props => {
 
   const addTextHandler = () => {
     // console.warn("enteredText: ", enteredInput);    
-
     if (enteredInput.length > 0) {
       props.onAdd(enteredInput);
       setEnteredInput('');
@@ -32,9 +31,11 @@ const MyInputText = props => {
   }
 
   const updateTextHandler = () => {
-    // console.warn("enteredText: ", enteredInput);    
     if (enteredInput.length > 0) {
       props.onUpdate(enteredInput);
+      // props.setIsUpdateMode();
+      // props.setUpdateOpen;
+      // props.visible()
       setEnteredInput('');
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
@@ -48,7 +49,7 @@ const MyInputText = props => {
   return (
 
     <View style={styles.container}>
-      {props.dialogOpen ?
+      {props.dialogOpen &&
         <>
           <Text style={styles.textDialog}>Create a new Category</Text>
           {/* TODO: Add dinamic screen title for the message below*/}
@@ -78,41 +79,38 @@ const MyInputText = props => {
             </TouchableOpacity>
           </View>
         </>
-        :
+      }
+      {
+        props.updateOpen &&
         <>
-          {
-            props.updateOpen &&
-            <>
-              <Text style={styles.textDialog}>Edit Category Name</Text>
-              {/* TODO: Add dinamic screen title for the message below*/}
-              {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
-              <View style={styles.inputContainer}>
-                <TextInput
-                  placeholder="Category name"
-                  style={styles.input}
-                  onChangeText={textInputHandler}
-                  value={enteredInput}
-                />
-              </View>
-              <View style={styles.buttonContainer}>
-                <TouchableOpacity
-                  onPress={props.onCancel}
-                  style={styles.cancelButton}
-                >
-                  <Icon name="map-marker-down" style={styles.icon2} />
-                  <Text style={styles.textButton}>CANCEL</Text>
-                </TouchableOpacity>
+          <Text style={styles.textDialog}>Edit Category Name</Text>
+          {/* TODO: Add dinamic screen title for the message below*/}
+          {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Category name"
+              style={styles.input}
+              onChangeText={textInputHandler}
+              value={enteredInput}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              onPress={() => {props.onCancel; }}
+              style={styles.cancelButton}
+            >
+              <Icon name="map-marker-down" style={styles.icon2} />
+              <Text style={styles.textButton}>CANCEL</Text>
+            </TouchableOpacity>
 
-                <TouchableOpacity
-                  onPress={updateTextHandler}
-                  style={styles.addButton}
-                >
-                  <Icon name="map-marker-check" style={styles.icon1} />
-                  <Text style={styles.textAddButton}>UPDATE</Text>
-                </TouchableOpacity>
-              </View>
-            </>
-          }
+            <TouchableOpacity
+              onPress={updateTextHandler}
+              style={styles.addButton}
+            >
+              <Icon name="map-marker-check" style={styles.icon1} />
+              <Text style={styles.textAddButton}>UPDATE</Text>
+            </TouchableOpacity>
+          </View>
         </>
       }
     </View>
