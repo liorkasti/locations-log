@@ -3,8 +3,9 @@
 // import { useHistory } from "react-router-dom";
 // import AsyncStorage from '@react-native-community/async-storage';
 
-// import { KEYS, setItem, getItem, setItems, getItems } from '../utils/myLocationsStorage';
-
+// // import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
+// // import { KEYS, storeData, setItem, getItem, multiSet, multiGet, getMyStringValue, getMyObject, getAllKeys, clearAll } from '../utils/myLocationsStorage';
+// import { addCategory, removeCategoryHandler } from '../action/modifyActions';
 // import MyCategoriesController from "../actionController/MyCategoriesController";
 // import Category from "../screens/Category";
 // import Location from "../screens/Location";
@@ -25,9 +26,8 @@
 
 // export default function Index(props) {
 
-//     // load from storage
-//     const item = getItem(KEYS.CATEGORY) || [];
-//     const items = getItems(KEYS.CATEGORIES) || [];
+//     const [storageItem, setStoreItem] = useState([]);
+//     const [storageItems, setStoreItems] = useState([]);
 
 //     const [componentIndex, setComponentIndex] = useState(0);
 //     const [renderedCategory, setRenderedCategory] = useState([]);
@@ -35,96 +35,83 @@
 //     const [renderedLocation, setRenderedLocation] = useState([]);
 
 
-//     // const [myLocationList, setMyLocationList] = useState([]);
-
-
 //     const componentKeys = ["MyCategoriesController", "Category", "Location"];
-//     const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedCategory };
-//     // const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedLocation };
+//     // const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedCategory };
+//     const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedLocation };
 
 //     const [dialogOpen, setDialogOpen] = useState(false);
 //     const [showBack, setShowBack] = useState(false);
 //     const [showMenu, setShowMenu] = useState(false);
+//     const [logout, setLogout] = useState(false);
+
+
+//     // load from storage
+//     // let item = getItem(KEYS.CATEGORY) || [];
+//     // let items = getItem(KEYS.CATEGORIES) || [];
 
 //     useEffect(() => {
-//         if (componentIndex < 0) {
-//             setShowBack(false);
-//             // initStorage();
-//             // // load from storage
-//             items = getItem(KEYS.CATEGORIES)
-//             console.log('items FROM STORAGE: ', (items))
-//             // AsyncStorage.getItem('items').then((items) => {
-//             //     console.log("Root List Category: ", myLocationList);
-//             //     setMyLocationList = items;
-//             //     console.log('items', items)
-//             // })
-//         }
-//         if (componentIndex > 0) { setShowBack(true); }
-//         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
+        
+//         // console.log('componentIndex props: ' + componentIndex);
+//         console.log('showMenu props: ' + showMenu);
+//         // clearAll();        
+//         //TODO: add logout item to top menu
+//         // if (logout) { clearAll(); console.log('logout: ' + logout); setLogout(false); }
+//         // return clearAll()
 //     }, [])
 
 //     useEffect(() => {
-//         // AsyncStorage.multiMerge(setMyLocationList, items);
-//         // AsyncStorage.getItem('items').then((items) => {
-//         //     console.log('items', items)
-//         // })
-//         console.log("Storage Rendered Category: ", getItem(JSON.stringify(KEYS.CATEGORY)));
+
+//         // console.log("Storage Rendered Category: ", item);
 //         console.log("Root Current Category: ", renderedCategory);
-//         console.log('Storage Rendered Categories: : ', getItem(JSON.stringify(KEYS.CATEGORIES)));
+//         // console.log('Storage Rendered Categories: : ', items);
 //         console.log("Root Current Category: ", renderedCategories);
-
-//         // console.log("HEADER NAME: ", headers[componentKeys[componentIndex]]);
-//         // console.log("Root componentIndex: ", componentIndex);
+        
+//         if (componentIndex < 0) {
+//             setShowBack(false);
+//             initStorage();
+//         }
+//         if (componentIndex > 0) {
+//             // setShowBack(true); 
+//             initStorage();
+//         }
 //         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
-//         // todo: Fix initStorage when on press Add new Category.
-//         // initStorage();
-
-//     }, [componentIndex])
+//     }, [renderedCategory, componentIndex])
 
 //     let history = useHistory();
 
 //     // set the new category
-//     // const renderedCategoryHandler = async (categoryNode) => {
-//     //     setRenderedCategory(categoryNode);
-//     //     item = setItem(KEYS.CATEGORY, JSON.stringify(categoryNode));
-//     //     setRenderedCategory(item);
-//     // }
+//     const renderedCategoryHandler = async (categoryNode) => {
+//         setRenderedCategory(categoryNode);
+//         // item = setItem(KEYS.CATEGORIES, JSON.stringify(categoryNode))
+//         // item = getItem(KEYS.CATEGORIES, JSON.stringify(categoryNode))
+//     }
 
 //     // update the categories list
 //     const renderedCategoriesHandler = async (categoryListNode) => {
+//         setRenderedCategories(addCategory(renderedCategories,categoryListNode));
 
-//         setRenderedCategory(categoryItems);
-
-//         setRenderedCategories(renderedCategories => [
-//             ...renderedCategories,
-//             { id: Math.random().toString(), name: categoryListNode }
-//         ]);
-
-//         const result = setItem(JSON.stringify(renderedCategories))
-//         console.warn("SET ITEMS", result)
-
-//         items = setItems(KEYS.CATEGORIES, JSON.stringify(renderedCategories))
-//         setRenderedCategories(items);
-
-
-
-//         // const categoryItems = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories))
-//         // items = setItem(JSON.stringify(renderedCategories))
-//         // myLocationList = setItem(renderedCategories);
-//         // console.log("Root List Category: ", renderedCategories);
+//         // items = multiSet(KEYS.CATEGORIES, item)
+//         // const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
+//         // console.warn("SET ITEMS", result)
 //     }
 
-//     const menuBarActionHandler = (action) => {
+//     const menuBarActionHandler = (action, backHistory) => {
+//         console.warn("SET NEW Location", action)
 //         switch (action) {
 //             case "addLocation":
-//                 onAddHandler(action);
+//                 Alert.alert("Selected add menu item");
+//                 // onAddHandler(action);
 //                 break;
 //             case "editCategory":
 //                 onUpdateHandler(action);
 //                 break;
 //             case "deleteCategory":
 //                 console.log('777777777777777: ' + action);
-//                 onDeleteHandler(action);
+//                 onDeleteHandler(renderedCategory);
+//                 break;
+//             case "resetCategories":
+//                 console.log('777777777777777: ' + action);
+//                 setLogout(true);
 //                 break;
 //             case "onOpenLocation":
 //                 onRead();
@@ -135,39 +122,38 @@
 //     };
 
 
-//     const onDeleteHandler = deletItem => {
-//         console.log('deletItem: ' + deletItem);
-
-//         // console.log('TO BE DELETED: ' + categoryName);
-//         // console.log('9999999999999999: ' + props.CurrentComponent.Index.myLocationList);
-//         // console.log("Current Category: ", currentCategory);
-//         // let newMyStays = [];
-//         // for (let i = 0; i < myLocationList.length; i++) {
-//         //     if (i !== myLocationList.indexOf(deletItem)) {
-//         //         console.log('Iterate VALUE ', myLocationList);
-//         //         newLocationList.push(myLocationList[i])
-//         //     }
-//         // }
-//         // setMyLocationList(newLocationList);
-//         // setComponentIndex(componentIndex - 1);
+//     const onDeleteHandler = deleteItem => {
+//         console.log('deleteItem: ' + deleteItem);
+//         // removeValue(deleteItem);
 //     };
 
 
 //     const initStorage = () => {
+//         // setRenderedCategory(getItem(KEYS.CATEGORY) || []);
+//         // setRenderedCategories(getItem(KEYS.CATEGORIES) || []);
+//         // setRenderedCategory(getItem(KEYS.CATEGORY) || []);
+//         // setRenderedCategories(multiGet(getItem(KEYS.CATEGORIES)) || []);
 //         setRenderedCategory(renderedCategory);
 //         setRenderedCategories(renderedCategories);
 //     }
 
+    
 //     return (
 //         <View style={styles.container}>
 //             <StatusBar backgroundColor="rgba(0,88,155,1)" />
 
 //             <HeaderBar
 //                 componentIndex={componentIndex}
-//                 myLocationList={renderedCategories}
-//                 setMyLocationList={renderedCategoriesHandler}
+
+//                 handleMenu={(subroute, _, action = _) => {
+//                     menuBarActionHandler(subroute, action);
+//                 }}
+
+//                 renderedCategories={renderedCategories}
+//                 onUpdateCategories={renderedCategoriesHandler}
 
 //                 renderedCategory={renderedCategory}
+//                 onUpdateCategory={renderedCategoryHandler}
 
 //                 header={headers[componentKeys[componentIndex]]}
 //                 onBack={() => {
@@ -181,24 +167,25 @@
 
 //                 onDelete={onDeleteHandler}
 //                 onActionMenu={(action) => { menuBarActionHandler(action); }}
+//                 onLogout={setLogout}
 
 //                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 //                 dialogOpen={dialogOpen}
 
 //                 style={styles.header}
-
 //             />
 
 //             {/* <ScrollView style={styles.scrollView}> */}
+
 //             <CurrentComponentRouter
 //                 currentComponent={components[componentKeys[componentIndex]]}
 //                 componentIndex={componentIndex}
 
-//                 myLocationList={renderedCategories}
+//                 renderedCategories={renderedCategories}
 //                 onUpdateCategories={renderedCategoriesHandler}
 
 //                 renderedCategory={renderedCategory}
-//                 // onUpdateCategory={renderedCategoryHandler}
+//                 onUpdateCategory={renderedCategoryHandler}
 
 //                 showMenu={showMenu}
 //                 setShowMenu={() => { setShowMenu(!showMenu); }}
@@ -212,6 +199,7 @@
 //                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
 //                 onDismiss={() => { setDialogOpen(false); }}
+
 //                 style={styles.componentStyle}
 //             />
 
@@ -219,10 +207,6 @@
 //         </View>
 //     );
 // }
-
-
-// const windowWidth = Dimensions.get('window').width;
-// const windowHeight = Dimensions.get('window').height;
 
 // const styles = StyleSheet.create({
 //     container: {

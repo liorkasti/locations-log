@@ -5,7 +5,7 @@ import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog
 import toastMaker from '../utils/toastMaker';
 
 import { KEY } from '../router/index';
-import { addCategory, removeCategoryHandler } from '../action/modifyActions';
+import { addCategory, removeCategory } from '../action/modifyActions';
 import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
 import MyInputText from '../components/MyInputText';
@@ -39,7 +39,6 @@ export default function MyCategoriesController({ props }) {
   const updateStorage = (newListItem) => {
     props.onUpdateCategory(newListItem)
     props.onUpdateCategories(newListItem)
-
   };
 
   const reloadStorage = () => {
@@ -53,11 +52,7 @@ export default function MyCategoriesController({ props }) {
   };
 
   const removeCategoryHandler = categoryId => {
-    console.log('TO BE DELETED: ' + categoryId);
-    // console.log("Current Category: ", currentCategory);
-    setCategoryList(currentCategory => {
-      return currentCategory.filter(category => category.id !== categoryId);
-    });
+
   };
 
   return (
@@ -118,7 +113,7 @@ export default function MyCategoriesController({ props }) {
               renderItem={itemData => (
                 <CardItem
                   id={itemData.item.id}
-                  onUpdateCategory={props.onUpdateCategory}
+                  onSelectedCategory={props.onUpdateCategory}
                   // onDelete={removeCategoryHandler}
                   onPress={props.onNext}
                   title={itemData.item.name}

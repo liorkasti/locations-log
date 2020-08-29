@@ -1,22 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Button } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions, Alert } from "react-native";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 
 
-const ActionMenu = (props) => {
 
+const ActionMenu = (props) => {
+    const [count, setCount] = useState(0);
+    const onPress = () => setCount(prevCount => prevCount + 1);
+
+    const onOptionSelect = () => {
+        // alert(`Selected number: ${value}`);
+        Alert.alert("Selected add menu item");
+        console.log("props: ", props.onActionMenu)
+    
+        this.setState({ opened: true });
+        this.setState(onActionMenu(value))
+    };
 
     return (
         <View style={styles.container}>
             <View style={styles.group}>
                 <TouchableOpacity
-                    // onPress={() => { props.onDelete(props.renderedCategory) }}
-                    // onPress={() => { props.onActionMenu("addLocation") }}
+                    // onPress={onOptionSelect}
+                    onPress={onOptionSelect}
+
                     tag="Add Location"
                     style={styles.actionButton}
                 >
+                    {/* <Text style={{ color: 'red' }}>Two</Text> */}
                     <Text style={styles.textMenuItem}>{props.tag || 'Add Location'}</Text>
                     <FontAwesomeIcon name="add-location" style={styles.icon} />
                 </TouchableOpacity>
@@ -59,23 +72,20 @@ const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     container: {
         position: "absolute",
-        flex: 1,
-        backgroundColor: "rgba(0,88,155,1.0)",
-        width: 'auto',
-        height: 'auto',
-        top: 62,
-        zIndex: 1000,
-        left: windowWidth - 175,
-        // left: 0,
-        // alignItems: 'center',
-        // right: -2000,
     },
     group: {
         alignItems: "flex-end",
         justifyContent: "center",
-        zIndex: 20,
-        width: 180,
-        height: 170
+        backgroundColor: "#111111aa",
+        shadowColor: "#000",
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        width: 200,
+        height: 200,
+        top: 142,
+        zIndex: 1000,
+        left: 212,
+        zIndex: 6000,
     },
     textMenuItem: {
         textAlign: 'right',
@@ -84,7 +94,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         borderBottomWidth: 0.7,
         borderColor: 'white',
-        width: 130,
+        width: 150,
     },
     actionButton: {
         padding: 8,

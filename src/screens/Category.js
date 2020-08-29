@@ -4,7 +4,7 @@ import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { myLocationList } from '../router/index';
+import { addCategory, removeCategory } from '../action/modifyActions';
 
 import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
@@ -15,15 +15,14 @@ export default function Location(props) {
   const [LocationList, setLocationList] = useState([]);
   const [currentLocation, setCurrentLocation] = useState([]);
 
-  const [categoryList, setCategoryList] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState([]);
-
   const [updateList, setUpdateList] = useState(false);
   const [isAddMode, setIsAddMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
-    console.log('66666666666666666666666666 props: ' + props.myLocationList);
+    console.log('props: ' + props);
+    console.log('dialogOpen props: ' + props.dialogOpen);
+    console.log('showMenu props: ' + props.showMenu);
 
     if (updateList) {
       // TODO: validate add asynch starage and sorting capabiliteis
@@ -56,31 +55,33 @@ export default function Location(props) {
     setIsCancelMode(true);
   };
 
-  const onDeleteHandler = (category) => {
-    console.log('TO BE DELETED: ' + category);
-
-    // let newMyStays = [];
-    // for (let i = 0; i < props.myLocationList.length; i++) {
-    //   if (i !== props.myLocationList.indexOf(deletItem)) {
-    //     console.log('Iterate VALUE ', props.myLocationList[i]);
-    //     newLocationList.push(props.myLocationList[i])
-    //   }
-    // }
-    // props.onUpdateCategories(newLocationList)
-    // // const _myLocationList = props.myLocationList.filter((name) => props.renderedCategory !== category)
-    // console.log("newLocationList: ", newLocationList);
-    // props.setComponentIndex(componentIndex - 1);  
-  };
-
   return (
     <View style={styles.container}>
       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
 
+        {/* {props.showMenu &&
+        <View style={styles.manuContainer}>
+          <ActionMenu
+            onActionMenu={props.onActionMenu}
+            onDelete={props.onDelete}
+
+            renderedCategories={props.renderedCategories}
+            onUpdateCategories={props.renderedCategoriesHandler}
+
+            renderedCategory={props.renderedCategory}
+            onUpdateCategory={props.renderedCategoryHandler}
+
+            onActionMenu={props.onActionMenu}
+            style={styles.actionMenu}
+          />
+        </View>
+        } */}
+
         <View style={styles.textContainer}>
 
           {
-            props.myLocationList ? 
-            
+            props.myLocationList ?
+
               <Text style={styles.textPrompt}>Your locations list</Text>
               :
 
@@ -200,10 +201,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 40,
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    zIndex: 1
   },
   icon: {
     color: "rgba(0,88,155,1)",
     fontSize: 120,
-  }
+    zIndex: 1
+  },
 });

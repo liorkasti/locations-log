@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, Text, TouchableOpacity, Image, } from "react-native";
-
-import Icon from "react-native-vector-icons/AntDesign";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Hamburger from '../components/Hamburger';
-
 import ActionMenu from '../components/ActionMenu';
-import TopActionMenu from '../components/TopActionMenu';
-import { MenuProvider } from 'react-native-popup-menu';
-import { Menu, MenuOptions, MenuOption, MenuTrigger, SomeCustomContainer } from 'react-native-popup-menu';
 
 const HeaderBar = (props) => {
 
@@ -22,24 +17,73 @@ const HeaderBar = (props) => {
       <View style={styles.headerStack}>
         <Text style={styles.bsD1}>BS&quot;D</Text>
         <Text style={styles.header}>{props.header}</Text>
-        <View style={styles.buttonStack}>
-          {props.componentIndex > 0 &&
-            <TouchableOpacity onPress={() => {
-              props.onBack()
-            }} >
-              <FontAwesomeIcon
-                name="chevron-left"
-                style={styles.bachIcon}>
-              </FontAwesomeIcon>
+        <View style={styles.buttonstack}>
 
-            </TouchableOpacity>
-          }
+          {props.componentIndex > 0 ?
+            // --------------------- Current Category View: ---------------------
+            <>
+              <TouchableOpacity onPress={() => {
+                props.onBack()
+              }} >
+                <FontAwesomeIcon
+                  name="chevron-left"
+                  style={styles.bachIcon}>
+                </FontAwesomeIcon>
+              </TouchableOpacity>
 
-          {props.componentIndex === 0 ?
-            <View style={styles.createbuttonRow}>
+              <View style={styles.createButtonRow}>
+
+                <TouchableOpacity
+                  onPress={props.setShowMenu}
+                  style={styles.hamburgerMenu} >
+                  <Hamburger
+                    type="cross"
+                    active={props.showMenu}
+                    onPress={props.setShowMenu}
+                    underlayColor="transparent"
+                  />
+                </TouchableOpacity>
+
+                {props.showMenu &&
+
+                  <View style={styles.buttonRow}>
+
+                    <TouchableOpacity
+                      onPress={() => { props.onActionMenu("addLocation"), props.renderedCategory }}
+                      style={styles.actionMenu}>
+                      {props.dialogOpen ?
+                        <Icon name="close" style={styles.icon} />
+                        :
+                        <FontAwesomeIcon name="add-location" style={styles.icon} />
+                      }
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      onPress={() => { props.onActionMenu("editCategory"), props.renderedCategory }}
+                      style={styles.actionMenu}>
+                      {props.dialogOpen ?
+                        <Icon name="close" style={styles.icon} />
+                        :
+                        <FontAwesomeIcon name="edit-location" style={styles.icon} />
+                      }
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => { props.onActionMenu("deleteCategory"), props.renderedCategory }}
+                      style={styles.actionMenu}
+                    >
+                      <Icon name="map-marker-remove-variant" style={styles.icon} />
+                    </TouchableOpacity>
+                  </View>
+                }
+              </View>
+            </>
+
+            :
+            // --------------------- Categories View: --------------------- 
+            <View style={styles.createButtonRow}>
               <TouchableOpacity
                 onPress={() => { props.setDialogOpen(); }}
-                style={styles.createbutton}
+                style={styles.createButton}
               >
 
                 {props.dialogOpen
@@ -50,49 +94,8 @@ const HeaderBar = (props) => {
                 }
               </TouchableOpacity>
             </View>
-            :
-            props.componentIndex === 1 &&
-            <View style={styles.createbuttonRow}>
-              {/* TODOL right toolbar */}
-              <TouchableOpacity
-                onPress={() => { props.setShowMenu() }}
-                style={styles.hamburgerMenu} >
-                <Hamburger
-                  type="cross"
-                  active={props.showMenu}
-                  // onPress={() => { props.onPress(); }}
-                  onPress={() => { props.setShowMenu() }}
-                  underlayColor="transparent"
-                />
-              </TouchableOpacity>
-              {props.showMenu ?
-                <View style={styles.container}>
-                  <View style={styles.group}>
-                    <TopActionMenu
-                      // onOpenMenu={props.setShowMenu()}
-                      showMenu={props.showMenu}
-                      onActionMenu={(action) => { onActionMenu(action); }}
-                      // onDelete={props.onDelete}
-                      // onLogout={props.onLogout}
-
-                      // renderedCategories={props.renderedCategories}
-                      // onUpdateCategories={props.renderedCategoriesHandler}
-
-                      // renderedCategory={props.renderedCategory}
-                      // onUpdateCategory={props.renderedCategoryHandler}
-                      // style={styles.actionMenu}
-                      windowWidth={windowWidth}
-                      windowHeight={windowHeight}
-
-                    />
-
-                  </View>
-                </View>
-                :
-                null
-              }
-            </View>
           }
+
         </View>
       </View>
     </View >
@@ -121,20 +124,25 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 18
   },
-  buttonback: {
+  buttonBack: {
     width: 29,
     height: 40,
   },
-  createbuttonRow: {
+  createButtonRow: {
     position: "absolute",
     flexDirection: "row",
   },
+  buttonRow: {
+    position: "absolute",
+    flexDirection: "row",
+    justifyContent: "center",
+    top: 8,
+    left: windowWidth - 140,
+  },
   actionMenu: {
-    // position: "absolute",
-    // width: windowWidth,
-    // right: windowWidth,
-    // left: 0,
-    // top: 64
+    zIndex: 100,
+    marginRight: 5,
+    fontSize: 30,
   },
   hamburgerMenu: {
     zIndex: 100,
@@ -143,40 +151,7 @@ const styles = StyleSheet.create({
     left: windowWidth - 50,
     fontSize: 28,
   },
-  menuContainer: {
-    // position: "absolute",
-    // flex: 0,
-    // backgroundColor: "rgba(0,88,155,1.0)",
-    // width: 'auto',
-    // height: 'auto',
-    // top: 62,
-    // zIndex: 1000,
-    // left: windowWidth - 175,
-  },
-  group: {
-    alignItems: "flex-end",
-    justifyContent: "center",
-    zIndex: 20,
-    width: 200,
-    height: 180,
-    marginTop: 0,
-    marginLeft: 0,
-  },
-  menuOptions: {
-    flex: 0,
-    zIndex: 5000,
-    // fontSize: 20,
-    borderBottomWidth: 0.7,
-    // borderColor: 'white',
-    // borderColor: 'rgba(0,88,155,1.0',
-    // width: 130,
-    // flexDirection: "row",
-    marginLeft: 10,
-    color: 'white',
-    padding: 10,
-  },
-
-  createbutton: {
+  createButton: {
     width: "100%",
     height: 30,
     top: 7,
@@ -207,31 +182,10 @@ const styles = StyleSheet.create({
     fontFamily: "roboto-regular",
     textAlign: "center",
   },
-  buttonStack: {
+  buttonstack: {
     height: 62,
     flexDirection: "row",
-  }, textMenuItem: {
-    textAlign: 'right',
-    alignSelf: 'stretch',
-    color: 'white',
-    fontSize: 16,
-    borderBottomWidth: 0.7,
-    borderColor: 'white',
-    width: 130,
-  },
-  actionButton: {
-    padding: 8,
-    flexDirection: "row",
-    // paddingHorizontal: 10
-  },
-  menuIcon: {
-    color: 'white',
-    fontSize: 20,
-    paddingHorizontal: 5,
-    textAlign: 'right',
-    alignSelf: 'stretch',
-  },
-
+  }
 });
 
 export default HeaderBar;

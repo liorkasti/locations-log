@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 // import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
 // import { KEYS, storeData, setItem, getItem, multiSet, multiGet, getMyStringValue, getMyObject, getAllKeys, clearAll } from '../utils/myLocationsStorage';
-import { addCategory, removeCategoryHandler } from '../action/modifyActions';
+import { addCategory, updateCategory, removeCategory } from '../action/modifyActions';
 import MyCategoriesController from "../actionController/MyCategoriesController";
 import Category from "../screens/Category";
 import Location from "../screens/Location";
@@ -26,13 +26,13 @@ const CurrentComponentRouter = (props) => {
 
 export default function Index(props) {
 
-    const [storageItem, setStoreItem] = useState([]);
-    const [storageItems, setStoreItems] = useState([]);
-
     const [componentIndex, setComponentIndex] = useState(0);
     const [renderedCategory, setRenderedCategory] = useState([]);
     const [renderedCategories, setRenderedCategories] = useState([]);
     const [renderedLocation, setRenderedLocation] = useState([]);
+
+    const [storageItem, setStoreItem] = useState([]);
+    const [storageItems, setStoreItems] = useState([]);
 
 
     const componentKeys = ["MyCategoriesController", "Category", "Location"];
@@ -50,6 +50,9 @@ export default function Index(props) {
     // let items = getItem(KEYS.CATEGORIES) || [];
 
     useEffect(() => {
+
+        // console.log('componentIndex props: ' + componentIndex);
+        console.log('showMenu props: ' + showMenu);
         // clearAll();        
         //TODO: add logout item to top menu
         // if (logout) { clearAll(); console.log('logout: ' + logout); setLogout(false); }
@@ -62,6 +65,7 @@ export default function Index(props) {
         console.log("Root Current Category: ", renderedCategory);
         // console.log('Storage Rendered Categories: : ', items);
         console.log("Root Current Category: ", renderedCategories);
+
         if (componentIndex < 0) {
             setShowBack(false);
             initStorage();
@@ -84,18 +88,19 @@ export default function Index(props) {
 
     // update the categories list
     const renderedCategoriesHandler = async (categoryListNode) => {
-        setRenderedCategories(addCategory(renderedCategories,categoryListNode));
+        setRenderedCategories(addCategory(renderedCategories, categoryListNode));
 
         // items = multiSet(KEYS.CATEGORIES, item)
         // const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
         // console.warn("SET ITEMS", result)
     }
 
-    const menuBarActionHandler = (action) => {
+    const menuBarActionHandler = (action, backHistory) => {
         console.warn("SET NEW Location", action)
         switch (action) {
             case "addLocation":
-                onAddHandler(action);
+                Alert.alert("Selected add menu item");
+                // onAddHandler(action);
                 break;
             case "editCategory":
                 onUpdateHandler(action);
@@ -132,12 +137,17 @@ export default function Index(props) {
         setRenderedCategories(renderedCategories);
     }
 
+
     return (
         <View style={styles.container}>
             <StatusBar backgroundColor="rgba(0,88,155,1)" />
 
             <HeaderBar
                 componentIndex={componentIndex}
+
+                handleMenu={(subroute, _, action = _) => {
+                    menuBarActionHandler(subroute, action);
+                }}
 
                 renderedCategories={renderedCategories}
                 onUpdateCategories={renderedCategoriesHandler}
@@ -166,31 +176,32 @@ export default function Index(props) {
             />
 
             {/* <ScrollView style={styles.scrollView}> */}
-            <CurrentComponentRouter
-                currentComponent={components[componentKeys[componentIndex]]}
-                componentIndex={componentIndex}
 
-                renderedCategories={renderedCategories}
-                onUpdateCategories={renderedCategoriesHandler}
+                <CurrentComponentRouter
+                    currentComponent={components[componentKeys[componentIndex]]}
+                    componentIndex={componentIndex}
 
-                renderedCategory={renderedCategory}
-                onUpdateCategory={renderedCategoryHandler}
+                    renderedCategories={renderedCategories}
+                    onUpdateCategories={renderedCategoriesHandler}
 
-                showMenu={showMenu}
-                setShowMenu={() => { setShowMenu(!showMenu); }}
-                onActionMenu={(_action) => { handleAction(action); }}
+                    renderedCategory={renderedCategory}
+                    onUpdateCategory={renderedCategoryHandler}
 
-                showBack={showBack}
-                onBack={() => { setComponentIndex(componentIndex - 1) }}
-                onNext={() => { setComponentIndex(componentIndex + 1) }}
+                    showMenu={showMenu}
+                    setShowMenu={() => { setShowMenu(!showMenu); }}
+                    onActionMenu={(_action) => { handleAction(action); }}
 
-                dialogOpen={dialogOpen}
-                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                    showBack={showBack}
+                    onBack={() => { setComponentIndex(componentIndex - 1) }}
+                    onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                onDismiss={() => { setDialogOpen(false); }}
+                    dialogOpen={dialogOpen}
+                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                style={styles.componentStyle}
-            />
+                    onDismiss={() => { setDialogOpen(false); }}
+
+                    style={styles.componentStyle}
+                />
 
             {/* </ScrollView> */}
         </View>
