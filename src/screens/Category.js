@@ -23,7 +23,8 @@ export default function Category(props) {
 
   useEffect(() => {
     console.log('Category.props: ' + JSON.stringify(props));
-    console.log('dialogOpen props: ' + props.dialogOpen);
+    console.log('currentComponent props: ' + JSON.stringify(props).currentComponent);
+    console.log('dialogOpen props: ' + JSON.stringify(props.dialogOpen));
     console.log('updateOpen props: ' + props.updateOpen);
     console.log('showMenu props: ' + props.showMenu);
 
@@ -62,7 +63,7 @@ export default function Category(props) {
     <View style={styles.container}>
       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
 
-        {/* {props.showMenu &&
+        {props.showMenu &&
         <View style={styles.manuContainer}>
           <ActionMenu
             onActionMenu={props.onActionMenu}
@@ -78,7 +79,7 @@ export default function Category(props) {
             style={styles.actionMenu}
           />
         </View>
-        } */}
+        }
 
         <View style={styles.textContainer}>
 

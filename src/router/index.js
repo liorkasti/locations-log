@@ -14,14 +14,14 @@ import HeaderBar from "../components/HeaderBar";
 
 const components = { MyCategoriesController, Category, Location };
 
-const CurrentComponentRouter = (props) => {
-    const CurrentComponent = props.currentComponent;
-    if (!CurrentComponent) return <View />
-    return (
-        <CurrentComponent
-            props={props}
-        />)
-};
+// const CurrentComponentRouter = (props) => {
+//     const CurrentComponent = props.currentComponent;
+//     if (!CurrentComponent) return <View />
+//     return (
+//         <CurrentComponent
+//             props={props}
+//         />)
+// };
 
 
 export default function Index(props) {
@@ -35,7 +35,6 @@ export default function Index(props) {
     const [storageItems, setStoreItems] = useState([]);
 
     const componentKeys = ["MyCategoriesController", "Category", "Location"];
-    // const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedCategory };
     const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedLocation };
 
     const [dialogOpen, setDialogOpen] = useState(false);
@@ -50,7 +49,7 @@ export default function Index(props) {
     // let items = getItem(KEYS.CATEGORIES) || [];
 
     useEffect(() => {
-        // console.log('componentIndex props: ' + componentIndex);
+        // console.log('componentIndex props: ' + CurrentComponent);
         // console.log('showMenu props: ' + showMenu);
         // clearAll();        
         //TODO: add logout item to top menu
@@ -59,8 +58,6 @@ export default function Index(props) {
     }, [])
 
     useEffect(() => {
-        console.log("componentKeys[componentIndex]: ", componentKeys[componentIndex]);
-
         // console.log("Storage Rendered Category: ", item);
         console.log("Root Current Category: ", renderedCategory);
         // console.log('Storage Rendered Categories: : ', items);
@@ -196,37 +193,70 @@ export default function Index(props) {
             />
 
             {/* <ScrollView style={styles.scrollView}> */}
+            {componentKeys[componentIndex] === "MyCategoriesController" &&
+            <MyCategoriesController
+                currentComponent={components[componentKeys[componentIndex]]}
+                componentIndex={componentIndex}
 
-                <CurrentComponentRouter
-                    currentComponent={components[componentKeys[componentIndex]]}
-                    componentIndex={componentIndex}
+                renderedCategories={renderedCategories}
+                onUpdateCategories={renderedCategoriesHandler}
 
-                    renderedCategories={renderedCategories}
-                    onUpdateCategories={renderedCategoriesHandler}
+                renderedCategory={renderedCategory}
+                onUpdateCategory={renderedCategoryHandler}
 
-                    renderedCategory={renderedCategory}
-                    onUpdateCategory={renderedCategoryHandler}
+                showMenu={showMenu}
+                setShowMenu={() => { setShowMenu(!showMenu); }}
+                onActionMenu={(_action) => { handleAction(action); }}
 
-                    showMenu={showMenu}
-                    setShowMenu={() => { setShowMenu(!showMenu); }}
-                    onActionMenu={(_action) => { handleAction(action); }}
+                showBack={showBack}
+                onBack={() => { setComponentIndex(componentIndex - 1) }}
+                onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                    showBack={showBack}
-                    onBack={() => { setComponentIndex(componentIndex - 1) }}
-                    onNext={() => { setComponentIndex(componentIndex + 1) }}
+                dialogOpen={dialogOpen}
+                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                    dialogOpen={dialogOpen}
-                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                onUpdateHandler={onUpdateHandler}
 
-                    onUpdateHandler={onUpdateHandler}
+                updateOpen={updateOpen}
+                setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
 
-                    updateOpen={updateOpen}
-                    setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
+                onDismiss={() => { setDialogOpen(false); }}
 
-                    onDismiss={() => { setDialogOpen(false); }}
+                style={styles.componentStyle}
+            />            
+            }
+            {componentKeys[componentIndex] === "Category" &&
+            <Category
+                currentComponent={components[componentKeys[componentIndex]]}
+                componentIndex={componentIndex}
 
-                    style={styles.componentStyle}
-                />
+                renderedCategories={renderedCategories}
+                onUpdateCategories={renderedCategoriesHandler}
+
+                renderedCategory={renderedCategory}
+                onUpdateCategory={renderedCategoryHandler}
+
+                showMenu={showMenu}
+                setShowMenu={() => { setShowMenu(!showMenu); }}
+                onActionMenu={(_action) => { handleAction(action); }}
+
+                showBack={showBack}
+                onBack={() => { setComponentIndex(componentIndex - 1) }}
+                onNext={() => { setComponentIndex(componentIndex + 1) }}
+
+                dialogOpen={dialogOpen}
+                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+
+                onUpdateHandler={onUpdateHandler}
+
+                updateOpen={updateOpen}
+                setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
+
+                onDismiss={() => { setDialogOpen(false); }}
+
+                style={styles.componentStyle}
+            />     
+            }
 
             {/* </ScrollView> */}
         </View>

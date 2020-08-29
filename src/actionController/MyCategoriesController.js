@@ -10,7 +10,7 @@ import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
 import MyInputText from '../components/MyInputText';
 
-export default function MyCategoriesController({ props }) {
+export default function MyCategoriesController( props ) {
 
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
