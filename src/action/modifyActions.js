@@ -3,10 +3,10 @@ export const addCategory = (items, item) => {
   return [...items, { id: Math.random().toString(36).substr(2, 5), name: item }];
 };
 
-export const addLocation = (items, item) => {
-  console.warn('Locations list: ' + items);
+export const addLocation = (items, item1, item2) => {
+  console.warn('Locations list: ' + JSON.stringify(items));
 
-  return [...items, { id: Math.random().toString(36).substr(2, 5), name: item }];
+  return [...items, { id: Math.random().toString(36).substr(2, 5), name: item1, address: item2 }];
 };
 
 export const updateCategory = (items, index, newName) => {

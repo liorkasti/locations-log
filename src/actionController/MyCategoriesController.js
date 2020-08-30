@@ -5,9 +5,8 @@ import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog
 import toastMaker from '../utils/feedbackGenerator';
 
 import { KEY } from '../router/index';
-import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
-import MyInputText from '../components/MyInputText';
+import ModifyCategory from '../actionController/ModifyCategory';
 
 export default function MyCategoriesController(props) {
 
@@ -100,7 +99,7 @@ export default function MyCategoriesController(props) {
         >
           <DialogContent>
             <View style={styles.welcomeContainer}>
-              <MyInputText
+              <ModifyCategory
                 initialValue=""
                 visible={props.dialogOpen}
                 dialogOpen={props.dialogOpen}
@@ -147,7 +146,7 @@ const styles = StyleSheet.create({
   dialog: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 240,
+    height: 260,
     width: '90%',
     padding: 20,
   },

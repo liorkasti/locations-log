@@ -4,11 +4,11 @@ import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { addCategory, addLocation, removeCategory } from '../action/modifyActions';
+import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
 
-import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
-import MyInputText from '../components/MyInputText';
+import ModifyLocation from '../actionController/ModifyLocation';
+import ModifyCategory from '../actionController/ModifyCategory';
 import ActionMenu from '../components/ActionMenu';
 
 
@@ -17,7 +17,8 @@ export default function Category(props) {
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
   const [locationList, setLocationList] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState([]);
+  const [currentLocationName, setCurrentLocationName] = useState([]);
+  const [currentLocationAddress, setCurrentLocationAddress] = useState([]);
 
   const [updateList, setUpdateList] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
@@ -27,7 +28,7 @@ export default function Category(props) {
   useEffect(() => {
     // console.log('Category.props: ' + JSON.stringify(props));
 
-    console.log('LocationList: ' + JSON.stringify(locationList));
+    // console.log('LocationList: ' + JSON.stringify(locationList));
 
     if (props.updateOpen) {
       // TODO: validate add asynch starage and sorting capabiliteis
@@ -38,18 +39,17 @@ export default function Category(props) {
     if (isAddLocationMode) {
       props.setUpdateOpen(false);
       reloadStorage()
-      console.log("The Current Location: ", currentLocation);
-      console.log("The Locations List: ", locationList);
+      console.log("The Current Location: ", JSON.stringify(currentLocationName));
+      console.log("The Locations List: ", JSON.stringify(locationList));
     }
   }, [])
 
 
-  const addLocationHandler = locationName => {
+  const addLocationHandler = (locationName, locationAdress) => {
 
-    setCurrentLocation(locationName);
-
+    setCurrentLocationName(locationName, locationAdress);
     if (isAddLocationMode) setIsAddLocationMode(false);
-    updateStorage(locationName);
+    updateStorage(locationName, locationAdress);
 
     //TODO: set the line below to active before production.
     // props.setDialogOpen(false)
@@ -68,13 +68,16 @@ export default function Category(props) {
 
   // call for local storing 
   const updateStorage = (newListItem) => {
-    props.onUpdateLocation(newListItem)
-    props.onUpdateLocations(newListItem)
+    setCurrentLocationName(newListItem);
+    setLocationList(addLocation(locationList, newListItem));
+
+    // props.onUpdateLocation(newListItem)
+    // props.onUpdateLocations(newListItem)
   };
 
   const reloadStorage = () => {
     // props.onDismiss();
-    setCurrentLocation(props.renderedLocation);
+    setCurrentLocationName(props.renderedLocation);
     setLocationList(props.renderedLocations);
     setIsAddLocationMode(false);
   }
@@ -138,13 +141,14 @@ export default function Category(props) {
           >
             <DialogContent>
               <View style={styles.welcomeContainer}>
-                <MyInputText
+                <ModifyLocation
                   initialValue=""
                   visible={props.dialogLocationOpen}
                   dialogLocationOpen={props.dialogLocationOpen}
                   setDialogLocationOpen={props.setDialogLocationOpen}
 
                   onSave={addLocationHandler}
+                  // onAdd={addLocationHandler}
                   reloadStorage={props.reloadStorage}
 
                   myLocationList={props.myLocationList}
@@ -184,7 +188,7 @@ export default function Category(props) {
           >
             <DialogContent>
               <View style={styles.welcomeContainer}>
-                <MyInputText
+                <ModifyCategory
                   initialValue=""
                   visible={props.updateOpen}
                   updateOpen={props.updateOpen}

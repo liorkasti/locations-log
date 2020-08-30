@@ -3,12 +3,12 @@ import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Modal } fro
 import toastMaker from '../utils/feedbackGenerator';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-const MyInputText = props => {
+const ModifyLocation = props => {
   const [nameInput, setNameInput] = useState("");
   const [addressInput, setAddressInput] = useState("");
 
   useEffect(() => {
-    console.log("CategoryInput props: ", props);
+    // console.log("CategoryInput props: ", props);
   }, [])
 
   const nameInputHandler = enteredText => {
@@ -19,30 +19,18 @@ const MyInputText = props => {
     setAddressInput(addressInput);
   };
 
-  const addNameHandler = () => {
+  const addLocationHandler = () => {
     // console.warn("enteredText: ", enteredInput);    
-    if (nameInput.length > 0) {
-      props.onAdd(nameInput);
-      // setNameInput('');
-    } else {
-      // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
-      Alert.alert("No input.");
-      console.log("No name has been entered.");
-      // toastMaker("No name has been entered");
-    }
-  }
-
-  const addAddressHandler = () => {
-    // console.warn("enteredText: ", enteredInput);    
-    if (nameInput.length > 0) {
-      props.onSave(nameInput);
-      // setNameInput('');
-    } else {
-      // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
-      Alert.alert("No input.");
-      console.log("No name has been entered.");
-      // toastMaker("No name has been entered");
+    if (nameInput.length > 0 && addressInput.length > 0) {
+      // props.onSave(nameInput, addressInput);
+      props.onSave(nameInput, addressInput);
       setNameInput('');
+      setAddressInput('');
+    } else {
+      // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
+      Alert.alert("No input.");
+      console.log("No name has been entered.");
+      // toastMaker("No name has been entered");
     }
   }
 
@@ -65,71 +53,7 @@ const MyInputText = props => {
   return (
 
     <View style={styles.container}>
-      {props.dialogOpen &&
-        <>
-          <Text style={styles.textDialog}>Create a new Category</Text>
-          {/* TODO: Add dinamic screen title for the message below*/}
-          {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Category name"
-              style={styles.input}
-              onChangeText={nameInputHandler}
-              value={nameInput}
-            />
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={props.onCancel}
-              style={styles.button1}
-            >
-              <Icon name="map-marker-down" style={styles.icon2} />
-              <Text style={styles.textButton}>DONE</Text>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={addNameHandler}
-              style={styles.button2}
-            >
-              <Icon name="map-marker-check" style={styles.icon1} />
-              <Text style={styles.textAddButton}>ADD</Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      }
-      {
-        props.updateOpen &&
-        <>
-          <Text style={styles.textDialog}>Edit Category Name</Text>
-          {/* TODO: Add dinamic screen title for the message below*/}
-          {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Category name"
-              style={styles.input}
-              onChangeText={nameInputHandler}
-              value={nameInput}
-            />
-          </View>
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              onPress={() => { props.onCancel; }}
-              style={styles.button1}
-            >
-              <Icon name="map-marker-down" style={styles.icon2} />
-              <Text style={styles.textButton}>CANCEL</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={updateTextHandler}
-              style={styles.button2}
-            >
-              <Icon name="map-marker-check" style={styles.icon1} />
-              <Text style={styles.textAddButton}>UPDATE</Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      }
       {props.dialogLocationOpen &&
 
         <>
@@ -165,7 +89,7 @@ const MyInputText = props => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={addAddressHandler}
+              onPress={addLocationHandler}
               style={styles.button2}
             >
               <Icon name="map-marker-check" style={styles.icon1} />
@@ -301,4 +225,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyInputText;
+export default ModifyLocation;

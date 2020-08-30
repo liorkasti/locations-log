@@ -8,7 +8,6 @@
 // import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 // import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 
-// import InputDialog from '../components/InputDialog';
 // import CategoryItem from '../components/CategoryItem';
 // import CategoryInput from '../components/CategoryInput';
 
