@@ -21,6 +21,7 @@ export default function Category(props) {
 
   const [updateList, setUpdateList] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
+  const [isAddLocationMode, setIsAddLocationMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
@@ -28,6 +29,8 @@ export default function Category(props) {
     console.log('dialogOpen props: ' + props.dialogOpen);
     console.log('updateOpen props: ' + props.updateOpen);
     console.log('LocationList: ' + locationList);
+
+    if (props.dialogLocationOpen) { setIsAddLocationMode(true)};
 
     if (props.updateOpen) {
       // TODO: validate add asynch starage and sorting capabiliteis
@@ -52,12 +55,13 @@ export default function Category(props) {
   }, [categoryList])
 
   const onUpdateHandler = categoryName => {
-    console.warn("onUpdateHandler in Category!")
+    if (props.updateOpen) props.setUpdateOpen(false)
+    setIsUpdateMode(false);
     props.onUpdateCategory(categoryName)
+    console.warn("onUpdateHandler in Category!")
     const index = props.renderedCategories.findIndex(category => category.name === props.renderedCategory);
     props.onUpdateHandler(props.renderedCategories, index, categoryName);
     //TODO: set the line below to active before production.
-    // props.setUpdateOpen(false)
     // setIsUpdateMode(false);    
   };
 
@@ -74,8 +78,9 @@ export default function Category(props) {
   }
 
   const cancelCategoryHandler = () => {
-    props.onDismiss();
-    setIsCancelMode(true);
+    // props.onDismiss();
+    // setIsCancelMode(true);
+    if (props.updateOpen) props.setUpdateOpen(false)
     // props.setUpdateOpen(false);
   };
 
@@ -138,7 +143,7 @@ export default function Category(props) {
         {props.updateOpen &&
           < Dialog
             visible={props.updateOpen}
-            onTouchOutside={() => { visible = props.onDismiss(); }}
+            onTouchOutside={() => { visible = props.setUpdateOpen(); }}
             dialogAnimation={
               new SlideAnimation({
                 slideFrom: 'bottom',
@@ -166,6 +171,48 @@ export default function Category(props) {
 
                   setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
                   isUpdateMode={isUpdateMode}
+
+                  windowWidth={windowWidth}
+                  windowHeight={windowHeight}
+                />
+              </View>
+            </DialogContent>
+          </Dialog>
+        }
+
+        {props.dialogLocationOpen &&
+          < Dialog
+            visible={props.dialogLocationOpen}
+            onTouchOutside={() => { visible = props.setDialogLocationOpen; }}
+            dialogAnimation={
+              new SlideAnimation({
+                slideFrom: 'bottom',
+              })
+            }
+            dialogStyle={(props.updateOpen) ? styles.dialog : styles.locationDialog}
+          >
+            <DialogContent>
+              <View style={styles.welcomeContainer}>
+                <MyInputText
+                  initialValue=""
+                  visible={props.updateOpen}
+                  updateOpen={props.updateOpen}
+                  setUpdateOpen={props.setUpdateOpen}
+
+                  onUpdate={onUpdateHandler}
+                  reloadStorage={props.reloadStorage}
+
+                  myLocationList={props.myLocationList}
+                  onUpdateCategories={props.onUpdateCategories}
+
+                  onCancel={cancelCategoryHandler}
+                  onDismiss={() => { props.onDismiss }}
+
+                  dialogLocationOpen={props.dialogLocationOpen}
+                  setDialogLocationOpen={props.setDialogLocationOpen}
+
+                  // setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
+                  // isUpdateMode={isUpdateMode}
 
                   // reloadStorage={reloadStorage}
                   // renderedCategory={props.renderedCategory}
@@ -208,7 +255,14 @@ const styles = StyleSheet.create({
   dialog: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 300,
+    height: 240,
+    width: '90%',
+    padding: 20,
+  },
+  locationDialog: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 340,
     width: '90%',
     padding: 20,
   },

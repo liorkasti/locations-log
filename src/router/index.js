@@ -61,10 +61,12 @@ export default function Index(props) {
 
         if (componentIndex < 0) {
             setShowBack(false);
+            if (updateOpen) setUpdateOpen(false)
             initStorage();
         }
         if (componentIndex > 0) {
             setShowBack(true);
+            if (updateOpen) setUpdateOpen(false)
             initStorage();
         }
         // todo: add to set 2 dimantions containet to hold the category item item(id,name, locations list {name, address, coordinates, and category}).
@@ -100,7 +102,8 @@ export default function Index(props) {
     const onUpdateHandler = (renderedCategories, renderedCategory, editCategory) => {
         console.log("updateOpen: ", updateOpen)
 
-        Alert.alert("Update Category", "Are you sure you want to update to '" + editCategory + "'?");
+        // Alert.alert("Update Category", "Are you sure you want to update to '" + editCategory + "'?");
+
         // TODO: confirmationAlert cancelable
         // confirmation = confirmationAlert("Delete Category", "Are you sure you want to delete");
         // if (confirmation) {
@@ -135,7 +138,7 @@ export default function Index(props) {
         console.log("SET NEW Location", action)
         switch (action) {
             case "addLocation":
-                onAddHandler(action);
+                setLocationDialogOpen(true);
                 break;
             case "editCategory":
                 setUpdateOpen(true);
@@ -150,7 +153,7 @@ export default function Index(props) {
                 setLogout(true);
                 break;
             case "onOpenLocation":
-                onRead();
+                setComponentIndex(componentIndex + 1)
                 break;
             default:
                 return next(action);
@@ -179,6 +182,8 @@ export default function Index(props) {
                     if (showMenu) setShowMenu(false);
                     setComponentIndex(componentIndex - 1);
                 }}
+
+                onNext={() => { setComponentIndex(componentIndex + 1) }}
 
                 // onActionMenu={menuBarActionHandler}
                 showMenu={showMenu}
@@ -267,6 +272,10 @@ export default function Index(props) {
                     dialogOpen={dialogOpen}
                     setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
+
+                    dialogLocationOpen={dialogLocationOpen}
+                    setDialogLocationOpen={() => { setDialogLocationOpen(!dialogLocationOpen); }}
+                    
                     onUpdateHandler={onUpdateHandler}
 
                     updateOpen={updateOpen}

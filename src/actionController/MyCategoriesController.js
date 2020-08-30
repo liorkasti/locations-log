@@ -36,15 +36,6 @@ export default function MyCategoriesController(props) {
     // props.setDialogOpen(false)
   };
 
-  const onUpdateHandler = categoryName => {
-    console.warn("onUpdateHandler in MyCategoriesController!")
-    // props.onUpdateCategory(newListItem)
-    props.onUpdateHandler(props.renderedCategories, props.renderedCategory, categoryName);
-    //TODO: set the line below to active before production.
-    props.setUpdateOpen(false)
-    setIsUpdateMode(false);
-  };
-
   // call for local storing 
   const updateStorage = (newListItem) => {
     props.onUpdateCategory(newListItem)
@@ -157,7 +148,7 @@ const styles = StyleSheet.create({
   dialog: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 300,
+    height: 240,
     width: '90%',
     padding: 20,
   },

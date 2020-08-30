@@ -96,7 +96,7 @@ const MyInputText = props => {
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              onPress={() => {props.onCancel; }}
+              onPress={() => { props.onCancel; }}
               style={styles.cancelButton}
             >
               <Icon name="map-marker-down" style={styles.icon2} />
@@ -112,6 +112,48 @@ const MyInputText = props => {
             </TouchableOpacity>
           </View>
         </>
+      }
+      {props.dialogLocationOpen &&
+      
+      <>
+        <Text style={styles.textDialog}>Add Location Details</Text>
+        {/* TODO: Add dinamic screen title for the message below*/}
+        {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Name"
+            style={styles.input}
+            onChangeText={textInputHandler}
+            value={enteredInput}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Address"
+            style={styles.input}
+            onChangeText={textInputHandler}
+            value={enteredInput}
+          />
+        </View>
+        
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => { props.onCancel; }}
+            style={styles.cancelButton}
+          >
+            <Icon name="map-marker-down" style={styles.icon2} />
+            <Text style={styles.textButton}>COORDINATES</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={updateTextHandler}
+            style={styles.addButton}
+          >
+            <Icon name="map-marker-check" style={styles.icon1} />
+            <Text style={styles.textAddButton}>SAVE</Text>
+          </TouchableOpacity>
+        </View>
+      </>
       }
     </View>
   );

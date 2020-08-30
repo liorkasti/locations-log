@@ -2,23 +2,18 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Picker } from "react-native";
 
 export default function Location(props) {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     editMode: false,
-  //     name: '',
-  //     address: '',
-  //     category: '',
-  //     coordinates: {
-  //       latitude: '',
-  //       longitude: '',
-  //     },
-  //   };
-  // }
+  
+  useEffect(() => {
+    if (categoryList) {
+      reloadStorage()
+      console.log("The Location props: ", props);
+    }
+    // return {  };
+  }, [])
 
   return (
     <View style={styles.container}><Text>Location Screen</Text>
-      {/* <View style={styles.parent}>
+      <View style={styles.parent}>
         <TextInput
           label={'Name'}
           iconName={'label'}
@@ -81,7 +76,7 @@ export default function Location(props) {
           marginHorizontal={24}
           marginVertical={24}
         />
-      </View> */}
+      </View>
     </View>
   );
 }
