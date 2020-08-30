@@ -5,7 +5,6 @@ import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog
 import toastMaker from '../utils/feedbackGenerator';
 
 import { KEY } from '../router/index';
-import { addCategory, removeCategory } from '../action/modifyActions';
 import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
 import MyInputText from '../components/MyInputText';
@@ -16,21 +15,20 @@ export default function MyCategoriesController(props) {
   const [currentCategory, setCurrentCategory] = useState([]);
 
   const [isAddMode, setIsAddMode] = useState(false);
-  const [isUpdatelMode, setIsUpdateMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
-    if (categoryList) {
+    if (isAddMode) {
       reloadStorage()
       // console.log("The Current Category: ", currentCategory);
-      // console.log("The List Category: ", categoryList);
+      // console.log("The Category List: ", categoryList);
     }
     // return {  };
-  }, [categoryList])
+  }, [])
 
   const addCategoryHandler = categoryName => {
 
-    setIsAddMode(false);
+    if (isAddMode) setIsAddMode(true);
     updateStorage(categoryName);
     //TODO: set the line below to active before production.
     // props.setDialogOpen(false)
@@ -45,6 +43,7 @@ export default function MyCategoriesController(props) {
   const reloadStorage = () => {
     setCurrentCategory(props.renderedCategory);
     setCategoryList(props.renderedCategories);
+    setIsAddMode(false);
   }
 
   const cancelCategoryHandler = () => {

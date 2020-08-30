@@ -4,7 +4,7 @@ import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { addCategory, removeCategory } from '../action/modifyActions';
+import { addCategory, addLocation, removeCategory } from '../action/modifyActions';
 
 import InputDialog from '../components/InputDialog';
 import CardItem from '../components/CardItem';
@@ -25,34 +25,35 @@ export default function Category(props) {
   const [isCancelMode, setIsCancelMode] = useState(false);
 
   useEffect(() => {
-    console.log('Category.props: ' + JSON.stringify(props));
-    console.log('dialogOpen props: ' + props.dialogOpen);
-    console.log('updateOpen props: ' + props.updateOpen);
-    console.log('LocationList: ' + locationList);
+    // console.log('Category.props: ' + JSON.stringify(props));
 
-    if (props.dialogLocationOpen) { setIsAddLocationMode(true)};
+    console.log('LocationList: ' + JSON.stringify(locationList));
 
     if (props.updateOpen) {
       // TODO: validate add asynch starage and sorting capabiliteis
       // initStorage();
     }
-  }, [])
 
-  useEffect(() => {
-    if (isUpdateMode) {
-      // props.setUpdateOpen(false);
+
+    if (isAddLocationMode) {
+      props.setUpdateOpen(false);
       reloadStorage()
+      console.log("The Current Location: ", currentLocation);
+      console.log("The Locations List: ", locationList);
     }
   }, [])
 
-  useEffect(() => {
-    if (categoryList) {
-      reloadStorage()
-      // console.log("The Current Category: ", currentCategory);
-      // console.log("The List Category: ", categoryList);
-    }
-    // return {  };
-  }, [categoryList])
+
+  const addLocationHandler = locationName => {
+
+    setCurrentLocation(locationName);
+
+    if (isAddLocationMode) setIsAddLocationMode(false);
+    updateStorage(locationName);
+
+    //TODO: set the line below to active before production.
+    // props.setDialogOpen(false)
+  };
 
   const onUpdateHandler = categoryName => {
     if (props.updateOpen) props.setUpdateOpen(false)
@@ -67,44 +68,28 @@ export default function Category(props) {
 
   // call for local storing 
   const updateStorage = (newListItem) => {
-    props.onUpdateCategory(newListItem)
-    props.onUpdateCategories(newListItem)
+    props.onUpdateLocation(newListItem)
+    props.onUpdateLocations(newListItem)
   };
 
   const reloadStorage = () => {
     // props.onDismiss();
-    setCurrentCategory(props.renderedCategory);
-    setCategoryList(props.renderedCategories);
+    setCurrentLocation(props.renderedLocation);
+    setLocationList(props.renderedLocations);
+    setIsAddLocationMode(false);
   }
 
   const cancelCategoryHandler = () => {
     // props.onDismiss();
     // setIsCancelMode(true);
     if (props.updateOpen) props.setUpdateOpen(false)
+    if (props.dialogLocationOpen) props.setLocationDialogOpen(false)
     // props.setUpdateOpen(false);
   };
 
   return (
     <View style={styles.container}>
       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
-
-        {/* {props.showMenu &&
-        <View style={styles.manuContainer}>
-          <ActionMenu
-            onActionMenu={props.onActionMenu}
-            onDelete={props.onDelete}
-
-            renderedCategories={props.renderedCategories}
-            onUpdateCategories={props.renderedCategoriesHandler}
-
-            renderedCategory={props.renderedCategory}
-            onUpdateCategory={props.renderedCategoryHandler}
-
-            onActionMenu={props.onActionMenu}
-            style={styles.actionMenu}
-          />
-        </View>
-        } */}
 
         <View style={styles.textContainer}>
 
@@ -139,6 +124,52 @@ export default function Category(props) {
               </View>
           }
         </View>
+
+        {props.dialogLocationOpen &&
+          < Dialog
+            visible={props.dialogLocationOpen}
+            onTouchOutside={() => { visible = props.setDialogLocationOpen; }}
+            dialogAnimation={
+              new SlideAnimation({
+                slideFrom: 'bottom',
+              })
+            }
+            dialogStyle={styles.locationDialog}
+          >
+            <DialogContent>
+              <View style={styles.welcomeContainer}>
+                <MyInputText
+                  initialValue=""
+                  visible={props.dialogLocationOpen}
+                  dialogLocationOpen={props.dialogLocationOpen}
+                  setDialogLocationOpen={props.setDialogLocationOpen}
+
+                  onSave={addLocationHandler}
+                  reloadStorage={props.reloadStorage}
+
+                  myLocationList={props.myLocationList}
+                  onUpdateCategories={props.onUpdateCategories}
+
+                  onCancel={cancelCategoryHandler}
+                  onDismiss={() => { props.onDismiss }}
+
+                  dialogLocationOpen={props.dialogLocationOpen}
+                  setDialogLocationOpen={props.setDialogLocationOpen}
+
+                  // setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
+                  // isUpdateMode={isUpdateMode}
+
+                  // reloadStorage={reloadStorage}
+                  // renderedCategory={props.renderedCategory}
+                  // onUpdateCategories={props.onUpdateCategories}
+
+                  windowWidth={windowWidth}
+                  windowHeight={windowHeight}
+                />
+              </View>
+            </DialogContent>
+          </Dialog>
+        }
 
         {props.updateOpen &&
           < Dialog
@@ -180,52 +211,23 @@ export default function Category(props) {
           </Dialog>
         }
 
-        {props.dialogLocationOpen &&
-          < Dialog
-            visible={props.dialogLocationOpen}
-            onTouchOutside={() => { visible = props.setDialogLocationOpen; }}
-            dialogAnimation={
-              new SlideAnimation({
-                slideFrom: 'bottom',
-              })
-            }
-            dialogStyle={(props.updateOpen) ? styles.dialog : styles.locationDialog}
-          >
-            <DialogContent>
-              <View style={styles.welcomeContainer}>
-                <MyInputText
-                  initialValue=""
-                  visible={props.updateOpen}
-                  updateOpen={props.updateOpen}
-                  setUpdateOpen={props.setUpdateOpen}
+        {/* {props.showMenu &&
+        <View style={styles.manuContainer}>
+          <ActionMenu
+            onActionMenu={props.onActionMenu}
+            onDelete={props.onDelete}
 
-                  onUpdate={onUpdateHandler}
-                  reloadStorage={props.reloadStorage}
+            renderedCategories={props.renderedCategories}
+            onUpdateCategories={props.renderedCategoriesHandler}
 
-                  myLocationList={props.myLocationList}
-                  onUpdateCategories={props.onUpdateCategories}
+            renderedCategory={props.renderedCategory}
+            onUpdateCategory={props.renderedCategoryHandler}
 
-                  onCancel={cancelCategoryHandler}
-                  onDismiss={() => { props.onDismiss }}
-
-                  dialogLocationOpen={props.dialogLocationOpen}
-                  setDialogLocationOpen={props.setDialogLocationOpen}
-
-                  // setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
-                  // isUpdateMode={isUpdateMode}
-
-                  // reloadStorage={reloadStorage}
-                  // renderedCategory={props.renderedCategory}
-                  // onUpdateCategories={props.onUpdateCategories}
-
-                  windowWidth={windowWidth}
-                  windowHeight={windowHeight}
-                />
-              </View>
-            </DialogContent>
-          </Dialog>
-        }
-
+            onActionMenu={props.onActionMenu}
+            style={styles.actionMenu}
+          />
+        </View>
+        } */}
       </ScrollView>
     </View >
   );
@@ -260,9 +262,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   locationDialog: {
-    justifyContent: 'center',
     alignItems: 'center',
-    height: 340,
+    height: 440,
     width: '90%',
     padding: 20,
   },

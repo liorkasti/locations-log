@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 // import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
 // import { KEYS, storeData, setItem, getItem, multiSet, multiGet, getMyStringValue, getMyObject, getAllKeys, clearAll } from '../utils/myLocationsStorage';
-import { addCategory, updateCategory, removeCategory } from '../action/modifyActions';
+import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
 import MyCategoriesController from "../actionController/MyCategoriesController";
 import Category from "../screens/Category";
 import Location from "../screens/Location";
@@ -58,6 +58,8 @@ export default function Index(props) {
         console.log("Root Current Category: ", renderedCategory);
         // console.log('Storage Rendered Categories: : ', items);
         console.log("Root Current Category: ", renderedCategories);
+        console.log("Root Current Location: ", renderedLocation);
+        console.log("Root Current Locations: ", renderedLocations);
 
         if (componentIndex < 0) {
             setShowBack(false);
@@ -89,14 +91,14 @@ export default function Index(props) {
         // const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
         // console.warn("SET ITEMS", result)
     }
-    // update the categories list
-    const renderedLocationHandler = async (categoryListNode) => {
-        setRenderedLocation(addCategory(renderedCategories, categoryListNode));
+    // update the location list
+    const renderedLocationHandler = async (locationNode) => {
+        setRenderedLocation(locationNode);
 
     }
-    // update the categories list
-    const renderedLocationsHandler = async (categoryListNode) => {
-        setRenderedLocations(addCategory(renderedCategories, categoryListNode));
+    // update the locations list
+    const renderedLocationsHandler = async (locationsListNode) => {
+        setRenderedLocations(addLocations(renderedLocations, locationsListNode));
     }
 
     const onUpdateHandler = (renderedCategories, renderedCategory, editCategory) => {
