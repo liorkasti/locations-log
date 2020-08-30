@@ -5,7 +5,6 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ModifyCategory = props => {
   const [nameInput, setNameInput] = useState("");
-  const [addressInput, setAddressInput] = useState("");
 
   useEffect(() => {
     // console.log("CategoryInput props: ", props);
@@ -15,16 +14,12 @@ const ModifyCategory = props => {
     setNameInput(enteredText);
   };
 
-  const addressInputHandler = addressInput => {
-    setAddressInput(addressInput);
-  };
-
-  const addLocationHandler = () => {
-    // console.warn("enteredText: ", enteredInput);    
+  const addCategoryHandler = () => {
+    // console.warn("nameInput: ", nameInput);    
     if (nameInput.length > 0) {
-      // props.onSave(nameInput, addressInput);
-      props.onAdd(nameInput, addressInput);
-      // setNameInput('');
+      // props.onSave(nameInput);
+      props.onAdd(nameInput);
+      setNameInput('');
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
       Alert.alert("No input.");
@@ -75,7 +70,7 @@ const ModifyCategory = props => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={addLocationHandler}
+              onPress={addCategoryHandler}
               style={styles.button2}
             >
               <Icon name="map-marker-check" style={styles.icon1} />

@@ -6,13 +6,22 @@ import AsyncStorage from '@react-native-community/async-storage';
 // import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
 // import { KEYS, storeData, setItem, getItem, multiSet, multiGet, getMyStringValue, getMyObject, getAllKeys, clearAll } from '../utils/myLocationsStorage';
 import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
-import MyCategoriesController from "../actionController/MyCategoriesController";
+import Categories from "../screens/Categories";
 import Category from "../screens/Category";
 import Location from "../screens/Location";
 
 import HeaderBar from "../components/HeaderBar";
 
-const components = { MyCategoriesController, Category, Location };
+const components = { Categories, Category, Location };
+
+const CurrentComponentRouter = (props) => {
+    const CurrentComponent = props.currentComponent;
+    if (!CurrentComponent) return <View />
+    return (
+        <CurrentComponent
+            props={props}
+        />)
+};
 
 export default function Index(props) {
 
@@ -25,8 +34,8 @@ export default function Index(props) {
     const [storageItem, setStoreItem] = useState([]);
     const [storageItems, setStoreItems] = useState([]);
 
-    const componentKeys = ["MyCategoriesController", "Category", "Location"];
-    const headers = { MyCategoriesController: "Categories", Category: renderedCategory, Location: renderedLocation };
+    const componentKeys = ["Categories", "Category", "Location"];
+    const headers = { Categories: "Categories", Category: renderedCategory, Location: renderedLocation };
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [dialogLocationOpen, setLocationDialogOpen] = useState(false);
@@ -208,8 +217,8 @@ export default function Index(props) {
             />
 
             {/* <ScrollView style={styles.scrollView}> */}
-            {componentKeys[componentIndex] === "MyCategoriesController" &&
-                <MyCategoriesController
+            {componentKeys[componentIndex] === "Categories" &&
+                <CurrentComponentRouter
                     currentComponent={components[componentKeys[componentIndex]]}
                     componentIndex={componentIndex}
 

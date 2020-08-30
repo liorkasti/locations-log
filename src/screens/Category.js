@@ -131,7 +131,8 @@ export default function Category(props) {
         {props.dialogLocationOpen &&
           < Dialog
             visible={props.dialogLocationOpen}
-            onTouchOutside={() => { visible = props.setDialogLocationOpen; }}
+            onTouchOutside={() => { visible = (!visible) }}
+            // onTouchOutside={() => { visible = props.setDialogLocationOpen; }}
             dialogAnimation={
               new SlideAnimation({
                 slideFrom: 'bottom',
@@ -178,7 +179,8 @@ export default function Category(props) {
         {props.updateOpen &&
           < Dialog
             visible={props.updateOpen}
-            onTouchOutside={() => { visible = props.setUpdateOpen(); }}
+            onTouchOutside={() => { visible = props.onDismiss(); }}
+            // onTouchOutside={() => { visible = props.setUpdateOpen(); }}
             dialogAnimation={
               new SlideAnimation({
                 slideFrom: 'bottom',

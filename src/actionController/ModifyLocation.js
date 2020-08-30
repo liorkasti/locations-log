@@ -34,22 +34,6 @@ const ModifyLocation = props => {
     }
   }
 
-  const updateTextHandler = () => {
-    if (nameInput.length > 0) {
-      props.onUpdate(nameInput);
-      // props.setIsUpdateMode();
-      // props.setUpdateOpen;
-      // props.visible()
-      setNameInput('');
-    } else {
-      // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
-      Alert.alert("No input.");
-      console.log("No name has been entered.");
-      // toastMaker("No name has been entered");
-      setNameInput('');
-    }
-  }
-
   return (
 
     <View style={styles.container}>

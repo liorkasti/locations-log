@@ -8,7 +8,7 @@ import { KEY } from '../router/index';
 import CardItem from '../components/CardItem';
 import ModifyCategory from '../actionController/ModifyCategory';
 
-export default function MyCategoriesController(props) {
+export default function Categories({props}) {
 
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
@@ -90,6 +90,7 @@ export default function MyCategoriesController(props) {
         < Dialog
           visible={props.dialogOpen}
           onTouchOutside={() => { visible = props.onDismiss(); }}
+          // onTouchOutside={() => { visible = (!visible) }}
           dialogAnimation={
             new SlideAnimation({
               slideFrom: 'bottom',
