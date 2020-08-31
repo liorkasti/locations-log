@@ -18,26 +18,6 @@ const ModifyLocation = props => {
     props = JSON.parse(props);
     // console.log("ModifyLocation props: ", props);
     // console.log('props.showMediumMap: ' + props.showMediumMap);
-    let coordinates = navigation.getParam(NAVIGATION_PARAMS.COORDINATES);
-    coordinates = {
-      latitude: isNaN(parseFloat(coordinates.latitude))
-        ? DEFAULT_LATITUDE
-        : coordinates.latitude,
-      longitude: isNaN(parseFloat(coordinates.longitude))
-        ? DEFAULT_LONGITUDE
-        : coordinates.longitude,
-    };
-
-    const updatedState = {
-      editMode: viewMode === MAP_VIEW_MODE.EDIT,
-      coordinates: coordinates,
-      region: {
-        latitude: coordinates.latitude,
-        longitude: coordinates.longitude,
-        latitudeDelta: 0,
-        longitudeDelta: 0,
-      },
-    };
 
     if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }
   }, [])

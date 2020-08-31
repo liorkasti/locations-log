@@ -29,9 +29,10 @@ export default function Category(props) {
   useEffect(() => {
 
     props=JSON.stringify(props)
-    // console.log('22222222222222 Category.props: ' + props);
+    console.log('22222222222222 Category.props: ' + props);
 
     // console.log('LocationList: ' + JSON.stringify(locationList));
+    console.log('LocationList: ' + JSON.stringify(locationList));
 
     if (props.updateOpen) {
       // TODO: validate add asynch starage and sorting capabiliteis
@@ -88,7 +89,7 @@ export default function Category(props) {
   const cancelCategoryHandler = () => {
     // props.onDismiss();
     // setIsCancelMode(true);
-    if (props.updateOpen) props.setUpdateOpen(false)
+    if (props.updateOpen) props.setUpdateOpen;
     if (props.dialogLocationOpen) props.setLocationDialogOpen(false)
     // props.setUpdateOpen(false);
   };
@@ -188,11 +189,11 @@ export default function Category(props) {
         {props.updateOpen &&
           < Dialog
             visible={props.updateOpen}
-            onTouchOutside={() => {
-              this.setState({ visible: false });
-            }}
+            // onTouchOutside={() => {
+              // this.setState({ visible: props.setUpdateOpen });
+            // }}
             // onTouchOutside={() => { visible = props.onDismiss(); }}
-            // onTouchOutside={() => { visible = props.setUpdateOpen(); }}
+            onTouchOutside={!updateOpen}
             dialogAnimation={
               new SlideAnimation({
                 slideFrom: 'bottom',

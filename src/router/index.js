@@ -293,8 +293,6 @@ export default function Index(props) {
                     updateOpen={updateOpen}
                     setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
 
-                    onDismiss={() => { setUpdateOpen(false); }}
-
                     style={styles.componentStyle}
                 />
             }

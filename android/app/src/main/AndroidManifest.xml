@@ -2,6 +2,11 @@
   package="com.mylocations">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
       android:name=".MainApplication"
@@ -26,7 +31,6 @@
         android:name="com.google.android.geo.API_KEY"
         android:value="AIzaSyB-er2NEIijdnvQhrJ0Op8kt19a2D3RXTU"/>
       <!-- <uses-library android:name="org.apache.http.legacy" android:required="false"/> -->
-
     </application>
 
 </manifest>
