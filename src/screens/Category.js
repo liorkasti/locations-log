@@ -24,9 +24,12 @@ export default function Category(props) {
   const [isUpdateMode, setIsUpdateMode] = useState(false);
   const [isAddLocationMode, setIsAddLocationMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
+  const [showMediumMap, setShowMediumMap] = useState(false);
 
   useEffect(() => {
-    // console.log('Category.props: ' + JSON.stringify(props));
+
+    props=JSON.stringify(props)
+    // console.log('22222222222222 Category.props: ' + props);
 
     // console.log('LocationList: ' + JSON.stringify(locationList));
 
@@ -131,7 +134,11 @@ export default function Category(props) {
         {props.dialogLocationOpen &&
           < Dialog
             visible={props.dialogLocationOpen}
-            onTouchOutside={() => { visible = (!visible) }}
+            // onTouchOutside={() => {
+            //   setDialogLocationOpen({ visible: false });
+            // }}
+            onTouchOutside={() => { (props.onDismiss()) }}
+            // onTouchOutside={() => { visible = (!visible) }}
             // onTouchOutside={() => { visible = props.setDialogLocationOpen; }}
             dialogAnimation={
               new SlideAnimation({
@@ -161,6 +168,8 @@ export default function Category(props) {
                   dialogLocationOpen={props.dialogLocationOpen}
                   setDialogLocationOpen={props.setDialogLocationOpen}
 
+                  showMediumMap={showMediumMap}
+                  setShowMediumMap={() => { setShowMediumMap(!showMediumMap); }}
                   // setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
                   // isUpdateMode={isUpdateMode}
 
@@ -179,7 +188,10 @@ export default function Category(props) {
         {props.updateOpen &&
           < Dialog
             visible={props.updateOpen}
-            onTouchOutside={() => { visible = props.onDismiss(); }}
+            onTouchOutside={() => {
+              this.setState({ visible: false });
+            }}
+            // onTouchOutside={() => { visible = props.onDismiss(); }}
             // onTouchOutside={() => { visible = props.setUpdateOpen(); }}
             dialogAnimation={
               new SlideAnimation({
@@ -269,7 +281,7 @@ const styles = StyleSheet.create({
   },
   locationDialog: {
     alignItems: 'center',
-    height: 440,
+    height: 500,
     width: '90%',
     padding: 20,
   },

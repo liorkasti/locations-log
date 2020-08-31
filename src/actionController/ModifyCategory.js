@@ -7,7 +7,7 @@ const ModifyCategory = props => {
   const [nameInput, setNameInput] = useState("");
 
   useEffect(() => {
-    // console.log("CategoryInput props: ", props);
+    console.log("ModifyCategory props: ", props);
   }, [])
 
   const nameInputHandler = enteredText => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, StatusBar, Dimensions, Alert, Image, TouchableOpacity, Text, ScrollView, SafeAreaView, Constants } from "react-native"
 import { useHistory } from "react-router-dom";
-import AsyncStorage from '@react-native-community/async-storage';
+// import AsyncStorage from '@react-native-community/async-storage';
 
 // import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
 // import { KEYS, storeData, setItem, getItem, multiSet, multiGet, getMyStringValue, getMyObject, getAllKeys, clearAll } from '../utils/myLocationsStorage';
@@ -69,6 +69,7 @@ export default function Index(props) {
         console.log("Root Current Category: ", renderedCategories);
         console.log("Root Current Location: ", renderedLocation);
         console.log("Root Current Locations: ", renderedLocations);
+        // console.log("Index props: ", props)
 
         if (componentIndex < 0) {
             setShowBack(false);
@@ -146,7 +147,7 @@ export default function Index(props) {
 
 
     const menuBarActionHandler = (action, backHistory) => {
-        console.log("SET NEW Location", action)
+        console.log("Action Handler Action SET: ", action)
         switch (action) {
             case "addLocation":
                 setLocationDialogOpen(true);

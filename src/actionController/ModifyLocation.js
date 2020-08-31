@@ -2,13 +2,44 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import toastMaker from '../utils/feedbackGenerator';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import MapScreen from "../components/MapScreen"
+import MapButton from "../components/MapButton"
 
 const ModifyLocation = props => {
   const [nameInput, setNameInput] = useState("");
   const [addressInput, setAddressInput] = useState("");
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const [regionLatitude, setRegionLatitude] = useState(0);
+  const [regionLongitude, setRegionLongitude] = useState(0);
 
   useEffect(() => {
-    // console.log("CategoryInput props: ", props);
+    props = JSON.stringify(props);
+    props = JSON.parse(props);
+    // console.log("ModifyLocation props: ", props);
+    // console.log('props.showMediumMap: ' + props.showMediumMap);
+    let coordinates = navigation.getParam(NAVIGATION_PARAMS.COORDINATES);
+    coordinates = {
+      latitude: isNaN(parseFloat(coordinates.latitude))
+        ? DEFAULT_LATITUDE
+        : coordinates.latitude,
+      longitude: isNaN(parseFloat(coordinates.longitude))
+        ? DEFAULT_LONGITUDE
+        : coordinates.longitude,
+    };
+
+    const updatedState = {
+      editMode: viewMode === MAP_VIEW_MODE.EDIT,
+      coordinates: coordinates,
+      region: {
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
+        latitudeDelta: 0,
+        longitudeDelta: 0,
+      },
+    };
+
+    if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }
   }, [])
 
   const nameInputHandler = enteredText => {
@@ -35,65 +66,81 @@ const ModifyLocation = props => {
   }
 
   return (
+    <>
 
-    <View style={styles.container}>
-
-      {props.dialogLocationOpen &&
-
-        <>
-          <Text style={styles.textDialog}>Add Location Details</Text>
-          {/* TODO: Add dinamic screen title for the message below*/}
-          {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Name"
-              style={styles.input}
-              onChangeText={nameInputHandler}
-              value={nameInput}
+      <View style={styles.container}>
+        {props.showMediumMap &&
+          <>
+            <MapScreen
+              onPress={props.setShowMediumMap}
+              showMediumMap={props.showMediumMap}
             />
-          </View>
+          </>
+        }
+        {
+          props.dialogLocationOpen &&
 
-          <View style={styles.inputContainer}>
-            <TextInput
-              placeholder="Address"
-              style={styles.input}
-              onChangeText={addressInputHandler}
-              value={addressInput}
-            />
-          </View>
+          <>
+            <Text style={styles.textDialog}>Add Location Details</Text>
+            {/* TODO: Add dinamic screen title for the message below*/}
+            {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Name"
+                style={styles.input}
+                onChangeText={nameInputHandler}
+                value={nameInput}
+              />
+            </View>
 
-          <View style={styles.buttonContainer}>
+            <View style={styles.inputContainer}>
+              <TextInput
+                placeholder="Address"
+                style={styles.input}
+                onChangeText={addressInputHandler}
+                value={addressInput}
+              />
+            </View>
 
-            <TouchableOpacity
-              onPress={props.onCancel}
-              style={styles.button1}
-            >
-              <Icon name="map-marker-down" style={styles.icon2} />
-              <Text style={styles.textButton}>DONE</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
 
-            <TouchableOpacity
-              onPress={addLocationHandler}
-              style={styles.button2}
-            >
-              <Icon name="map-marker-check" style={styles.icon1} />
-              <Text style={styles.textAddButton}>SAVE</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                onPress={props.onCancel}
+                style={styles.button1}
+              >
+                <Icon name="map-marker-down" style={styles.icon2} />
+                <Text style={styles.textButton}>DONE</Text>
+              </TouchableOpacity>
 
-          <View style={styles.mapContainer}>
-            <TouchableOpacity
-              onPress={() => { props.onCancel; }}
-              style={styles.mapButton}
-            >
-              <Icon name="map-legend" style={styles.icon3} />
-              <Text style={styles.textButton}>COORDINATES</Text>
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity
+                onPress={addLocationHandler}
+                style={styles.button2}
+              >
+                <Icon name="map-marker-check" style={styles.icon1} />
+                <Text style={styles.textAddButton}>SAVE</Text>
+              </TouchableOpacity>
+            </View>
 
-        </>
-      }
-    </View>
+            <View style={styles.mapContainer}>
+              <MapButton
+                // showMediumMap = {showMediumMap}
+                onPress={props.setShowMediumMap}
+                showMediumMap={props.showMediumMap}
+                style={styles.mapButton}
+              />
+              <TouchableOpacity
+                onPress={() => { props.onCancel; }}
+                style={styles.coordButton}
+              >
+                <Icon name="map-legend" style={styles.icon3} />
+                <Text style={styles.textButton}>COORDINATES</Text>
+              </TouchableOpacity>
+            </View>
+
+          </>
+        }
+      </View >
+    </>
   );
 };
 
@@ -102,7 +149,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    top: -20
+    top: -60
   },
   textDialog: {
     padding: 20,
@@ -111,6 +158,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: 330,
+    // width: "95%",
   },
   input: {
     borderColor: 'black',
@@ -153,8 +201,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 50,
   },
-
   mapButton: {
+    marginVertical: 10,
+    borderColor: 'rgba(0,88,155,1)',
+    borderWidth: 0.7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    // bottom: 80,
+    marginVertical: 10,
+    height: 60,
+    width: '95%',
+    // width: 330,
+    zIndex: 20
+  },
+  coordButton: {
     // flexDirection: 'row',
     alignItems: "center",
     textAlign: "center",

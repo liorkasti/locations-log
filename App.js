@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, StatusBar, Dimensions } from 'react-native';
+import { StyleSheet, View, StatusBar, YellowBox, Dimensions } from 'react-native';
 import { NativeRouter, Route, Switch, Redirect } from "react-router-native";
 import LocationIndex from "./src/router";
+// import { Navigation } from "react-native-navigation";
+// import { NavigationContainer } from '@react-navigation/native';
+
 
 export default function App() {
 
@@ -10,6 +13,7 @@ export default function App() {
   }, []);
 
   const onOpenIndex = () => {
+    console.disableYellowBox = true;
     // console.log("App props: ", App.wprops);
   }
 
