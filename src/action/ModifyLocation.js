@@ -2,17 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import toastMaker from '../utils/feedbackGenerator';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import MapScreen from "../components/MapScreen"
-import MapButton from "../components/MapButton"
+import MapComponent from "../components/MapComponent";
+import MapButton from "../components/MapButton";
+import Coordinates from '../components/Coordinate';
+
 
 const ModifyLocation = props => {
   const [nameInput, setNameInput] = useState("");
   const [addressInput, setAddressInput] = useState("");
+  const [coordinates, setCoordinates] = useState([]);
 
   useEffect(() => {
     // props = JSON.stringify(props);
     // props = JSON.parse(props);
     console.log("ModifyLocation props: ", props);
+    console.log("ModifyLocation coordinates: ", coordinates);
     // console.log('props.showMediumMap: ' + props.showMediumMap);
 
     if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }
@@ -46,14 +50,11 @@ const ModifyLocation = props => {
       <View style={styles.container}>
         {props.showMediumMap &&
           <>
-            <MapScreen
+            <MapComponent
               onPress={props.setShowMediumMap}
               showMediumMap={props.showMediumMap}
-              // latitude={latitude}
-              // setLatitude={setLatitude}
-              // regionLatitude={regionLatitude}
-              // setRegionLatitude={setRegionLatitude}
-              // regionLongitude={regionLongitude}
+              coordinates={coordinates}
+              setCoordinates={setCoordinates}
               isAddLocationMode={props.isAddLocationMode}
               setIsAddLocationMode={props.setIsAddLocationMode} />
           </>
@@ -63,6 +64,7 @@ const ModifyLocation = props => {
 
           <>
             <Text style={styles.textDialog}>Add Location Details</Text>
+
             {props.showMediumMap &&
               <TouchableOpacity
                 disabled={!(props.showMediumMap)}
@@ -70,7 +72,11 @@ const ModifyLocation = props => {
                 showMediumMap={props.showMediumMap}
                 style={styles.coordsClose}
               >
+                {coordinates ? 
                 <Icon name="close-circle" style={styles.icon3} />
+                :
+                <Icon name="map-check" style={styles.icon3} />
+                }
                 {/* <Text style={styles.textButton}>COORDINATES</Text> */}
               </TouchableOpacity>
             }
@@ -107,13 +113,21 @@ const ModifyLocation = props => {
             </View>
 
             <View style={styles.buttonContainer}>
+              <Coordinates
+                latitude={latitude || 0}
+                longitude={longitude || 0}
+                // latitude={props.regionLatitude}
+                // longitude={props.regionLongitude}
+                // hide={props.setIsAddLocationMode}
+                hide={false}
+              />
 
               <TouchableOpacity
                 onPress={props.onCancel}
                 style={styles.button1}
               >
                 <Icon name="map-marker-down" style={styles.icon2} />
-                <Text style={styles.textButton}>DONE</Text>
+                <Text style={styles.textButton}>CANCEL</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -133,26 +147,6 @@ const ModifyLocation = props => {
   );
 };
 
-const Coordinates = React.memo(({ latitude, longitude, hide }) =>
-  hide ? null : (
-    <View style={styles.coordinates}>
-      <Coordinate label={'Latitude'} value={latitude} />
-      <Coordinate label={'Longitude'} value={longitude} />
-    </View>
-  ),
-);
-
-const Coordinate = React.memo(({ label, value }) => (
-  // const Coordinate = React.memo(({ label, value }) => (
-  <View style={styles.coordinate}>
-    <Text style={{ fontWeight: 'bold' }} numberOfLines={1}>
-      {label}
-    </Text>
-    <Text numberOfLines={1}>{value}</Text>
-  </View>
-),
-);
-
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
@@ -161,11 +155,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     // alignContent: "center",
-    justifyContent: 'center',
+    // justifyContent: 'center',
     top: -20
   },
   textDialog: {
-    padding: 20,
+    padding: 10,
     fontSize: 20,
     textAlign: 'center'
   },
@@ -214,7 +208,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.7,
     width: '45%',
   },
-
   mapContainer: {
     width: windowWidth * .85,
     // justifyContent: 'space-around',
