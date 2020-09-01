@@ -137,7 +137,7 @@ export default function Category({ props }) {
 
         {/* {locationDialogOpen && */}
           < Dialog
-            visible={props.locationDialogOpen}
+            // visible={props.locationDialogOpen}
             // onTouchOutside={() => { visible = onDismiss(); }}
             // onTouchOutside={setLocationDialogOpen(false)}
             // onTouchOutside={() => {
@@ -195,18 +195,18 @@ export default function Category({ props }) {
           </Dialog>
         {/* } */}
 
-        {(isCancelMode === false) ?
+        {/* {(isCancelMode === false) ? */}
           < Dialog
             visible={props.updateOpen}
-            onTouchOutside={() => { props.onDismiss(); }}
-
-            // onTouchOutside={() => { 
+            onTouchOutside={() => { 
+              visible=false;
+              // props.onDismiss();
               // visible: false
-              // props.setUpdateOpen;
+              // props.setUpdateOpen();
               // this.setState({ visible: false }, () => Keyboard.dismiss());
-              // console.log('visible : ', visible);
+              console.log('visible : ', visible);
               // this.setState({ visible: false });
-            // }}
+            }}
             dialogTitle={<DialogTitle title="Dialog Title" />}
 
             footer={
@@ -256,9 +256,7 @@ export default function Category({ props }) {
               </View>
             </DialogContent>
           </Dialog>
-        :
-        null
-        }
+
 
         {/* {props.showMenu &&
         <View style={styles.manuContainer}>
@@ -306,7 +304,7 @@ const styles = StyleSheet.create({
   dialog: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 240,
+    height: 500,
     width: '90%',
     padding: 20,
   },
