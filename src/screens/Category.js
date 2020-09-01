@@ -1,22 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Picker } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, FlatList, ScrollView, Dimensions, Picker } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
-import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
+import Dialog, { DialogFooter,DialogTitle, DialogButton, SlideAnimation, PopupDialog, DialogContent } from 'react-native-popup-dialog';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
 
 import CardItem from '../components/CardItem';
-import ModifyLocation from '../actionController/ModifyLocation';
-import ModifyCategory from '../actionController/ModifyCategory';
+import ModifyLocation from '../action/ModifyLocation';
+import ModifyCategory from '../action/ModifyCategory';
 import ActionMenu from '../components/ActionMenu';
 
 
-export default function Category(props) {
+export default function Category({ props }) {
 
-  const [categoryList, setCategoryList] = useState([]);
-  const [currentCategory, setCurrentCategory] = useState([]);
-  const [locationList, setLocationList] = useState([]);
+  const [locationList, setLocationList] = useState();
   const [currentLocationName, setCurrentLocationName] = useState([]);
   const [currentLocationAddress, setCurrentLocationAddress] = useState([]);
 
@@ -25,16 +23,20 @@ export default function Category(props) {
   const [isAddLocationMode, setIsAddLocationMode] = useState(false);
   const [isCancelMode, setIsCancelMode] = useState(false);
   const [showMediumMap, setShowMediumMap] = useState(false);
+  // const [locationDialogOpen, setLocationDialogOpen] = useState(false);
 
   useEffect(() => {
 
-    props=JSON.stringify(props)
+    props = JSON.stringify({ props });
+    // props = JSON.parse(props);
     console.log('22222222222222 Category.props: ' + props);
+    // console.log('locationDialogOpen: ' + locationDialogOpen);
 
     // console.log('LocationList: ' + JSON.stringify(locationList));
-    console.log('LocationList: ' + JSON.stringify(locationList));
+    // console.log('LocationList: ' + JSON.stringify(locationList));
 
-    if (props.updateOpen) {
+    if (props.isUpdateMode) { 
+      // props.setUpdateOpen(false);
       // TODO: validate add asynch starage and sorting capabiliteis
       // initStorage();
     }
@@ -60,14 +62,13 @@ export default function Category(props) {
   };
 
   const onUpdateHandler = categoryName => {
-    if (props.updateOpen) props.setUpdateOpen(false)
-    setIsUpdateMode(false);
+
     props.onUpdateCategory(categoryName)
     console.warn("onUpdateHandler in Category!")
     const index = props.renderedCategories.findIndex(category => category.name === props.renderedCategory);
     props.onUpdateHandler(props.renderedCategories, index, categoryName);
     //TODO: set the line below to active before production.
-    // setIsUpdateMode(false);    
+    setIsUpdateMode(true);        
   };
 
   // call for local storing 
@@ -80,17 +81,18 @@ export default function Category(props) {
   };
 
   const reloadStorage = () => {
-    // props.onDismiss();
+    props.onDismiss();
     setCurrentLocationName(props.renderedLocation);
     setLocationList(props.renderedLocations);
     setIsAddLocationMode(false);
   }
 
   const cancelCategoryHandler = () => {
-    // props.onDismiss();
-    // setIsCancelMode(true);
-    if (props.updateOpen) props.setUpdateOpen;
-    if (props.dialogLocationOpen) props.setLocationDialogOpen(false)
+    props.onDismiss();
+    // onDismiss();
+    setIsCancelMode(true);
+    // if (props.updateOpen) props.setUpdateOpen(false);
+    if (props.locationDialogOpen) props.setLocationDialogOpen(false)
     // props.setUpdateOpen(false);
   };
 
@@ -101,7 +103,7 @@ export default function Category(props) {
         <View style={styles.textContainer}>
 
           {
-            props.locationList ?
+            locationList ?
 
               <>
                 <Text style={styles.textPrompt}>Your locations list</Text>
@@ -112,7 +114,8 @@ export default function Category(props) {
                     <CardItem
                       id={itemData.item.id}
 
-                      myLocationList={props.myLocationList}
+                      setCurrentLocationName={setCurrentLocationName}
+                      locationList={locationList}
                       onUpdateCategories={props.onUpdateCategories}
                       setRenderedCategory={props.setRenderedCategory}
 
@@ -132,15 +135,18 @@ export default function Category(props) {
           }
         </View>
 
-        {props.dialogLocationOpen &&
+        {/* {locationDialogOpen && */}
           < Dialog
-            visible={props.dialogLocationOpen}
+            visible={props.locationDialogOpen}
+            // onTouchOutside={() => { visible = onDismiss(); }}
+            // onTouchOutside={setLocationDialogOpen(false)}
             // onTouchOutside={() => {
-            //   setDialogLocationOpen({ visible: false });
+            //   setLocationDialogOpen({ visible: false });
             // }}
+            // onTouchOutside={() => { cancelCategoryHandler }}
             onTouchOutside={() => { (props.onDismiss()) }}
             // onTouchOutside={() => { visible = (!visible) }}
-            // onTouchOutside={() => { visible = props.setDialogLocationOpen; }}
+            // onTouchOutside={() => { visible = props.setLocationDialogOpen; }}
             dialogAnimation={
               new SlideAnimation({
                 slideFrom: 'bottom',
@@ -152,9 +158,9 @@ export default function Category(props) {
               <View style={styles.welcomeContainer}>
                 <ModifyLocation
                   initialValue=""
-                  visible={props.dialogLocationOpen}
-                  dialogLocationOpen={props.dialogLocationOpen}
-                  setDialogLocationOpen={props.setDialogLocationOpen}
+                  visible={props.locationDialogOpen}
+                  locationDialogOpen={props.locationDialogOpen}
+                  setLocationDialogOpen={props.setLocationDialogOpen}
 
                   onSave={addLocationHandler}
                   // onAdd={addLocationHandler}
@@ -166,11 +172,14 @@ export default function Category(props) {
                   onCancel={cancelCategoryHandler}
                   onDismiss={() => { props.onDismiss }}
 
-                  dialogLocationOpen={props.dialogLocationOpen}
-                  setDialogLocationOpen={props.setDialogLocationOpen}
+                  locationDialogOpen={props.locationDialogOpen}
+                  setLocationDialogOpen={props.setLocationDialogOpen}
 
                   showMediumMap={showMediumMap}
                   setShowMediumMap={() => { setShowMediumMap(!showMediumMap); }}
+
+                  isAddLocationMode={isAddLocationMode}
+                  setIsAddLocationMode={() => { setIsAddLocationMode(!isAddLocationMode); }}
                   // setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
                   // isUpdateMode={isUpdateMode}
 
@@ -184,16 +193,35 @@ export default function Category(props) {
               </View>
             </DialogContent>
           </Dialog>
-        }
+        {/* } */}
 
-        {props.updateOpen &&
+        {(isCancelMode === false) ?
           < Dialog
             visible={props.updateOpen}
-            // onTouchOutside={() => {
-              // this.setState({ visible: props.setUpdateOpen });
+            onTouchOutside={() => { props.onDismiss(); }}
+
+            // onTouchOutside={() => { 
+              // visible: false
+              // props.setUpdateOpen;
+              // this.setState({ visible: false }, () => Keyboard.dismiss());
+              // console.log('visible : ', visible);
+              // this.setState({ visible: false });
             // }}
-            // onTouchOutside={() => { visible = props.onDismiss(); }}
-            onTouchOutside={!updateOpen}
+            dialogTitle={<DialogTitle title="Dialog Title" />}
+
+            footer={
+              <DialogFooter>
+                <DialogButton
+                  text="CANCEL"
+                  onPress={() => { }}
+                />
+                <DialogButton
+                  text="OK"
+                  onPress={() => { }}
+                />
+              </DialogFooter>
+            }          
+
             dialogAnimation={
               new SlideAnimation({
                 slideFrom: 'bottom',
@@ -228,6 +256,8 @@ export default function Category(props) {
               </View>
             </DialogContent>
           </Dialog>
+        :
+        null
         }
 
         {/* {props.showMenu &&
@@ -282,7 +312,7 @@ const styles = StyleSheet.create({
   },
   locationDialog: {
     alignItems: 'center',
-    height: 500,
+    height: windowHeight * .8,
     width: '90%',
     padding: 20,
   },

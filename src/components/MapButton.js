@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import MapView from "react-native-maps";
 
-function MapButton(props) {
+const MapButton = (props) => {
 
   useEffect(() => {
-    console.log("MapButton props: ", props);
+    // console.log("MapButton props: ", props);
     // console.log("props.showMediumMap: ", props.showMediumMap);
     // if (showMediumMap) {}
   }, [])

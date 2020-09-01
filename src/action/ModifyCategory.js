@@ -35,6 +35,7 @@ const ModifyCategory = props => {
       // props.setUpdateOpen;
       // props.visible()
       setNameInput('');
+      props.setUpdateOpen(false)
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
       Alert.alert("No input.");

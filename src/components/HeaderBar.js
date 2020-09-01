@@ -74,13 +74,13 @@ const HeaderBar = (props) => {
                       <Icon name="map-marker-remove-variant" style={styles.icon} />
                     </TouchableOpacity>
                     
-                    <TouchableOpacity
+                    {/* <TouchableOpacity
                     onPress={() => { props.onActionMenu("resetCategories"); }}
                     tag="Reset Categories"
                     style={styles.actionMenu}
                 >
                     <Icon name="map-marker-off" style={styles.icon} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
                   </View>
                 }
               </View>

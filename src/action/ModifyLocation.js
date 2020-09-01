@@ -47,18 +47,23 @@ const ModifyLocation = props => {
 
   return (
     <>
-
       <View style={styles.container}>
         {props.showMediumMap &&
           <>
             <MapScreen
               onPress={props.setShowMediumMap}
               showMediumMap={props.showMediumMap}
-            />
+              latitude={latitude}
+              setLatitude={setLatitude}
+              regionLatitude={regionLatitude}
+              setRegionLatitude={setRegionLatitude}
+              regionLongitude={regionLongitude}
+              isAddLocationMode={props.isAddLocationMode}
+              setIsAddLocationMode={props.setIsAddLocationMode}            />
           </>
         }
         {
-          props.dialogLocationOpen &&
+          props.locationDialogOpen &&
 
           <>
             <Text style={styles.textDialog}>Add Location Details</Text>

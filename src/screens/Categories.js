@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialCommunityIcons";
-import Dialog, { SlideAnimation, DialogContent } from 'react-native-popup-dialog';
+import Dialog, { DialogFooter, DialogButton, SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 import toastMaker from '../utils/feedbackGenerator';
 
 import { KEY } from '../router/index';
 import CardItem from '../components/CardItem';
-import ModifyCategory from '../actionController/ModifyCategory';
+import ModifyCategory from '../action/ModifyCategory';
 
 export default function Categories({props}) {
 
@@ -88,8 +88,9 @@ export default function Categories({props}) {
         </View>
 
         < Dialog
+          visible={() => { visible = true }}
           visible={props.dialogOpen}
-          onTouchOutside={() => { visible = props.onDismiss(); }}
+          onTouchOutside={() => { props.onDismiss(); }}
           // onTouchOutside={() => { visible = (!visible) }}
           dialogAnimation={
             new SlideAnimation({

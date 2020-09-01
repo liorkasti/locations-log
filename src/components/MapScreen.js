@@ -1,13 +1,44 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 
-const DEFAULT_LATITUDE = 32.0869342;
-const DEFAULT_LONGITUDE = 34.7801262;
+const MapScreen = (props) => {
 
-const VIBRATION_DURATION = 500;
+  const [selectedLocation, setSelectedLocation] = useState();
 
-function MapScreen(props) {
+  const mapRegion = {
+    latitude: 37.78,
+    longitude: -122.43,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421
+  };
+
+  const selectLocationHandler = event => {
+    console.log("event: ", event)
+    setSelectedLocation({
+      // lat: event.nativeEvent.coordinate.latitude,
+      // lng: event.nativeEvent.coordinate.longitude
+    });
+  };
+
+  const savePickedLocationHandler = useCallback(() => {
+    if (!selectedLocation) {
+      return;
+    }
+    props.navigation.navigate("NewPlace", { pickedLocation: selectedLocation });
+  }, [selectedLocation]);
+
+  useEffect(() => {
+    // props.navigation.setParams({ saveLocation: savePickedLocationHandler });
+  }, [savePickedLocationHandler]);
+
+  let markerCoordinates;
+  if (selectedLocation) {
+    markerCoordinates = {
+      latitude: selectedLocation.lat,
+      longitude: selectedLocation.lng
+    };
+  }
 
   useEffect(() => {
     console.log("MapScreen props: ", props);
@@ -21,15 +52,15 @@ function MapScreen(props) {
       <MapView
         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
         style={styles.map}
-        region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
-        }}
+        region={mapRegion}
+        onPress={selectLocationHandler}
       >
       </MapView>
-
+      <Coordinates
+          latitude={props.regionLatitude}
+          longitude={props.regionLongitude}
+          hide={props.setIsAddLocationMode}
+        />
     </View>
   );
 }
@@ -56,7 +87,8 @@ const Coordinate = React.memo(({ label, value }) => (
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
-    height: '100%',
+    height: '70%',
+    height: 420,
     width: '100%',
     justifyContent: 'flex-end',
     alignItems: 'center',

@@ -38,7 +38,7 @@ export default function Index(props) {
     const headers = { Categories: "Categories", Category: renderedCategory, Location: renderedLocation };
 
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [dialogLocationOpen, setLocationDialogOpen] = useState(false);
+    const [locationDialogOpen, setLocationDialogOpen] = useState(false);
     const [updateOpen, setUpdateOpen] = useState(false);
     const [showBack, setShowBack] = useState(false);
     const [showMenu, setShowMenu] = useState(false);
@@ -55,8 +55,8 @@ export default function Index(props) {
         //TODO: add logout item to top menu
         if (logout) {
             clearAll();
-            console.log('logout: ' + logout);
             setComponentIndex(componentIndex - 1);
+            console.log('logout: ' + logout + 'componentIndex: ' + componentIndex);
             setLogout(false);
         }
         // return clearAll()
@@ -113,16 +113,17 @@ export default function Index(props) {
 
     const onUpdateHandler = (renderedCategories, renderedCategory, editCategory) => {
         console.log("updateOpen: ", updateOpen)
-
+        
         // Alert.alert("Update Category", "Are you sure you want to update to '" + editCategory + "'?");
-
+        
         // TODO: confirmationAlert cancelable
         // confirmation = confirmationAlert("Delete Category", "Are you sure you want to delete");
         // if (confirmation) {
-        setRenderedCategories(updateCategory(renderedCategories, renderedCategory, editCategory));
-        if (updateOpen) setUpdateOpen(false)
-        setComponentIndex(componentIndex - 1);
-        // removeValue(deleteItem);
+            setRenderedCategories(updateCategory(renderedCategories, renderedCategory, editCategory));
+            setComponentIndex(componentIndex - 1);
+            if (updateOpen) setUpdateOpen(false)
+            // removeValue(deleteItem);
+            console.log("updateOpen: ", updateOpen)
     };
 
     const onDeleteHandler = deleteItem => {
@@ -208,8 +209,8 @@ export default function Index(props) {
                 dialogOpen={dialogOpen}
                 setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                dialogLocationOpen={dialogLocationOpen}
-                setDialogLocationOpen={() => { setDialogLocationOpen(!dialogLocationOpen); }}
+                locationDialogOpen={locationDialogOpen}
+                setLocationDialogOpen={() => { setLocationDialogOpen(!locationDialogOpen); }}
 
                 updateOpen={updateOpen}
                 setUpdateOpen={() => { setUpdateOpen(!updateOpen); }}
@@ -218,10 +219,18 @@ export default function Index(props) {
             />
 
             {/* <ScrollView style={styles.scrollView}> */}
-            {componentKeys[componentIndex] === "Categories" &&
+            {/* {componentKeys[componentIndex] === "Categories" && */}
                 <CurrentComponentRouter
                     currentComponent={components[componentKeys[componentIndex]]}
                     componentIndex={componentIndex}
+
+                    showMenu={showMenu}
+                    setShowMenu={() => { setShowMenu(!showMenu); }}
+                    onActionMenu={(_action) => { handleAction(action); }}
+
+                    showBack={showBack}
+                    onBack={() => { setComponentIndex(componentIndex - 1) }}
+                    onNext={() => { setComponentIndex(componentIndex + 1) }}
 
                     renderedCategories={renderedCategories}
                     onUpdateCategories={renderedCategoriesHandler}
@@ -246,17 +255,24 @@ export default function Index(props) {
                     dialogOpen={dialogOpen}
                     setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                    // onUpdateHandler={onUpdateHandler}
+                    locationDialogOpen={locationDialogOpen}
+                    setLocationDialogOpen={() => { setLocationDialogOpen(!locationDialogOpen); }}
+                    
+                    onUpdateHandler={onUpdateHandler}
 
                     updateOpen={updateOpen}
                     setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
 
-                    onDismiss={() => { setDialogOpen(false); }}
+                    onDismiss={() => { 
+                        setDialogOpen(false); 
+                        setUpdateOpen(false); 
+                        setLocationDialogOpen(false); 
+                    }}
 
                     style={styles.componentStyle}
                 />
-            }
-            {componentKeys[componentIndex] === "Category" &&
+            {/* } */}
+            {/* {componentKeys[componentIndex] === "Category" &&
                 <Category
                     currentComponent={components[componentKeys[componentIndex]]}
                     componentIndex={componentIndex}
@@ -285,8 +301,8 @@ export default function Index(props) {
                     setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
 
-                    dialogLocationOpen={dialogLocationOpen}
-                    setDialogLocationOpen={() => { setDialogLocationOpen(!dialogLocationOpen); }}
+                    locationDialogOpen={locationDialogOpen}
+                    setLocationDialogOpen={() => { setLocationDialogOpen(!locationDialogOpen); }}
                     
                     onUpdateHandler={onUpdateHandler}
 
@@ -295,7 +311,7 @@ export default function Index(props) {
 
                     style={styles.componentStyle}
                 />
-            }
+            } */}
 
             {/* </ScrollView> */}
         </View>
