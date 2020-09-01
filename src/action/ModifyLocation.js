@@ -114,12 +114,12 @@ const ModifyLocation = props => {
 
             <View style={styles.buttonContainer}>
               <Coordinates
-                latitude={latitude || 0}
-                longitude={longitude || 0}
+                latitude={coordinates.latitude || 0}
+                longitude={coordinates.longitude || 0}
                 // latitude={props.regionLatitude}
                 // longitude={props.regionLongitude}
                 // hide={props.setIsAddLocationMode}
-                hide={false}
+                // hide={false}
               />
 
               <TouchableOpacity
