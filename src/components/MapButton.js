@@ -15,6 +15,7 @@ const MapButton = (props) => {
       <TouchableOpacity
         onPress={props.onPress}
         // onPress={() => setShowMediumMap(!showMediumMap)}
+
         style={styles.button55}>
         <MapView style={styles.dragableMap}></MapView>
         <Text style={styles.taxtMap}>Find Location From On The Map</Text>

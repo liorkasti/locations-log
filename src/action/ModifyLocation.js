@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import toastMaker from '../utils/feedbackGenerator';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import MapScreen from "../components/MapScreen"
@@ -8,10 +8,6 @@ import MapButton from "../components/MapButton"
 const ModifyLocation = props => {
   const [nameInput, setNameInput] = useState("");
   const [addressInput, setAddressInput] = useState("");
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-  const [regionLatitude, setRegionLatitude] = useState(0);
-  const [regionLongitude, setRegionLongitude] = useState(0);
 
   useEffect(() => {
     // props = JSON.stringify(props);
@@ -53,13 +49,13 @@ const ModifyLocation = props => {
             <MapScreen
               onPress={props.setShowMediumMap}
               showMediumMap={props.showMediumMap}
-              latitude={latitude}
-              setLatitude={setLatitude}
-              regionLatitude={regionLatitude}
-              setRegionLatitude={setRegionLatitude}
-              regionLongitude={regionLongitude}
+              // latitude={latitude}
+              // setLatitude={setLatitude}
+              // regionLatitude={regionLatitude}
+              // setRegionLatitude={setRegionLatitude}
+              // regionLongitude={regionLongitude}
               isAddLocationMode={props.isAddLocationMode}
-              setIsAddLocationMode={props.setIsAddLocationMode}            />
+              setIsAddLocationMode={props.setIsAddLocationMode} />
           </>
         }
         {
@@ -67,6 +63,17 @@ const ModifyLocation = props => {
 
           <>
             <Text style={styles.textDialog}>Add Location Details</Text>
+            {props.showMediumMap &&
+              <TouchableOpacity
+                disabled={!(props.showMediumMap)}
+                onPress={props.setShowMediumMap}
+                showMediumMap={props.showMediumMap}
+                style={styles.coordsClose}
+              >
+                <Icon name="close-circle" style={styles.icon3} />
+                {/* <Text style={styles.textButton}>COORDINATES</Text> */}
+              </TouchableOpacity>
+            }
             {/* TODO: Add dinamic screen title for the message below*/}
             {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
             <View style={styles.inputContainer}>
@@ -84,6 +91,18 @@ const ModifyLocation = props => {
                 style={styles.input}
                 onChangeText={addressInputHandler}
                 value={addressInput}
+              />
+            </View>
+
+            {/* <Icon name="map-legend" style={styles.icon3} /> */}
+            <Text style={styles.coordsText}>SELECT COORDINATES</Text>
+
+            <View style={styles.mapContainer}>
+              <MapButton
+                // showMediumMap = {showMediumMap}
+                onPress={props.setShowMediumMap}
+                showMediumMap={props.showMediumMap}
+                style={styles.mapButton}
               />
             </View>
 
@@ -106,21 +125,6 @@ const ModifyLocation = props => {
               </TouchableOpacity>
             </View>
 
-            <View style={styles.mapContainer}>
-              <MapButton
-                // showMediumMap = {showMediumMap}
-                onPress={props.setShowMediumMap}
-                showMediumMap={props.showMediumMap}
-                style={styles.mapButton}
-              />
-              <TouchableOpacity
-                onPress={() => { props.onCancel; }}
-                style={styles.coordButton}
-              >
-                <Icon name="map-legend" style={styles.icon3} />
-                <Text style={styles.textButton}>COORDINATES</Text>
-              </TouchableOpacity>
-            </View>
 
           </>
         }
@@ -129,12 +133,36 @@ const ModifyLocation = props => {
   );
 };
 
+const Coordinates = React.memo(({ latitude, longitude, hide }) =>
+  hide ? null : (
+    <View style={styles.coordinates}>
+      <Coordinate label={'Latitude'} value={latitude} />
+      <Coordinate label={'Longitude'} value={longitude} />
+    </View>
+  ),
+);
+
+const Coordinate = React.memo(({ label, value }) => (
+  // const Coordinate = React.memo(({ label, value }) => (
+  <View style={styles.coordinate}>
+    <Text style={{ fontWeight: 'bold' }} numberOfLines={1}>
+      {label}
+    </Text>
+    <Text numberOfLines={1}>{value}</Text>
+  </View>
+),
+);
+
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    // alignContent: "center",
     justifyContent: 'center',
-    top: -60
+    top: -20
   },
   textDialog: {
     padding: 20,
@@ -142,8 +170,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   inputContainer: {
-    width: 330,
-    // width: "95%",
+    width: windowWidth * .85,
   },
   input: {
     borderColor: 'black',
@@ -151,10 +178,19 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10
   },
+  coordsClose: {
+    // position: 'absolute',
+    borderColor: 'rgba(0,88,155,1)',
+    top: -30,
+    left: (-windowWidth * .40),
+    zIndex: 999
+  },
   buttonContainer: {
     flexDirection: 'row',
-    width: 330,
+    width: windowWidth * .85,
     justifyContent: 'space-around',
+    bottom: -40,
+    // zIndex: 999,
   },
   button1: {
     flexDirection: 'row',
@@ -180,8 +216,7 @@ const styles = StyleSheet.create({
   },
 
   mapContainer: {
-    // flexDirection: 'row',
-    width: 330,
+    width: windowWidth * .85,
     // justifyContent: 'space-around',
     alignItems: 'center',
     height: 50,
@@ -200,18 +235,6 @@ const styles = StyleSheet.create({
     // width: 330,
     zIndex: 20
   },
-  coordButton: {
-    // flexDirection: 'row',
-    alignItems: "center",
-    textAlign: "center",
-    backgroundColor: '#ccc',
-    padding: 10,
-    marginVertical: 10,
-    borderColor: 'rgba(0,88,155,1)',
-    borderWidth: 0.7,
-    // width: '45%',
-  },
-
   textAddButton: {
     textAlign: 'center',
     justifyContent: 'center',
@@ -219,6 +242,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingHorizontal: 5,
     left: -5
+  },
+  coordsText: {
+    color: 'rgba(0,88,155,1)',
+    justifyContent: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    paddingTop: 15
+    // marginVertical: 40,
   },
   textButton: {
     justifyContent: 'center',
@@ -249,7 +280,7 @@ const styles = StyleSheet.create({
     color: 'rgba(0,88,155,1)',
     fontSize: 30,
     left: -5,
-    padding: 5,
+    padding: 15,
     // textAlign: 'right',
     // alignSelf: 'stretch',
   },

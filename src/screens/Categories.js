@@ -129,7 +129,7 @@ export default function Categories({ props }) {
 }
 
 
-const windowHeight = Dimensions.get('window').height + 100;
+const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({

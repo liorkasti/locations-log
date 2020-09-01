@@ -211,7 +211,8 @@ const styles = StyleSheet.create({
     },
     locationDialog: {
         alignItems: 'center',
-        height: windowHeight * .8,
+        // height: windowHeight * .8,
+        height: 500,
         width: '90%',
         padding: 20,
     },

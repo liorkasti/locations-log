@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, TextInput, Alert, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
 import toastMaker from '../utils/feedbackGenerator';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -119,6 +119,9 @@ const ModifyCategory = props => {
   );
 };
 
+const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -133,6 +136,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: 330,
+    width: windowWidth*.85,
   },
   input: {
     borderColor: 'black',
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    width: 330,
+    width: windowWidth*.85,
     justifyContent: 'space-around',
   },
   button1: {
