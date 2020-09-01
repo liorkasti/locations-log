@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, FlatList, ScrollView, Dimensions, Picker } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
-import Dialog, { DialogFooter,DialogTitle, DialogButton, SlideAnimation, PopupDialog, DialogContent } from 'react-native-popup-dialog';
+import Dialog, { DialogFooter, DialogTitle, DialogButton, SlideAnimation, PopupDialog, DialogContent } from 'react-native-popup-dialog';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
@@ -9,10 +9,13 @@ import { addCategory, addLocations, addLocation, updateCategory, removeCategory 
 import CardItem from '../components/CardItem';
 import ModifyLocation from '../action/ModifyLocation';
 import ModifyCategory from '../action/ModifyCategory';
+import DialogComponent from '../components/DialogComponent';
 import ActionMenu from '../components/ActionMenu';
 
 
-export default function Category({ props }) {
+// export default function Category({ props }) {
+// export function Category( {props} ) {
+const Category = ( {props} ) => {
 
   const [locationList, setLocationList] = useState();
   const [currentLocationName, setCurrentLocationName] = useState([]);
@@ -27,16 +30,17 @@ export default function Category({ props }) {
 
   useEffect(() => {
 
-    props = JSON.stringify({ props });
-    // props = JSON.parse(props);
-    console.log('22222222222222 Category.props: ' + props);
+    const _props = JSON.stringify( props );
+    // props = JSON.parse(_props);
+    console.log('Category.props: ' + props);
+    console.log('Category._props: ' + _props);
     // console.log('locationDialogOpen: ' + locationDialogOpen);
 
     // console.log('LocationList: ' + JSON.stringify(locationList));
     // console.log('LocationList: ' + JSON.stringify(locationList));
 
-    if (props.isUpdateMode) { 
-      // props.setUpdateOpen(false);
+    if (props.isUpdateMode) {
+      props.setUpdateOpen(false);
       // TODO: validate add asynch starage and sorting capabiliteis
       // initStorage();
     }
@@ -68,7 +72,8 @@ export default function Category({ props }) {
     const index = props.renderedCategories.findIndex(category => category.name === props.renderedCategory);
     props.onUpdateHandler(props.renderedCategories, index, categoryName);
     //TODO: set the line below to active before production.
-    setIsUpdateMode(true);        
+    setIsUpdateMode(false);
+    props.setUpdateOpen(false);
   };
 
   // call for local storing 
@@ -88,10 +93,12 @@ export default function Category({ props }) {
   }
 
   const cancelCategoryHandler = () => {
+    console.log("I am cancelCategoryHandler now")
     props.onDismiss();
     // onDismiss();
     setIsCancelMode(true);
-    // if (props.updateOpen) props.setUpdateOpen(false);
+    if (props.dialogOpen) props.setDialogOpen(false);
+    if (props.updateOpen) props.setUpdateOpen(false);
     if (props.locationDialogOpen) props.setLocationDialogOpen(false)
     // props.setUpdateOpen(false);
   };
@@ -134,147 +141,45 @@ export default function Category({ props }) {
               </View>
           }
         </View>
+        <DialogComponent
+          locationDialogOpen={props.locationDialogOpen}
+          setLocationDialogOpen={props.setLocationDialogOpen}
 
-        {/* {locationDialogOpen && */}
-          < Dialog
-            // visible={props.locationDialogOpen}
-            // onTouchOutside={() => { visible = onDismiss(); }}
-            // onTouchOutside={setLocationDialogOpen(false)}
-            // onTouchOutside={() => {
-            //   setLocationDialogOpen({ visible: false });
-            // }}
-            // onTouchOutside={() => { cancelCategoryHandler }}
-            onTouchOutside={() => { (props.onDismiss()) }}
-            // onTouchOutside={() => { visible = (!visible) }}
-            // onTouchOutside={() => { visible = props.setLocationDialogOpen; }}
-            dialogAnimation={
-              new SlideAnimation({
-                slideFrom: 'bottom',
-              })
-            }
-            dialogStyle={styles.locationDialog}
-          >
-            <DialogContent>
-              <View style={styles.welcomeContainer}>
-                <ModifyLocation
-                  initialValue=""
-                  visible={props.locationDialogOpen}
-                  locationDialogOpen={props.locationDialogOpen}
-                  setLocationDialogOpen={props.setLocationDialogOpen}
+          onSave={addLocationHandler}
+          // onAdd={addLocationHandler}
+          reloadStorage={props.reloadStorage}
+          
+          onUpdate={onUpdateHandler}
+          
+          myLocationList={props.myLocationList}
+          onUpdateCategories={props.onUpdateCategories}
 
-                  onSave={addLocationHandler}
-                  // onAdd={addLocationHandler}
-                  reloadStorage={props.reloadStorage}
+          onCancel={cancelCategoryHandler}
 
-                  myLocationList={props.myLocationList}
-                  onUpdateCategories={props.onUpdateCategories}
+          locationDialogOpen={props.locationDialogOpen}
+          setLocationDialogOpen={props.setLocationDialogOpen}
 
-                  onCancel={cancelCategoryHandler}
-                  onDismiss={() => { props.onDismiss }}
+          onUpdateHandler={props.onUpdateHandler}
 
-                  locationDialogOpen={props.locationDialogOpen}
-                  setLocationDialogOpen={props.setLocationDialogOpen}
+          updateOpen={props.updateOpen}
+          setUpdateOpen={props.setUpdateOpen}
 
-                  showMediumMap={showMediumMap}
-                  setShowMediumMap={() => { setShowMediumMap(!showMediumMap); }}
+          showMediumMap={showMediumMap}
+          setShowMediumMap={() => { setShowMediumMap(!showMediumMap); }}
 
-                  isAddLocationMode={isAddLocationMode}
-                  setIsAddLocationMode={() => { setIsAddLocationMode(!isAddLocationMode); }}
-                  // setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
-                  // isUpdateMode={isUpdateMode}
+          isAddLocationMode={isAddLocationMode}
+          setIsAddLocationMode={() => { setIsAddLocationMode(!isAddLocationMode); }}
+          setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
+          isUpdateMode={isUpdateMode}
 
-                  // reloadStorage={reloadStorage}
-                  // renderedCategory={props.renderedCategory}
-                  // onUpdateCategories={props.onUpdateCategories}
+          onDismiss={props.onDismiss}
+          // reloadStorage={reloadStorage}
+          // renderedCategory={props.renderedCategory}
+          // onUpdateCategories={props.onUpdateCategories}
 
-                  windowWidth={windowWidth}
-                  windowHeight={windowHeight}
-                />
-              </View>
-            </DialogContent>
-          </Dialog>
-        {/* } */}
-
-        {/* {(isCancelMode === false) ? */}
-          < Dialog
-            visible={props.updateOpen}
-            onTouchOutside={() => { 
-              visible=false;
-              // props.onDismiss();
-              // visible: false
-              // props.setUpdateOpen();
-              // this.setState({ visible: false }, () => Keyboard.dismiss());
-              console.log('visible : ', visible);
-              // this.setState({ visible: false });
-            }}
-            dialogTitle={<DialogTitle title="Dialog Title" />}
-
-            footer={
-              <DialogFooter>
-                <DialogButton
-                  text="CANCEL"
-                  onPress={() => { }}
-                />
-                <DialogButton
-                  text="OK"
-                  onPress={() => { }}
-                />
-              </DialogFooter>
-            }          
-
-            dialogAnimation={
-              new SlideAnimation({
-                slideFrom: 'bottom',
-              })
-            }
-            dialogStyle={styles.dialog}
-          >
-            <DialogContent>
-              <View style={styles.welcomeContainer}>
-                <ModifyCategory
-                  initialValue=""
-                  visible={props.updateOpen}
-                  updateOpen={props.updateOpen}
-                  setUpdateOpen={props.setUpdateOpen}
-
-                  onUpdate={onUpdateHandler}
-                  reloadStorage={props.reloadStorage}
-
-                  myLocationList={props.myLocationList}
-                  onUpdateCategories={props.onUpdateCategories}
-
-                  onCancel={cancelCategoryHandler}
-                  onDismiss={() => { props.onDismiss }}
-
-
-                  setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
-                  isUpdateMode={isUpdateMode}
-
-                  windowWidth={windowWidth}
-                  windowHeight={windowHeight}
-                />
-              </View>
-            </DialogContent>
-          </Dialog>
-
-
-        {/* {props.showMenu &&
-        <View style={styles.manuContainer}>
-          <ActionMenu
-            onActionMenu={props.onActionMenu}
-            onDelete={props.onDelete}
-
-            renderedCategories={props.renderedCategories}
-            onUpdateCategories={props.renderedCategoriesHandler}
-
-            renderedCategory={props.renderedCategory}
-            onUpdateCategory={props.renderedCategoryHandler}
-
-            onActionMenu={props.onActionMenu}
-            style={styles.actionMenu}
-          />
-        </View>
-        } */}
+          windowWidth={windowWidth}
+          windowHeight={windowHeight}
+        />
       </ScrollView>
     </View >
   );
@@ -294,7 +199,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     maxHeight: "98%",
-    zIndex: 10
+    zIndex: 10,
+    alignContent: "center",
+    justifyContent: 'center',
   },
   textDialog: {
     padding: 20,
@@ -304,9 +211,21 @@ const styles = StyleSheet.create({
   dialog: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 500,
+    height: 260,
     width: '90%',
     padding: 20,
+  },
+  dialogTitle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // height: 60,
+    paddingTop: 20,
+    marginTop: 20,
+    padding: 20,
+    fontSize: 20,
+    textAlign: 'center'
+    // width: '90%',
+    // padding: 20,
   },
   locationDialog: {
     alignItems: 'center',
@@ -344,3 +263,5 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
 });
+
+export default Category;

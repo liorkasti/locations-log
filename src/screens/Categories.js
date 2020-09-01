@@ -7,8 +7,9 @@ import toastMaker from '../utils/feedbackGenerator';
 import { KEY } from '../router/index';
 import CardItem from '../components/CardItem';
 import ModifyCategory from '../action/ModifyCategory';
+import DialogComponent from '../components/DialogComponent';
 
-export default function Categories({props}) {
+export default function Categories({ props }) {
 
   const [categoryList, setCategoryList] = useState([]);
   const [currentCategory, setCurrentCategory] = useState([]);
@@ -111,10 +112,6 @@ export default function Categories({props}) {
 
                 onCancel={cancelCategoryHandler}
                 onDismiss={() => { props.setDialogOpen() }}
-
-                // setIsUpdateMode={() => { setIsUpdateMode() }}
-                // setUpdateOpen={props.setUpdateOpen}
-                // isUpdateMode={isUpdateMode}
 
                 reloadStorage={reloadStorage}
                 renderedCategory={props.renderedCategory}

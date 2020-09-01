@@ -14,9 +14,9 @@ const ModifyLocation = props => {
   const [regionLongitude, setRegionLongitude] = useState(0);
 
   useEffect(() => {
-    props = JSON.stringify(props);
-    props = JSON.parse(props);
-    // console.log("ModifyLocation props: ", props);
+    // props = JSON.stringify(props);
+    // props = JSON.parse(props);
+    console.log("ModifyLocation props: ", props);
     // console.log('props.showMediumMap: ' + props.showMediumMap);
 
     if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }

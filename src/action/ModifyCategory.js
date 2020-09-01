@@ -35,13 +35,15 @@ const ModifyCategory = props => {
       // props.setUpdateOpen;
       // props.visible()
       setNameInput('');
-      props.setUpdateOpen(false)
+      props.setUpdateOpen(false)      
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
       Alert.alert("No input.");
       console.log("No name has been entered.");
       // toastMaker("No name has been entered");
       setNameInput('');
+      // props.onDismiss()
+      // visible=false
     }
   }
 
@@ -121,6 +123,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    alignContent: "center",
     justifyContent: 'center',
   },
   textDialog: {
