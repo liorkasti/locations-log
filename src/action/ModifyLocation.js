@@ -4,7 +4,7 @@ import toastMaker from '../utils/feedbackGenerator';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import MapComponent from "../components/MapComponent";
 import MapButton from "../components/MapButton";
-import Coordinates from '../components/Coordinate';
+// import Coordinates from '../components/Coordinate';
 
 
 const ModifyLocation = props => {
@@ -34,7 +34,7 @@ const ModifyLocation = props => {
     // console.warn("enteredText: ", enteredInput);    
     if (nameInput.length > 0 && addressInput.length > 0) {
       // props.onSave(nameInput, addressInput);
-      props.onSave(nameInput, addressInput);
+      props.onSave(nameInput, addressInput, coordinates);
       setNameInput('');
       setAddressInput('');
     } else {
@@ -48,17 +48,6 @@ const ModifyLocation = props => {
   return (
     <>
       <View style={styles.container}>
-        {props.showMediumMap &&
-          <>
-            <MapComponent
-              onPress={props.setShowMediumMap}
-              showMediumMap={props.showMediumMap}
-              coordinates={coordinates}
-              setCoordinates={setCoordinates}
-              isAddLocationMode={props.isAddLocationMode}
-              setIsAddLocationMode={props.setIsAddLocationMode} />
-          </>
-        }
         {
           props.locationDialogOpen &&
 
@@ -72,10 +61,10 @@ const ModifyLocation = props => {
                 showMediumMap={props.showMediumMap}
                 style={styles.coordsClose}
               >
-                {coordinates ? 
-                <Icon name="close-circle" style={styles.icon3} />
-                :
-                <Icon name="map-check" style={styles.icon3} />
+                {coordinates ?
+                  <Icon name="close-circle" style={styles.icon3} />
+                  :
+                  <Icon name="map-check" style={styles.icon3} />
                 }
                 {/* <Text style={styles.textButton}>COORDINATES</Text> */}
               </TouchableOpacity>
@@ -110,42 +99,68 @@ const ModifyLocation = props => {
                 showMediumMap={props.showMediumMap}
                 style={styles.mapButton}
               />
-            </View>
 
-            <View style={styles.buttonContainer}>
               <Coordinates
                 latitude={coordinates.latitude || 0}
                 longitude={coordinates.longitude || 0}
-                // latitude={props.regionLatitude}
-                // longitude={props.regionLongitude}
-                // hide={props.setIsAddLocationMode}
-                // hide={false}
               />
 
-              <TouchableOpacity
-                onPress={props.onCancel}
-                style={styles.button1}
-              >
-                <Icon name="map-marker-down" style={styles.icon2} />
-                <Text style={styles.textButton}>CANCEL</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={addLocationHandler}
-                style={styles.button2}
-              >
-                <Icon name="map-marker-check" style={styles.icon1} />
-                <Text style={styles.textAddButton}>SAVE</Text>
-              </TouchableOpacity>
             </View>
-
-
           </>
+        }
+
+
+        {props.showMediumMap ?
+          <>
+            <MapComponent
+              onPress={props.setShowMediumMap}
+              showMediumMap={props.showMediumMap}
+              coordinates={coordinates}
+              setCoordinates={setCoordinates}
+              isAddLocationMode={props.isAddLocationMode}
+              setIsAddLocationMode={props.setIsAddLocationMode} />
+          </>
+          :
+          <View style={styles.buttonContainer}>
+
+            <TouchableOpacity
+              onPress={props.onCancel}
+              style={styles.button1}
+            >
+              <Icon name="map-marker-down" style={styles.icon2} />
+              <Text style={styles.textButton}>CANCEL</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={addLocationHandler}
+              style={styles.button2}
+            >
+              <Icon name="map-marker-check" style={styles.icon1} />
+              <Text style={styles.textAddButton}>SAVE</Text>
+            </TouchableOpacity>
+          </View>
         }
       </View >
     </>
   );
 };
+
+const Coordinates = React.memo(({ latitude, longitude }) =>
+
+  <View style={styles.coordinates}>
+    <Coordinate label={'Latitude'} value={latitude} />
+    <Coordinate label={'Longitude'} value={longitude} />
+  </View>
+);
+
+const Coordinate = React.memo(({ label, value }) => (
+  <View style={styles.coordinate}>
+    <Text style={{ fontWeight: 'bold' }} numberOfLines={1}>
+      {label}
+    </Text>
+    <Text numberOfLines={1}>{value}</Text>
+  </View>
+));
 
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width;
@@ -161,13 +176,15 @@ const styles = StyleSheet.create({
   textDialog: {
     padding: 10,
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'rgba(0,88,155,1)',
+
   },
   inputContainer: {
     width: windowWidth * .85,
   },
   input: {
-    borderColor: 'black',
+    borderColor: 'rgba(0,88,155,1)',
     borderWidth: 0.7,
     padding: 10,
     margin: 10
@@ -177,14 +194,53 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,88,155,1)',
     top: -30,
     left: (-windowWidth * .40),
-    zIndex: 999
+    zIndex: 1000
+  },
+  mapContainer: {
+    width: windowWidth * .85,
+    alignItems: 'center',
+  },
+  mapButton: {
+    marginVertical: 10,
+    borderColor: 'rgba(0,88,155,1)',
+    borderWidth: 0.7,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    // bottom: 80,
+    marginVertical: 10,
+    height: 60,
+    width: '95%',
+    // width: windowWidth * .85,
+    // width: 330,
+    zIndex: 20
+  },
+  coordinates: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    zIndex: 99,
+  },
+  coordinate: {
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    margin: 16,
+    backgroundColor: 'white',
+    opacity: 0.8,
+    height: 60,
+    borderColor: 'rgba(0,88,155,1)',
+    borderWidth: 0.7,
+    borderRadius: 10,
   },
   buttonContainer: {
+    // position: 'absolute',
+    // top: 170,
+    // height: 60,
     flexDirection: 'row',
     width: windowWidth * .85,
     justifyContent: 'space-around',
-    bottom: -40,
-    // zIndex: 999,
+    zIndex: 0,
   },
   button1: {
     flexDirection: 'row',
@@ -208,41 +264,19 @@ const styles = StyleSheet.create({
     borderWidth: 0.7,
     width: '45%',
   },
-  mapContainer: {
-    width: windowWidth * .85,
-    // justifyContent: 'space-around',
-    alignItems: 'center',
-    height: 50,
-  },
-  mapButton: {
-    marginVertical: 10,
-    borderColor: 'rgba(0,88,155,1)',
-    borderWidth: 0.7,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    // bottom: 80,
-    marginVertical: 10,
-    height: 60,
-    width: '95%',
-    // width: 330,
-    zIndex: 20
-  },
   textAddButton: {
     textAlign: 'center',
     justifyContent: 'center',
     color: 'white',
     fontWeight: 'bold',
     paddingHorizontal: 5,
-    left: -5
+    left: -5,
   },
   coordsText: {
     color: 'rgba(0,88,155,1)',
     justifyContent: 'center',
     textAlign: 'center',
-    fontWeight: 'bold',
     paddingTop: 15
-    // marginVertical: 40,
   },
   textButton: {
     justifyContent: 'center',

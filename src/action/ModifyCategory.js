@@ -35,7 +35,7 @@ const ModifyCategory = props => {
       // props.setUpdateOpen;
       // props.visible()
       setNameInput('');
-      props.setUpdateOpen(false)      
+      props.setUpdateOpen(false)
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
       Alert.alert("No input.");
@@ -132,21 +132,22 @@ const styles = StyleSheet.create({
   textDialog: {
     padding: 20,
     fontSize: 20,
-    textAlign: 'center'
+    textAlign: 'center',
+    color: 'rgba(0,88,155,1)',
   },
   inputContainer: {
     width: 330,
-    width: windowWidth*.85,
+    width: windowWidth * .85,
   },
   input: {
-    borderColor: 'black',
+    borderColor: 'rgba(0,88,155,1)',
     borderWidth: 0.7,
     padding: 10,
     margin: 10
   },
   buttonContainer: {
     flexDirection: 'row',
-    width: windowWidth*.85,
+    width: windowWidth * .85,
     justifyContent: 'space-around',
   },
   button1: {

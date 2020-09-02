@@ -55,11 +55,11 @@ const Category = ( {props} ) => {
   }, [])
 
 
-  const addLocationHandler = (locationName, locationAdress) => {
+  const addLocationHandler = (locationName, address, coordinates) => {
 
-    setCurrentLocationName(locationName, locationAdress);
+    setCurrentLocationName(locationName, address, coordinates);
     if (isAddLocationMode) setIsAddLocationMode(false);
-    updateStorage(locationName, locationAdress);
+    updateStorage(locationName, address, coordinates);
 
     //TODO: set the line below to active before production.
     // props.setDialogOpen(false)
