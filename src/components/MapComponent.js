@@ -13,9 +13,14 @@ const MapComponent = (props) => {
 
   useEffect(() => {
     Keyboard.dismiss();
-    console.log("MapScreen props: ", props);
+    // console.log("MapScreen props: ", props);
     console.log("selectedLocation : ", selectedLocation);
     console.log("props.showMediumMap: ", props.showMediumMap);
+    console.log("markerCoordinates: ", mapRegion);
+    setSelectedLocation({
+      lat: latitude || mapRegion.latitude,
+      lng: longitude || mapRegion.longitude
+    });
     if (selectedLocation) { props.setCoordinates(selectedLocation) }
   }, [])
 
@@ -45,7 +50,14 @@ const MapComponent = (props) => {
       lng: event.nativeEvent.coordinate.longitude
     });
     console.log("selectedLocation: ", selectedLocation)
+    updateCoordinate(selectedLocation)
+
   };
+
+
+  const updateCoordinate = (selectedLocation) => {
+    props.setCoordinates({latitude: selectedLocation.lat, longitude: selectedLocation.lng})
+  }
 
   return (
     <View style={[styles.container, props.style]}>

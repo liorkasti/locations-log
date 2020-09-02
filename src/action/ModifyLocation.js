@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     width: '95%',
     zIndex: 20
   },
-  coordinates: {
+  coordinates: {    
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
