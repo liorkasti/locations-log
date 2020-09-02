@@ -65,7 +65,7 @@ export default function DialogComponent(props) {
                                 onUpdateCategories={props.onUpdateCategories}
 
                                 onCancel={props.onCancel}
-                                onDismiss={props.onDismiss }
+                                onDismiss={props.onDismiss}
 
                                 locationDialogOpen={props.locationDialogOpen}
                                 setLocationDialogOpen={props.setLocationDialogOpen}
@@ -95,38 +95,29 @@ export default function DialogComponent(props) {
                     visible={props.updateOpen}
                     onTouchOutside={() => {
                         (props.onDismiss())
-                        // this.setState({ visible: false });
-                        // props.setUpdateOpen(false);
-                        // visible = props.updateOpen
-                        // cancelCategoryHandler
-                        // props.onDismiss();
-                        // visible: false
-                        // props.setUpdateOpen();
-                        // this.setState({ visible: false }, () => Keyboard.dismiss());
-                        // conso.le.log('visible : ', visible);
-                        // this.setState({ visible: false });
                     }}
                     /* 
-                                dialogTitle={
-                                  <DialogTitle
-                                    title="Dialog Title"
-                                  // dialogStyle={styles.dialogTitle}
-                                  />}
-                      */
-                    // footer={
-                    //   <DialogFooter>
-                    //     <DialogButton
-                    //       text="CANCEL"
-                    //       onPress={() => { cancelCategoryHandler }}
-                    //     />
-                    //     <DialogButton
-                    //       text="OK"
-                    //       onPress={props.updateTextHandler}
-                    //     // onPress={() => { }}
-                    //     />
-                    //   </DialogFooter>
-                    // }
-
+                    opptional;
+                    dialogTitle={
+                        <DialogTitle
+                        title="Dialog Title"
+                        // dialogStyle={styles.dialogTitle}
+                        />}
+                      
+                    footer={
+                      <DialogFooter>
+                        <DialogButton
+                          text="CANCEL"
+                          onPress={() => { cancelCategoryHandler }}
+                        />
+                        <DialogButton
+                          text="OK"
+                          onPress={props.updateTextHandler}
+                        // onPress={() => { }}
+                        />
+                      </DialogFooter>
+                    }
+                    */
                     dialogAnimation={
                         new SlideAnimation({
                             slideFrom: 'bottom',

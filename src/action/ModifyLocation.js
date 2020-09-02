@@ -15,9 +15,7 @@ const ModifyLocation = props => {
 
 
   useEffect(() => {
-    // props = JSON.stringify(props);
-    // props = JSON.parse(props);
-    console.log("ModifyLocation props: ", props);
+    // console.log("ModifyLocation props: ", props);
     console.log("ModifyLocation coordinates: ", coordinates);
     // console.log('props.showMediumMap: ' + props.showMediumMap);
 
