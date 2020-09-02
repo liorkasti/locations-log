@@ -54,21 +54,6 @@ const ModifyLocation = props => {
           <>
             <Text style={styles.textDialog}>Add Location Details</Text>
 
-            {props.showMediumMap &&
-              <TouchableOpacity
-                disabled={!(props.showMediumMap)}
-                onPress={props.setShowMediumMap}
-                showMediumMap={props.showMediumMap}
-                style={styles.coordsClose}
-              >
-                {coordinates ?
-                  <Icon name="close-circle" style={styles.icon3} />
-                  :
-                  <Icon name="map-check" style={styles.icon3} />
-                }
-                {/* <Text style={styles.textButton}>COORDINATES</Text> */}
-              </TouchableOpacity>
-            }
             {/* TODO: Add dinamic screen title for the message below*/}
             {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
             <View style={styles.inputContainer}>
@@ -112,13 +97,24 @@ const ModifyLocation = props => {
 
         {props.showMediumMap ?
           <>
+            <TouchableOpacity
+              disabled={!(props.showMediumMap)}
+              onPress={props.setShowMediumMap}
+              showMediumMap={props.showMediumMap}
+              style={styles.coordsClose}
+            >
+              <Icon name="map-check" style={styles.icon3} />
+            </TouchableOpacity>
+
             <MapComponent
               onPress={props.setShowMediumMap}
               showMediumMap={props.showMediumMap}
               coordinates={coordinates}
               setCoordinates={setCoordinates}
               isAddLocationMode={props.isAddLocationMode}
-              setIsAddLocationMode={props.setIsAddLocationMode} />
+              setIsAddLocationMode={props.setIsAddLocationMode}
+            />
+
           </>
           :
           <View style={styles.buttonContainer}>
@@ -190,10 +186,13 @@ const styles = StyleSheet.create({
     margin: 10
   },
   coordsClose: {
-    // position: 'absolute',
+    backgroundColor: '#ffffffcc',
     borderColor: 'rgba(0,88,155,1)',
-    top: -30,
-    left: (-windowWidth * .40),
+    borderRadius: 50,
+    borderWidth: 0.7,
+    position: 'absolute',
+    top: 390,
+    // left: (-windowWidth * .4),
     zIndex: 1000
   },
   mapContainer: {
@@ -207,12 +206,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 16,
-    // bottom: 80,
     marginVertical: 10,
     height: 60,
     width: '95%',
-    // width: windowWidth * .85,
-    // width: 330,
     zIndex: 20
   },
   coordinates: {
@@ -234,9 +230,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonContainer: {
-    // position: 'absolute',
-    // top: 170,
-    // height: 60,
     flexDirection: 'row',
     width: windowWidth * .85,
     justifyContent: 'space-around',
@@ -290,26 +283,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     left: -5
-
-    // paddingHorizontal: 5,
-    // textAlign: 'right',
-    // alignSelf: 'stretch',
   },
   icon2: {
     color: 'rgba(0,88,155,1)',
     fontSize: 20,
     left: -5
-    // paddingHorizontal: 5,
-    // textAlign: 'right',
-    // alignSelf: 'stretch',
   },
   icon3: {
     color: 'rgba(0,88,155,1)',
     fontSize: 30,
-    left: -5,
-    padding: 15,
-    // textAlign: 'right',
-    // alignSelf: 'stretch',
+    padding: 10,
   },
 });
 
