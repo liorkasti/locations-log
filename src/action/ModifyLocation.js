@@ -11,6 +11,8 @@ const ModifyLocation = props => {
   const [nameInput, setNameInput] = useState("");
   const [addressInput, setAddressInput] = useState("");
   const [coordinates, setCoordinates] = useState([]);
+  const [isAddLocationMode, setIsAddLocationMode] = useState(false);
+
 
   useEffect(() => {
     // props = JSON.stringify(props);
@@ -31,16 +33,21 @@ const ModifyLocation = props => {
   };
 
   const addLocationHandler = () => {
-    // console.warn("enteredText: ", enteredInput);    
-    if (nameInput.length > 0 && addressInput.length > 0) {
+    // console.warn("coordinates: "+ latitude + ", " + longitude);   
+    // && coordinates !== emptyArray 
+    if (nameInput.length > 0 && addressInput.length > 0 ) {
       // props.onSave(nameInput, addressInput);
+      // props.onSave(nameInput, addressInput, {latitude: 0, longitude: 0})
       props.onSave(nameInput, addressInput, coordinates);
       setNameInput('');
       setAddressInput('');
+      // setCoordinates();
+      setIsAddLocationMode(true);
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
       Alert.alert("No input.");
       console.log("No name has been entered.");
+      setIsAddLocationMode(false);
       // toastMaker("No name has been entered");
     }
   }
@@ -114,7 +121,6 @@ const ModifyLocation = props => {
               isAddLocationMode={props.isAddLocationMode}
               setIsAddLocationMode={props.setIsAddLocationMode}
             />
-
           </>
           :
           <View style={styles.buttonContainer}>
@@ -226,6 +232,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     height: 60,
     borderColor: 'rgba(0,88,155,1)',
+    // backgroundColor: isAddLocationMode ? '#ffffffcc' : '#cccccccc',
     borderWidth: 0.7,
     borderRadius: 10,
   },
