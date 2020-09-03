@@ -18,6 +18,7 @@ const ModifyLocation = props => {
     // console.log("ModifyLocation props: ", props);
     console.log("ModifyLocation coordinates: ", coordinates);
     // console.log('props.showMediumMap: ' + props.showMediumMap);
+    console.log(' *----* isAddLocationMode: *----* ' + isAddLocationMode);
 
     if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }
   }, [])
@@ -31,21 +32,27 @@ const ModifyLocation = props => {
   };
 
   const addLocationHandler = () => {
-    // console.warn("coordinates: "+ latitude + ", " + longitude);   
+    console.log("addLocationHandler: ", coordinates);
+    let cords =  {latitude: coordinates.latitude, longitude: coordinates.longitude};
+    console.log("addLocationHandler: ",  cords);
+    console.log('******************* isAddLocationMode: ***************' + isAddLocationMode);
+    console.warn("0000000000000000000 addLocationHandler: "+ nameInput + ', '+ addressInput + ', ' + coordinates.latitude + ', ' + coordinates.longitude);   
+    console.warn("0000000000000000000 addLocationHandler: "+ nameInput + ', '+ addressInput + ', ' + {coordinates});   
     // && coordinates !== emptyArray 
-    if (nameInput.length > 0 && addressInput.length > 0 ) {
+    if (nameInput.length > 0 && addressInput.length > 0 && {coordinates}) {
       // props.onSave(nameInput, addressInput);
       // props.onSave(nameInput, addressInput, {latitude: 0, longitude: 0})
-      props.onSave(nameInput, addressInput, coordinates);
+      props.onSaveLocation(nameInput, addressInput, {latitude: coordinates.latitude, longitude: coordinates.longitude});
       setNameInput('');
       setAddressInput('');
-      // setCoordinates();
+      setCoordinates;
       setIsAddLocationMode(true);
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
-      Alert.alert("No input.");
+      Alert.alert("Missing input.");
       console.log("No name has been entered.");
       setIsAddLocationMode(false);
+  
       // toastMaker("No name has been entered");
     }
   }

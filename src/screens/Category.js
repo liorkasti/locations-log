@@ -17,9 +17,8 @@ import ActionMenu from '../components/ActionMenu';
 // export function Category( {props} ) {
 const Category = ( {props} ) => {
 
-  const [locationList, setLocationList] = useState();
-  const [currentLocationName, setCurrentLocationName] = useState([]);
-  const [currentLocationAddress, setCurrentLocationAddress] = useState([]);
+  const [locationList, setLocationList] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState([]);
 
   const [updateList, setUpdateList] = useState(false);
   const [isUpdateMode, setIsUpdateMode] = useState(false);
@@ -32,11 +31,11 @@ const Category = ( {props} ) => {
 
     const _props = JSON.stringify( props );
     // props = JSON.parse(_props);
-    console.log('Category.props: ' + props);
-    console.log('Category._props: ' + _props);
+    // console.log('Category.props: ' + props);
+    // console.log('Category._props: ' + _props);
     // console.log('locationDialogOpen: ' + locationDialogOpen);
 
-    // console.log('LocationList: ' + JSON.stringify(locationList));
+    console.log('LocationList: ' + JSON.stringify(locationList));
     // console.log('LocationList: ' + JSON.stringify(locationList));
 
     if (props.isUpdateMode) {
@@ -49,17 +48,17 @@ const Category = ( {props} ) => {
     if (isAddLocationMode) {
       props.setUpdateOpen(false);
       reloadStorage()
-      console.log("The Current Location: ", JSON.stringify(currentLocationName));
-      console.log("The Locations List: ", JSON.stringify(locationList));
+      // console.log("The Current Location: ", JSON.stringify(currentLocationName));
+      // console.log("The Locations List: ", JSON.stringify(locationList));
     }
   }, [])
 
 
   const addLocationHandler = (locationName, address, coordinates) => {
 
-    setCurrentLocationName(locationName, address, coordinates);
+    setCurrentLocation({name: locationName, address: address, coordinates: coordinates});
     if (isAddLocationMode) setIsAddLocationMode(false);
-    updateStorage(locationName, address, coordinates);
+    updateStorage(currentLocation);
 
     //TODO: set the line below to active before production.
     // props.setDialogOpen(false)
@@ -87,7 +86,7 @@ const Category = ( {props} ) => {
 
   const reloadStorage = () => {
     props.onDismiss();
-    setCurrentLocationName(props.renderedLocation);
+    setCurrentLocation(props.renderedLocation);
     setLocationList(props.renderedLocations);
     setIsAddLocationMode(false);
   }
@@ -145,7 +144,7 @@ const Category = ( {props} ) => {
           locationDialogOpen={props.locationDialogOpen}
           setLocationDialogOpen={props.setLocationDialogOpen}
 
-          onSave={addLocationHandler}
+          onSaveLocation={addLocationHandler}
           // onAdd={addLocationHandler}
           reloadStorage={props.reloadStorage}
           

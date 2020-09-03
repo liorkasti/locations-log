@@ -8,8 +8,6 @@ import ActionMenu from '../components/ActionMenu';
 const HeaderBar = (props) => {
 
   useEffect(() => {
-    // TODO: validate currect index
-    // console.warn("show componentIndex: ", props)
   }, [props.componentIndex]);
 
   return (

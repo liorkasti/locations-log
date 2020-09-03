@@ -56,7 +56,7 @@ export default function DialogComponent(props) {
                                 locationDialogOpen={props.locationDialogOpen}
                                 setLocationDialogOpen={props.setLocationDialogOpen}
 
-                                onSave={props.onSave}
+                                onSaveLocation={props.onSaveLocation}
                                 onUpdate={props.onUpdate}
                                 onAdd={props.addLocationHandler}
                                 reloadStorage={props.reloadStorage}

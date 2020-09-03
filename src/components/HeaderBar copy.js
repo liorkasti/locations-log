@@ -66,7 +66,7 @@ const HeaderBar = (props) => {
             props.componentIndex === 1 &&
             
             <View style={styles.createbuttonRow}>
-              {/* TODOL right toolbar */}
+              {/* TODO: right toolbar */}
               <TouchableOpacity
                 onPress={props.setShowMenu}
                 style={styles.hamburgerMenu} >

@@ -52,7 +52,7 @@ export default function Index(props) {
     useEffect(() => {
         // console.log('showMenu props: ' + showMenu);
         // clearAll();        
-        //TODO: add logout item to top menu
+        //TODO: add logout button to top menu when async
         if (logout) {
             clearAll();
             setComponentIndex(componentIndex - 1);

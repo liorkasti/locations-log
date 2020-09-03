@@ -13,15 +13,21 @@ const MapComponent = (props) => {
 
   useEffect(() => {
     Keyboard.dismiss();
-    // console.log("MapScreen props: ", props);
-    console.log("selectedLocation : ", selectedLocation);
-    console.log("props.showMediumMap: ", props.showMediumMap);
-    console.log("markerCoordinates: ", mapRegion);
+    console.log("&&&& MapScreen props: &&&&& ", JSON.stringify(props));
+    // console.log("selectedLocation : ", selectedLocation);
+    // console.log("props.showMediumMap: ", props.showMediumMap);
+    // console.log("markerCoordinates: ", mapRegion);
     setSelectedLocation({
       lat: latitude || mapRegion.latitude,
       lng: longitude || mapRegion.longitude
     });
-    if (selectedLocation) { props.setCoordinates(selectedLocation) }
+    if (selectedLocation) { 
+      props.setIsAddLocationMode(true);
+      console.log("###### setIsAddLocationMode: ########", props.isAddLocationMode)
+      props.setCoordinates(selectedLocation) 
+      console.log("props.coordinates: ", props.coordinates)
+      updateCoordinate(selectedLocation)
+    }
   }, [])
 
   const mapRegion = {
@@ -49,7 +55,10 @@ const MapComponent = (props) => {
       lat: event.nativeEvent.coordinate.latitude,
       lng: event.nativeEvent.coordinate.longitude
     });
-    console.log("selectedLocation: ", selectedLocation)
+    props.setIsAddLocationMode(true);
+    console.log("--------- setIsAddLocationMode: ----------", props.isAddLocationMode)
+    props.setCoordinates(selectedLocation) 
+    console.log("props.coordinates: ", props.coordinates)
     updateCoordinate(selectedLocation)
 
   };
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
     width: windowWidth * .85,
     // justifyContent: 'flex-end',
     alignItems: 'center',
-    top: 60,
+    top: 50,
     zIndex: 999,
   },
   map: {
@@ -116,9 +125,7 @@ const styles = StyleSheet.create({
   },
   coordinates: {
     position: 'absolute',
-    width: '100%',
-    width: 320,
-    //   width: windowWidth * .85,
+    width: windowWidth * .85,
     alignItems: 'center',
     justifyContent: 'center',
     bottom: 60,
