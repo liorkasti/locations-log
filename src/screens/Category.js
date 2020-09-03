@@ -15,7 +15,7 @@ import ActionMenu from '../components/ActionMenu';
 
 // export default function Category({ props }) {
 // export function Category( {props} ) {
-const Category = ( {props} ) => {
+const Category = ({ props }) => {
 
   const [locationList, setLocationList] = useState([]);
   const [currentLocation, setCurrentLocation] = useState([]);
@@ -29,14 +29,16 @@ const Category = ( {props} ) => {
 
   useEffect(() => {
 
-    const _props = JSON.stringify( props );
+    const _props = JSON.stringify(props);
     // props = JSON.parse(_props);
     // console.log('Category.props: ' + props);
     // console.log('Category._props: ' + _props);
     // console.log('locationDialogOpen: ' + locationDialogOpen);
 
-    console.log('LocationList: ' + JSON.stringify(locationList));
+    setLocationList(props.renderedLocations)
+    console.log('LocationList after storage: ' + JSON.stringify(locationList));
     // console.log('LocationList: ' + JSON.stringify(locationList));
+
 
     if (props.isUpdateMode) {
       props.setUpdateOpen(false);
@@ -49,16 +51,20 @@ const Category = ( {props} ) => {
       props.setUpdateOpen(false);
       reloadStorage()
       // console.log("The Current Location: ", JSON.stringify(currentLocationName));
-      // console.log("The Locations List: ", JSON.stringify(locationList));
     }
   }, [])
 
 
-  const addLocationHandler = (locationName, address, coordinates) => {
+  const addLocationHandler = (locationDetails) => {
 
-    setCurrentLocation({name: locationName, address: address, coordinates: coordinates});
+    console.log("The Location Details: ", locationDetails);
+    setCurrentLocation(locationDetails);
+    props.onUpdateLocation(locationDetails)
+
+    console.log("The Current Location on category addLocationHandler: ", currentLocation);
+
     if (isAddLocationMode) setIsAddLocationMode(false);
-    updateStorage(currentLocation);
+    // updateStorage(locationDatiles);
 
     //TODO: set the line below to active before production.
     // props.setDialogOpen(false)
@@ -77,8 +83,10 @@ const Category = ( {props} ) => {
 
   // call for local storing 
   const updateStorage = (newListItem) => {
-    setCurrentLocationName(newListItem);
-    setLocationList(addLocation(locationList, newListItem));
+    setCurrentLocation(newListItem);
+    console.warn("onUpdateHandler in Category!")
+
+    // setLocationList(addLocation(locationList, newListItem)); 0000000000000000000000
 
     // props.onUpdateLocation(newListItem)
     // props.onUpdateLocations(newListItem)
@@ -109,7 +117,7 @@ const Category = ( {props} ) => {
         <View style={styles.textContainer}>
 
           {
-            locationList ?
+            isAddLocationMode ?
 
               <>
                 <Text style={styles.textPrompt}>Your locations list</Text>
@@ -120,7 +128,7 @@ const Category = ( {props} ) => {
                     <CardItem
                       id={itemData.item.id}
 
-                      setCurrentLocationName={setCurrentLocationName}
+                      setCurrentLocation={setCurrentLocation}
                       locationList={locationList}
                       onUpdateCategories={props.onUpdateCategories}
                       setRenderedCategory={props.setRenderedCategory}
@@ -147,9 +155,9 @@ const Category = ( {props} ) => {
           onSaveLocation={addLocationHandler}
           // onAdd={addLocationHandler}
           reloadStorage={props.reloadStorage}
-          
+
           onUpdate={onUpdateHandler}
-          
+
           myLocationList={props.myLocationList}
           onUpdateCategories={props.onUpdateCategories}
 

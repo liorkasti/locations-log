@@ -17,9 +17,9 @@ export default function DialogComponent(props) {
     useEffect(() => {
 
         const _props = JSON.stringify({ props });
-        console.log('DialogComponent._props: ' + _props);
+        // console.log('DialogComponent._props: ' + _props);
         // props = JSON.parse(props);
-        console.log('DialogComponent.props: ' + props);
+        // console.log('DialogComponent.props: ' + props);
         // console.log('locationDialogOpen: ' + locationDialogOpen);
 
         // console.log('LocationList: ' + JSON.stringify(locationList));
@@ -37,7 +37,7 @@ export default function DialogComponent(props) {
                     // onTouchOutside={() => {
                     //   setLocationDialogOpen({ visible: false });
                     // }}
-                    // onTouchOutside={() => { cancelCategoryHandler }}
+                    // onTouchOutside={() => { props.cancelCategoryHandler }}
                     onTouchOutside={() => { (props.onDismiss()) }}
                     // onTouchOutside={() => { visible = (!visible) }}
                     // onTouchOutside={() => { visible = props.setLocationDialogOpen; }}

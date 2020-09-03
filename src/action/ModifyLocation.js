@@ -16,8 +16,10 @@ const ModifyLocation = props => {
 
   useEffect(() => {
     // console.log("ModifyLocation props: ", props);
-    console.log("ModifyLocation coordinates: ", coordinates);
+    // console.log("ModifyLocation coordinates: ", coordinates);
     // console.log('props.showMediumMap: ' + props.showMediumMap);
+    console.log(' *----* isAddLocationMode: *----* ' + isAddLocationMode);
+    if(isAddLocationMode) isAddLocationMode(true);
     console.log(' *----* isAddLocationMode: *----* ' + isAddLocationMode);
 
     if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }
@@ -36,17 +38,21 @@ const ModifyLocation = props => {
     let cords =  {latitude: coordinates.latitude, longitude: coordinates.longitude};
     console.log("addLocationHandler: ",  cords);
     console.log('******************* isAddLocationMode: ***************' + isAddLocationMode);
-    console.warn("0000000000000000000 addLocationHandler: "+ nameInput + ', '+ addressInput + ', ' + coordinates.latitude + ', ' + coordinates.longitude);   
-    console.warn("0000000000000000000 addLocationHandler: "+ nameInput + ', '+ addressInput + ', ' + {coordinates});   
+    // console.warn("0000000000000000000 addLocationHandler: "+ nameInput + ', '+ addressInput + ', ' + coordinates.latitude + ', ' + coordinates.longitude);   
+    // console.warn("0000000000000000000 addLocationHandler: "+ nameInput + ', '+ addressInput + ', ' + {coordinates});   
     // && coordinates !== emptyArray 
     if (nameInput.length > 0 && addressInput.length > 0 && {coordinates}) {
       // props.onSave(nameInput, addressInput);
       // props.onSave(nameInput, addressInput, {latitude: 0, longitude: 0})
-      props.onSaveLocation(nameInput, addressInput, {latitude: coordinates.latitude, longitude: coordinates.longitude});
+      let locationDetails = {nameInput, addressInput, coordinates}
+      console.warn("locationDatiles: " + JSON.stringify(locationDetails));   
+      
+      props.onSaveLocation(locationDetails);
+      // props.onSaveLocation(nameInput, addressInput, {latitude: coordinates.latitude, longitude: coordinates.longitude});
       setNameInput('');
       setAddressInput('');
       setCoordinates;
-      setIsAddLocationMode(true);
+      setIsAddLocationMode(false);
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
       Alert.alert("Missing input.");

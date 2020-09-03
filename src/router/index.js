@@ -103,8 +103,8 @@ export default function Index(props) {
     }
     // update the location list
     const renderedLocationHandler = async (locationNode) => {
-        setRenderedLocation(locationNode);
-
+        console.log("The Current Location: ", locationNode);
+        setRenderedLocation(addLocation(renderedCategory, locationNode));
     }
     // update the locations list
     const renderedLocationsHandler = async (locationsListNode) => {

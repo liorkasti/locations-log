@@ -18,7 +18,7 @@ const MapButton = (props) => {
 
         style={styles.button55}>
         <MapView style={styles.dragableMap}></MapView>
-        <Text style={styles.taxtMap}>Find Location From On The Map</Text>
+        <Text style={styles.taxtMap}>Find Location On The Map</Text>
       </TouchableOpacity>
     </View>
   );
