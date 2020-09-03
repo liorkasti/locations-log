@@ -35,8 +35,8 @@ const Category = ({ props }) => {
     // console.log('Category._props: ' + _props);
     // console.log('locationDialogOpen: ' + locationDialogOpen);
 
-    setLocationList(props.renderedLocations)
-    console.log('LocationList after storage: ' + JSON.stringify(locationList));
+    setLocationList(props.renderedLocation)
+    // console.log('LocationList after storage: ' + JSON.stringify(locationList));
     // console.log('LocationList: ' + JSON.stringify(locationList));
 
 
@@ -61,9 +61,12 @@ const Category = ({ props }) => {
     setCurrentLocation(locationDetails);
     props.onUpdateLocation(locationDetails)
 
-    console.log("The Current Location on category addLocationHandler: ", currentLocation);
+    // console.log("The Current Location on category addLocationHandler: ", currentLocation);
 
     if (isAddLocationMode) setIsAddLocationMode(false);
+
+    props.setLocationDialogOpen(false)
+
     // updateStorage(locationDatiles);
 
     //TODO: set the line below to active before production.
@@ -77,8 +80,8 @@ const Category = ({ props }) => {
     const index = props.renderedCategories.findIndex(category => category.name === props.renderedCategory);
     props.onUpdateHandler(props.renderedCategories, index, categoryName);
     //TODO: set the line below to active before production.
-    setIsUpdateMode(false);
-    props.setUpdateOpen(false);
+    // props.setIsUpdateMode(false);
+    // props.setUpdateOpen(false);
   };
 
   // call for local storing 
@@ -117,7 +120,7 @@ const Category = ({ props }) => {
         <View style={styles.textContainer}>
 
           {
-            isAddLocationMode ?
+            locationList.length ?
 
               <>
                 <Text style={styles.textPrompt}>Your locations list</Text>

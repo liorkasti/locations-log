@@ -18,11 +18,10 @@ const ModifyLocation = props => {
     // console.log("ModifyLocation props: ", props);
     // console.log("ModifyLocation coordinates: ", coordinates);
     // console.log('props.showMediumMap: ' + props.showMediumMap);
-    console.log(' *----* isAddLocationMode: *----* ' + isAddLocationMode);
     if(isAddLocationMode) isAddLocationMode(true);
-    console.log(' *----* isAddLocationMode: *----* ' + isAddLocationMode);
+    // console.log(' *----* isAddLocationMode: *----* ' + isAddLocationMode);
 
-    if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }
+    // if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }
   }, [])
 
   const nameInputHandler = enteredText => {
@@ -35,13 +34,11 @@ const ModifyLocation = props => {
 
   const addLocationHandler = () => {
     console.log("addLocationHandler: ", coordinates);
-    let cords =  {latitude: coordinates.latitude, longitude: coordinates.longitude};
-    console.log("addLocationHandler: ",  cords);
+    // let cords =  {latitude: coordinates.latitude, longitude: coordinates.longitude};
+    console.log("coordinates.length: ",  coordinates.length);
     console.log('******************* isAddLocationMode: ***************' + isAddLocationMode);
-    // console.warn("0000000000000000000 addLocationHandler: "+ nameInput + ', '+ addressInput + ', ' + coordinates.latitude + ', ' + coordinates.longitude);   
-    // console.warn("0000000000000000000 addLocationHandler: "+ nameInput + ', '+ addressInput + ', ' + {coordinates});   
-    // && coordinates !== emptyArray 
-    if (nameInput.length > 0 && addressInput.length > 0 && {coordinates}) {
+
+    if (nameInput.length > 0 && addressInput.length > 0 && coordinates.latitude && coordinates.longitude) {
       // props.onSave(nameInput, addressInput);
       // props.onSave(nameInput, addressInput, {latitude: 0, longitude: 0})
       let locationDetails = {nameInput, addressInput, coordinates}
@@ -52,7 +49,8 @@ const ModifyLocation = props => {
       setNameInput('');
       setAddressInput('');
       setCoordinates;
-      setIsAddLocationMode(false);
+      setIsAddLocationMode(true);
+      props.setIsAddLocationMode(false)
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
       Alert.alert("Missing input.");

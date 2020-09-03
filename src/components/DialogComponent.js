@@ -16,7 +16,7 @@ export default function DialogComponent(props) {
 
     useEffect(() => {
 
-        const _props = JSON.stringify({ props });
+        // const _props = JSON.stringify({ props });
         // console.log('DialogComponent._props: ' + _props);
         // props = JSON.parse(props);
         // console.log('DialogComponent.props: ' + props);
@@ -41,11 +41,11 @@ export default function DialogComponent(props) {
                     onTouchOutside={() => { (props.onDismiss()) }}
                     // onTouchOutside={() => { visible = (!visible) }}
                     // onTouchOutside={() => { visible = props.setLocationDialogOpen; }}
-                    dialogAnimation={
-                        new SlideAnimation({
-                            slideFrom: 'bottom',
-                        })
-                    }
+                                    dialogAnimation={
+                                        new SlideAnimation({
+                                            slideFrom: 'bottom',
+                                        })
+                                    }
                     dialogStyle={styles.locationDialog}
                 >
                     <DialogContent>
@@ -141,7 +141,6 @@ export default function DialogComponent(props) {
 
                                 onCancel={props.onCancel}
                                 onDismiss={props.onDismiss}
-
 
                                 setIsUpdateMode={props.setIsUpdateMode}
                                 isUpdateMode={props.isUpdateMode}

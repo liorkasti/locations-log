@@ -6,7 +6,7 @@ export const addCategory = (items, item) => {
 export const addLocation = (items, item) => {
   console.warn('New Location: ' + JSON.stringify(item));
   console.warn('Locations list before storage: ' + JSON.stringify(items));
-  // console.warn('Locations list befor storage: ' + items);
+  console.warn('Locations list before storage: ' + items);
 
   return [...items, { id: Math.random().toString(36).substr(2, 5), item }];
 };

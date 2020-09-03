@@ -5,10 +5,14 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ModifyCategory = props => {
   const [nameInput, setNameInput] = useState("");
+  const [closeDialog, setCloseDialog] = useState(false);
 
   useEffect(() => {
-    console.log("ModifyCategory props: ", props);
-  }, [])
+    // console.log("ModifyCategory props: ", props);
+    console.log("closeDialog: ", props);
+    // if (closeDialog === true) 
+    props.setUpdateOpen(false);
+  }, [closeDialog])
 
   const nameInputHandler = enteredText => {
     setNameInput(enteredText);
@@ -20,6 +24,7 @@ const ModifyCategory = props => {
       // props.onSave(nameInput);
       props.onAdd(nameInput);
       setNameInput('');
+      setCloseDialog(true)
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
       Alert.alert("No input.");
@@ -42,7 +47,8 @@ const ModifyCategory = props => {
       console.log("No name has been entered.");
       // toastMaker("No name has been entered");
       setNameInput('');
-      // props.onDismiss()
+
+      props.onDismiss()
       // visible=false
     }
   }
@@ -98,7 +104,8 @@ const ModifyCategory = props => {
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              onPress={() => { props.onCancel; }}
+              onPress={() => { setCloseDialog(true) }}
+              // onPress={() => { props.onCancel; }}
               style={styles.button1}
             >
               <Icon name="map-marker-down" style={styles.icon2} />

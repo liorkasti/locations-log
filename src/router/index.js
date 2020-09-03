@@ -103,8 +103,8 @@ export default function Index(props) {
     }
     // update the location list
     const renderedLocationHandler = async (locationNode) => {
-        console.log("The Current Location: ", locationNode);
-        setRenderedLocation(addLocation(renderedCategory, locationNode));
+        setRenderedLocation(locationNode);
+        console.log("The Current Location: ", renderedLocation);
     }
     // update the locations list
     const renderedLocationsHandler = async (locationsListNode) => {
@@ -271,48 +271,6 @@ export default function Index(props) {
 
                     style={styles.componentStyle}
                 />
-            {/* } */}
-            {/* {componentKeys[componentIndex] === "Category" &&
-                <Category
-                    currentComponent={components[componentKeys[componentIndex]]}
-                    componentIndex={componentIndex}
-
-                    renderedCategories={renderedCategories}
-                    onUpdateCategories={renderedCategoriesHandler}
-
-                    renderedCategory={renderedCategory}
-                    onUpdateCategory={renderedCategoryHandler}
-
-                    renderedLocation={renderedLocation}
-                    onUpdateLocation={renderedLocationHandler}
-
-                    renderedLocations={renderedLocations}
-                    onUpdateLocations={renderedLocationsHandler}
-
-                    showMenu={showMenu}
-                    setShowMenu={() => { setShowMenu(!showMenu); }}
-                    onActionMenu={(_action) => { handleAction(action); }}
-
-                    showBack={showBack}
-                    onBack={() => { setComponentIndex(componentIndex - 1) }}
-                    onNext={() => { setComponentIndex(componentIndex + 1) }}
-
-                    dialogOpen={dialogOpen}
-                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
-
-
-                    locationDialogOpen={locationDialogOpen}
-                    setLocationDialogOpen={() => { setLocationDialogOpen(!locationDialogOpen); }}
-                    
-                    onUpdateHandler={onUpdateHandler}
-
-                    updateOpen={updateOpen}
-                    setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
-
-                    style={styles.componentStyle}
-                />
-            } */}
-
             {/* </ScrollView> */}
         </View>
     );
