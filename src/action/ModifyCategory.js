@@ -9,9 +9,8 @@ const ModifyCategory = props => {
 
   useEffect(() => {
     // console.log("ModifyCategory props: ", props);
-    console.log("closeDialog: ", props);
     // if (closeDialog === true) 
-    props.setUpdateOpen(false);
+    // props.setUpdateOpen(false);
   }, [closeDialog])
 
   const nameInputHandler = enteredText => {

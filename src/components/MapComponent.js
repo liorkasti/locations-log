@@ -13,7 +13,7 @@ const MapComponent = (props) => {
 
   useEffect(() => {
     Keyboard.dismiss();
-    console.log("&&&& MapScreen props: &&&&& ", JSON.stringify(props));
+    // console.log("&&&& MapScreen props: &&&&& ", JSON.stringify(props));
     // console.log("selectedLocation : ", selectedLocation);
     // console.log("props.showMediumMap: ", props.showMediumMap);
     // console.log("markerCoordinates: ", mapRegion);
@@ -23,9 +23,9 @@ const MapComponent = (props) => {
     });
     if (selectedLocation) { 
       props.setIsAddLocationMode(true);
-      console.log("###### setIsAddLocationMode: ########", props.isAddLocationMode)
+      // console.log("###### setIsAddLocationMode: ########", props.isAddLocationMode)
       props.setCoordinates(selectedLocation) 
-      console.log("props.coordinates: ", props.coordinates)
+      // console.log("props.coordinates: ", props.coordinates)
       updateCoordinate(selectedLocation)
     }
   }, [])
@@ -56,9 +56,9 @@ const MapComponent = (props) => {
       lng: event.nativeEvent.coordinate.longitude
     });
     props.setIsAddLocationMode(true);
-    console.log("--------- setIsAddLocationMode: ----------", props.isAddLocationMode)
+    // console.log("--------- setIsAddLocationMode: ----------", props.isAddLocationMode)
     props.setCoordinates(selectedLocation) 
-    console.log("props.coordinates: ", props.coordinates)
+    // console.log("props.coordinates: ", props.coordinates)
     updateCoordinate(selectedLocation)
 
   };

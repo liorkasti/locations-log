@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
 
-import CardItem from '../components/CardItem';
+import LocationCard from '../components/LocationCard';
 import ModifyLocation from '../action/ModifyLocation';
 import ModifyCategory from '../action/ModifyCategory';
 import DialogComponent from '../components/DialogComponent';
@@ -15,6 +15,7 @@ import ActionMenu from '../components/ActionMenu';
 
 // export default function Category({ props }) {
 // export function Category( {props} ) {
+// const Category = (props) => {
 const Category = ({ props }) => {
 
   const [locationList, setLocationList] = useState([]);
@@ -32,23 +33,28 @@ const Category = ({ props }) => {
     const _props = JSON.stringify(props);
     // props = JSON.parse(_props);
     // console.log('Category.props: ' + props);
-    // console.log('Category._props: ' + _props);
+    console.log('Category._props: ' + _props);
     // console.log('locationDialogOpen: ' + locationDialogOpen);
-
-    setLocationList(props.renderedLocation)
-    // console.log('LocationList after storage: ' + JSON.stringify(locationList));
+    console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations));
+    console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations).length);
+    console.log('========= locationList: ' + JSON.stringify(locationList));
+    console.log('========= locationList: ' + JSON.stringify(locationList.nameInput));
+    
+    setLocationList(props.renderedLocations)
+    // setLocationList(props.renderedLocation)
+    console.log('LocationList after storage: ' + JSON.stringify(locationList));
     // console.log('LocationList: ' + JSON.stringify(locationList));
 
 
     if (props.isUpdateMode) {
-      props.setUpdateOpen(false);
+      // props.setUpdateOpen(false);
       // TODO: validate add asynch starage and sorting capabiliteis
       // initStorage();
     }
 
 
     if (isAddLocationMode) {
-      props.setUpdateOpen(false);
+      // props.setUpdateOpen(false);
       reloadStorage()
       // console.log("The Current Location: ", JSON.stringify(currentLocationName));
     }
@@ -60,6 +66,7 @@ const Category = ({ props }) => {
     console.log("The Location Details: ", locationDetails);
     setCurrentLocation(locationDetails);
     props.onUpdateLocation(locationDetails)
+    props.onUpdateLocations(locationDetails)
 
     // console.log("The Current Location on category addLocationHandler: ", currentLocation);
 
@@ -120,7 +127,8 @@ const Category = ({ props }) => {
         <View style={styles.textContainer}>
 
           {
-            locationList.length ?
+            locationList.length || props.renderedLocations.length ?
+            // locationList.length ?
 
               <>
                 <Text style={styles.textPrompt}>Your locations list</Text>
@@ -128,7 +136,7 @@ const Category = ({ props }) => {
                   keyExtractor={(item, index) => item.id}
                   data={locationList}
                   renderItem={itemData => (
-                    <CardItem
+                    <LocationCard
                       id={itemData.item.id}
 
                       setCurrentLocation={setCurrentLocation}

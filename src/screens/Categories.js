@@ -9,6 +9,7 @@ import CardItem from '../components/CardItem';
 import ModifyCategory from '../action/ModifyCategory';
 import DialogComponent from '../components/DialogComponent';
 
+// export default function Categories(props) {
 export default function Categories({ props }) {
 
   const [categoryList, setCategoryList] = useState([]);
