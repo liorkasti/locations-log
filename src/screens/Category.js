@@ -6,6 +6,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
 
+import ItemsList from '../components/ItemsList';
 import LocationCard from '../components/LocationCard';
 import ModifyLocation from '../action/ModifyLocation';
 import ModifyCategory from '../action/ModifyCategory';
@@ -39,7 +40,7 @@ const Category = ({ props }) => {
     console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations).length);
     console.log('========= locationList: ' + JSON.stringify(locationList));
     console.log('========= locationList: ' + JSON.stringify(locationList.nameInput));
-    
+
     setLocationList(props.renderedLocations)
     // setLocationList(props.renderedLocation)
     console.log('LocationList after storage: ' + JSON.stringify(locationList));
@@ -128,31 +129,27 @@ const Category = ({ props }) => {
 
           {
             locationList.length || props.renderedLocations.length ?
-            // locationList.length ?
-
+              // locationList.length ?
               <>
                 <Text style={styles.textPrompt}>Your locations list</Text>
-                <FlatList
-                  keyExtractor={(item, index) => item.id}
-                  data={locationList}
-                  renderItem={itemData => (
-                    <LocationCard
-                      id={itemData.item.id}
+                <ItemsList
+                  currentLocation={currentLocation}
+                  setCurrentLocation={setCurrentLocation}
 
-                      setCurrentLocation={setCurrentLocation}
-                      locationList={locationList}
-                      onUpdateCategories={props.onUpdateCategories}
-                      setRenderedCategory={props.setRenderedCategory}
+                  locationList={locationList}
+                  setLocationList={setLocationList}
+                  
+                  renderedLocations={props.renderedLocations}
+                  setRenderedLocation={props.setRenderedLocation}
 
-                      onPress={props.onNext}
-                      title={itemData.item.name}
-                      style={styles.categoryItem}
-                    />
-                  )}
+                  onUpdateCategories={props.onUpdateCategories}
+                  setRenderedCategory={props.setRenderedCategory}
+
+                  onPress={props.onNext}
+                  style={styles.categoryItem}
                 />
               </>
               :
-
               <View style={styles.welcomeContainer}>
                 <Text style={styles.textPrompt}>Please create{"\n"}your locations</Text>
                 <Icon name="map-marker-multiple" style={styles.icon} />
