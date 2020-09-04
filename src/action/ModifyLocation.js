@@ -33,10 +33,10 @@ const ModifyLocation = props => {
   };
 
   const addLocationHandler = () => {
-    console.log("addLocationHandler: ", coordinates);
-    // let cords =  {latitude: coordinates.latitude, longitude: coordinates.longitude};
-    console.log("coordinates.length: ",  coordinates.length);
-    console.log('******************* isAddLocationMode: ***************' + isAddLocationMode);
+    // console.log("addLocationHandler: ", coordinates);
+    // // let cords =  {latitude: coordinates.latitude, longitude: coordinates.longitude};
+    // console.log("coordinates.length: ",  coordinates.length);
+    // console.log('******************* isAddLocationMode: ***************' + isAddLocationMode);
 
     if (nameInput.length > 0 && addressInput.length > 0 && coordinates.latitude && coordinates.longitude) {
       // props.onSave(nameInput, addressInput);

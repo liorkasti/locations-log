@@ -50,12 +50,12 @@ export default function Index(props) {
     // let items = getItem(KEYS.CATEGORIES) || [];
 
     useEffect(() => {
-        // console.log("Storage Rendered Category: ", item);
-        console.log("Root Current Category: ", renderedCategory);
-        // console.log('Storage Rendered Categories: : ', items);
-        console.log("Root Current Categories: ", renderedCategories);
-        console.log("Root Current Location: ", renderedLocation);
-        console.log("Root Current Locations: ", renderedLocations);
+        // // console.log("Storage Rendered Category: ", item);
+        // console.log("Root Current Category: ", renderedCategory);
+        // // console.log('Storage Rendered Categories: : ', items);
+        // console.log("Root Current Categories: ", renderedCategories);
+        // console.log("Root Current Location: ", renderedLocation);
+        // console.log("Root Current Locations: ", renderedLocations);
         // console.log("Index props: ", props)
 
         if (componentIndex < 0) {
@@ -107,7 +107,7 @@ export default function Index(props) {
     }
     // update the locations list
     const renderedLocationsHandler = async (locationsListNode) => {
-        console.log("renderedLocationsHandler: ", locationsListNode)
+        // console.log("renderedLocationsHandler: ", locationsListNode)
         setRenderedLocations(addLocation(renderedLocations, locationsListNode));
     }
 
@@ -218,59 +218,59 @@ export default function Index(props) {
 
             {/* <ScrollView style={styles.scrollView}> */}
             {/* {componentKeys[componentIndex] === "Categories" && */}
-                <CurrentComponentRouter
+            <CurrentComponentRouter
                 // <Categories
-                    currentComponent={components[componentKeys[componentIndex]]}
-                    componentIndex={componentIndex}
+                currentComponent={components[componentKeys[componentIndex]]}
+                componentIndex={componentIndex}
 
-                    showMenu={showMenu}
-                    setShowMenu={() => { setShowMenu(!showMenu); }}
-                    onActionMenu={(_action) => { handleAction(action); }}
+                showMenu={showMenu}
+                setShowMenu={() => { setShowMenu(!showMenu); }}
+                onActionMenu={(_action) => { handleAction(action); }}
 
-                    showBack={showBack}
-                    onBack={() => { setComponentIndex(componentIndex - 1) }}
-                    onNext={() => { setComponentIndex(componentIndex + 1) }}
+                showBack={showBack}
+                onBack={() => { setComponentIndex(componentIndex - 1) }}
+                onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                    renderedCategories={renderedCategories}
-                    onUpdateCategories={renderedCategoriesHandler}
+                renderedCategories={renderedCategories}
+                onUpdateCategories={renderedCategoriesHandler}
 
-                    renderedCategory={renderedCategory}
-                    onUpdateCategory={renderedCategoryHandler}
+                renderedCategory={renderedCategory}
+                onUpdateCategory={renderedCategoryHandler}
 
-                    renderedLocation={renderedLocation}
-                    onUpdateLocation={renderedLocationHandler}
+                renderedLocation={renderedLocation}
+                onUpdateLocation={renderedLocationHandler}
 
-                    renderedLocations={renderedLocations}
-                    onUpdateLocations={renderedLocationsHandler}
+                renderedLocations={renderedLocations}
+                onUpdateLocations={renderedLocationsHandler}
 
-                    showMenu={showMenu}
-                    setShowMenu={() => { setShowMenu(!showMenu); }}
-                    onActionMenu={(_action) => { handleAction(action); }}
+                showMenu={showMenu}
+                setShowMenu={() => { setShowMenu(!showMenu); }}
+                onActionMenu={(_action) => { handleAction(action); }}
 
-                    showBack={showBack}
-                    onBack={() => { setComponentIndex(componentIndex - 1) }}
-                    onNext={() => { setComponentIndex(componentIndex + 1) }}
+                showBack={showBack}
+                onBack={() => { setComponentIndex(componentIndex - 1) }}
+                onNext={() => { setComponentIndex(componentIndex + 1) }}
 
-                    dialogOpen={dialogOpen}
-                    setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
+                dialogOpen={dialogOpen}
+                setDialogOpen={() => { setDialogOpen(!dialogOpen); }}
 
-                    locationDialogOpen={locationDialogOpen}
-                    setLocationDialogOpen={() => { setLocationDialogOpen(!locationDialogOpen); }}
+                locationDialogOpen={locationDialogOpen}
+                setLocationDialogOpen={() => { setLocationDialogOpen(!locationDialogOpen); }}
 
-                    onUpdateHandler={onUpdateHandler}
+                onUpdateHandler={onUpdateHandler}
 
-                    updateOpen={updateOpen}
-                    setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
+                updateOpen={updateOpen}
+                setUpdateOpen={() => { setUpdateOpen(!dialogOpen); }}
 
-                    onDismiss={() => {
-                        setDialogOpen(false);
-                        setUpdateOpen(false);
-                        setLocationDialogOpen(false);
-                    }}
+                onDismiss={() => {
+                    setDialogOpen(false);
+                    setUpdateOpen(false);
+                    setLocationDialogOpen(false);
+                }}
 
-                    style={styles.componentStyle}
-                />
-
+                style={styles.componentStyle}
+            />
+            {/* } */}
             {/* 
             {componentKeys[componentIndex] === "Category" &&
                 // <CurrentComponentRouter

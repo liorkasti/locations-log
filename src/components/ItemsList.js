@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, FlatList, ScrollView, Dimensions, Picker } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, FlatList, ScrollView, Dimensions, Picker } from "react-native";
 import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 import Dialog, { DialogFooter, DialogTitle, DialogButton, SlideAnimation, PopupDialog, DialogContent } from 'react-native-popup-dialog';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -18,75 +18,96 @@ import ActionMenu from './ActionMenu';
 // const Category = (props) => {
 const ItemsList = (props) => {
 
-  const [locationList, setLocationList] = useState([]);
-  const [currentLocation, setCurrentLocation] = useState([]);
-
-  const [updateList, setUpdateList] = useState(false);
-  const [isUpdateMode, setIsUpdateMode] = useState(false);
-  const [isAddLocationMode, setIsAddLocationMode] = useState(false);
-  const [isCancelMode, setIsCancelMode] = useState(false);
-  const [showMediumMap, setShowMediumMap] = useState(false);
-  // const [locationDialogOpen, setLocationDialogOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
 
     const _props = JSON.stringify(props);
     console.log('ItemsList._props: ' + _props);
     console.log('ItemsList.props: ' + props);
-    console.log('locationDialogOpen: ' + props.locationDialogOpen);
-    console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations));
-    console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations).length);
-    console.log('========= locationList: ' + JSON.stringify(locationList));
-    console.log('========= locationList: ' + JSON.stringify(locationList.nameInput));
-
-    setLocationList(props.renderedLocations)
+    console.log('ItemsList locationDialogOpen: ' + JSON.stringify(props.locationDialogOpen));
+    console.log('ItemsList props.renderedLocations: ' + JSON.stringify(props.renderedLocations));
+    console.log('ItemsList props.renderedLocations: ' + JSON.stringify(props.renderedLocations).length);
+    console.log('ItemsList after storage: ' + JSON.stringify(props.locationList));
     // setLocationList(props.renderedLocation)
-    console.log('LocationList after storage: ' + JSON.stringify(locationList));
-    // console.log('LocationList: ' + JSON.stringify(locationList));
+    console.log(' xxxxxxxxxxx _currentLocation: ' + props._currentLocation);
+
   }, [])
 
+  // const DATA = [props.locationList]
+  const DATA = [
+    
+    {
+      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+      title: "First Item",
+    },
+    {
+      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+      title: "Second Item",
+    },
+    {
+      id: "58694a0f-3da1-471f-bd96-145571e29d72",
+      title: "Third Item",
+    },
+  ];
 
-  const reloadStorage = () => {
-    props.onDismiss();
-    setCurrentLocation(props.renderedLocation);
-    setLocationList(props.renderedLocations);
-    setIsAddLocationMode(false);
-  }
+  const Item = ({ item, onPress, style }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
+      <Text style={styles.title}>{item.title}</Text>
+    </TouchableOpacity>
+  );
 
-  const cancelCategoryHandler = () => {
-    console.log("I am cancelCategoryHandler now")
-    props.onDismiss();
-    // onDismiss();
-    setIsCancelMode(true);
-    // if (props.dialogOpen) props.setDialogOpen(false);
-    // if (props.updateOpen) props.setUpdateOpen(false);
-    // if (props.locationDialogOpen) props.setLocationDialogOpen(false)
-    // props.setUpdateOpen(false);
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
+
+    console.log(' DATA: ' + DATA);
+
+    return (
+      <Item
+        item={item}
+        onPress={() => setSelectedId(item.id)}
+
+        // id={itemData.data.id}
+        // title={itemData.data.nameInput}
+        // address={itemData.data.address}
+
+        setCurrentLocation={props.setCurrentLocation}
+        locationList={props.locationList}
+        onUpdateCategories={props.onUpdateCategories}
+        setRenderedCategory={props.setRenderedCategory}
+
+        onPress={props.onNext}
+        style={styles.categoryItem}
+      />
+    );
   };
 
   return (
     <View style={styles.container}>
       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
         {/* <Text style={styles.textPrompt}>Your locations list</Text> */}
-        <FlatList
+        <SafeAreaView style={styles.container}>
+          <FlatList
+            data={DATA}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            extraData={selectedId}
+          />
+        </SafeAreaView>
+
+        {/* <FlatList
           keyExtractor={(item, index) => item.id}
-          data={props.locationList}
+          // data={DATA}
+          // data={props.locationList}
           renderItem={itemData => (
             <LocationCard
-              id={itemData.data.id}
-              title={itemData.data.nameInput}
-              address={itemData.data.address}
-
-              setCurrentLocation={setCurrentLocation}
-              locationList={props.locationList}
-              onUpdateCategories={props.onUpdateCategories}
-              setRenderedCategory={props.setRenderedCategory}
-
-              onPress={props.onNext}
-              style={styles.categoryItem}
+              data={DATA}
+              renderItem={renderItem}
+              keyExtractor={(item) => item.id}
+              extraData={selectedId}
             />
           )}
-        />
+        /> */}
       </ScrollView>
     </View >
   );

@@ -34,16 +34,16 @@ const Category = ({ props }) => {
     const _props = JSON.stringify(props);
     // props = JSON.parse(_props);
     // console.log('Category.props: ' + props);
-    console.log('Category._props: ' + _props);
+    // console.log('Category._props: ' + _props);
     // console.log('locationDialogOpen: ' + locationDialogOpen);
-    console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations));
-    console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations).length);
-    console.log('========= locationList: ' + JSON.stringify(locationList));
-    console.log('========= locationList: ' + JSON.stringify(locationList.nameInput));
+    // console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations));
+    // console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations).length);
+    // console.log('========= locationList: ' + JSON.stringify(locationList));
+    // console.log('========= locationList: ' + JSON.stringify(locationList.nameInput));
 
     setLocationList(props.renderedLocations)
     // setLocationList(props.renderedLocation)
-    console.log('LocationList after storage: ' + JSON.stringify(locationList));
+    // console.log('LocationList after storage: ' + JSON.stringify(locationList));
     // console.log('LocationList: ' + JSON.stringify(locationList));
 
 
@@ -133,12 +133,13 @@ const Category = ({ props }) => {
               <>
                 <Text style={styles.textPrompt}>Your locations list</Text>
                 <ItemsList
+                  _currentLocation={JSON.stringify(currentLocation)}
                   currentLocation={currentLocation}
                   setCurrentLocation={setCurrentLocation}
 
                   locationList={locationList}
                   setLocationList={setLocationList}
-                  
+
                   renderedLocations={props.renderedLocations}
                   setRenderedLocation={props.setRenderedLocation}
 
