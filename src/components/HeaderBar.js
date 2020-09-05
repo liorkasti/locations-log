@@ -8,8 +8,10 @@ import ActionMenu from '../components/ActionMenu';
 const HeaderBar = (props) => {
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => {   
 
+    if (open) props.setShowMenu(false)
+    // if (props.udateOpen) props.setUpdateOpen(false)
   }, [props.componentIndex]);
 
   return (
@@ -201,6 +203,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: '100%',
     color: "#4287f5",
+    color: 'black',
     fontSize: 20,
     fontFamily: "roboto-regular",
     textAlign: "center",

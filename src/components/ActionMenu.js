@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: "#4287f5",
-        backgroundColor: "#d4d8d9",
+        backgroundColor: "#ddddddf2",
         shadowColor: "#000",
         shadowOpacity: 0.25,
         shadowRadius: 3.84,

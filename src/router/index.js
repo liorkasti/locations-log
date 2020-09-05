@@ -118,8 +118,9 @@ export default function Index(props) {
         // confirmation = confirmationAlert("Delete Category", "Are you sure you want to delete");
         // if (confirmation) {
         setRenderedCategories(updateCategory(renderedCategories, renderedCategory, editCategory));
-        setComponentIndex(componentIndex - 1);
+        // setComponentIndex(componentIndex - 1);
         if (updateOpen) setUpdateOpen(false)
+        // if (showMenu) setShowMenu(false);
         // removeValue(deleteItem);
         console.log("updateOpen: ", updateOpen)
     };
@@ -130,8 +131,8 @@ export default function Index(props) {
         // confirmation = confirmationAlert("Delete Category", "Are you sure you want to delete");
         // if (confirmation) {
         setRenderedCategories(removeCategory(renderedCategories, deleteItem));
-        if (showMenu) setShowMenu(false);
         setComponentIndex(componentIndex - 1);
+        // if (showMenu) setShowMenu(false);
         // removeValue(deleteItem);
     };
 
@@ -154,6 +155,7 @@ export default function Index(props) {
             case "editCategory":
                 setUpdateOpen(true);
                 // onUpdateHandler(action);
+                setShowMenu(false);
                 break;
             case "deleteCategory":
                 console.log('action: ' + action);
@@ -173,7 +175,7 @@ export default function Index(props) {
 
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor="#4287f5" />
+            <StatusBar backgroundColor="rgba(0,88,155,1)" />
 
             <HeaderBar
                 componentIndex={componentIndex}

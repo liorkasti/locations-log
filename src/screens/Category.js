@@ -40,6 +40,9 @@ const Category = ({ props }) => {
     // console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations).length);
     // console.log('========= locationList: ' + JSON.stringify(locationList));
     // console.log('========= locationList: ' + JSON.stringify(locationList.nameInput));
+    console.log('props.showMenu: ' + JSON.stringify(props.showMenu));
+
+    // if (props.showMenu) setShowMenu(false)
 
     setLocationList(props.renderedLocations)
     // setLocationList(props.renderedLocation)
@@ -112,12 +115,12 @@ const Category = ({ props }) => {
 
   const cancelCategoryHandler = () => {
     console.log("I am cancelCategoryHandler now")
-    props.onDismiss();
+    // props.onDismiss();
     // onDismiss();
-    setIsCancelMode(true);
-    if (props.dialogOpen) props.setDialogOpen(false);
-    if (props.updateOpen) props.setUpdateOpen(false);
-    if (props.locationDialogOpen) props.setLocationDialogOpen(false)
+    // setIsCancelMode(true);
+    if (props.dialogOpen) props.setDialogOpen();
+    if (props.updateOpen) props.setUpdateOpen();
+    if (props.locationDialogOpen) props.setLocationDialogOpen()
     // props.setUpdateOpen(false);
   };
 
@@ -139,7 +142,8 @@ const Category = ({ props }) => {
           {
             locationList.length || props.renderedLocations.length ?
               // locationList.length ?
-              <>
+
+              <>                
                 <Text style={styles.textPrompt}>Your locations list</Text>
                 <ItemsList
                   _currentLocation={JSON.stringify(currentLocation)}
@@ -148,21 +152,23 @@ const Category = ({ props }) => {
 
                   locationList={locationList}
                   setLocationList={setLocationList}
-
+                  
                   renderedLocations={props.renderedLocations}
                   setRenderedLocation={props.setRenderedLocation}
-
+                  
                   onUpdateCategories={props.onUpdateCategories}
                   setRenderedCategory={props.setRenderedCategory}
-
+                  
                   onPress={props.onNext}
+                  
                   style={styles.categoryItem}
                 />
               </>
               :
               <View style={styles.welcomeContainer}>
                 <Text style={styles.textPrompt}>Please create{"\n"}your locations</Text>
-                <Icon name="map-marker-multiple" style={styles.icon} />
+                {/* <Icon name="map-marker-multiple" style={styles.icon} /> */}
+                <Icon name="map-search-outline" style={styles.icon} />
               </View>
           }
         </View>
@@ -196,6 +202,9 @@ const Category = ({ props }) => {
           setIsAddLocationMode={() => { setIsAddLocationMode(!isAddLocationMode); }}
           setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
           isUpdateMode={isUpdateMode}
+
+          showMenu={props.showMenu}
+          setShowMenu={props.setShowMenu}
 
           onDismiss={props.onDismiss}
           // reloadStorage={reloadStorage}
@@ -259,7 +268,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   boxContainer: {
-    
+
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
@@ -288,7 +297,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: "#4287f5",
-    fontSize: 120,    
+    fontSize: 120,
     zIndex: 1
   },
 });

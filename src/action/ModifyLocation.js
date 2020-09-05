@@ -18,7 +18,10 @@ const ModifyLocation = props => {
     // console.log("ModifyLocation props: ", props);
     // console.log("ModifyLocation coordinates: ", coordinates);
     // console.log('props.showMediumMap: ' + props.showMediumMap);
-    if(isAddLocationMode) isAddLocationMode(true);
+
+    props.setShowMenu();
+
+    if (isAddLocationMode) isAddLocationMode(true);
     // console.log(' *----* isAddLocationMode: *----* ' + isAddLocationMode);
 
     // if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }
@@ -41,9 +44,9 @@ const ModifyLocation = props => {
     if (nameInput.length > 0 && addressInput.length > 0 && coordinates.latitude && coordinates.longitude) {
       // props.onSave(nameInput, addressInput);
       // props.onSave(nameInput, addressInput, {latitude: 0, longitude: 0})
-      let locationDetails = {nameInput, addressInput, coordinates}
-      console.warn("locationDatiles: " + JSON.stringify(locationDetails));   
-      
+      let locationDetails = { nameInput, addressInput, coordinates }
+      console.warn("locationDatiles: " + JSON.stringify(locationDetails));
+
       props.onSaveLocation(locationDetails);
       // props.onSaveLocation(nameInput, addressInput, {latitude: coordinates.latitude, longitude: coordinates.longitude});
       setNameInput('');
@@ -56,7 +59,7 @@ const ModifyLocation = props => {
       Alert.alert("Missing input.");
       console.log("No name has been entered.");
       setIsAddLocationMode(false);
-  
+
       // toastMaker("No name has been entered");
     }
   }
@@ -68,7 +71,11 @@ const ModifyLocation = props => {
           props.locationDialogOpen &&
 
           <>
-            <Text style={styles.textDialog}>Add Location Details</Text>
+            {props.showMediumMap ?
+              <Text style={styles.textDialog}>Pick Location</Text>
+              :
+              <Text style={styles.textDialog}>Add Location Details</Text>
+            }
 
             {/* TODO: Add dinamic screen title for the message below*/}
             {/* <Text style={styles.textDialog}>Create a new {props.screen}</Text> */}
@@ -119,7 +126,8 @@ const ModifyLocation = props => {
               showMediumMap={props.showMediumMap}
               style={styles.coordsClose}
             >
-              <Icon name="map-check" style={styles.icon3} />
+              {/* <Icon name="map-check" style={styles.icon3} /> */}
+              <Icon name="check-circle" style={styles.icon3} />
             </TouchableOpacity>
 
             <MapComponent
@@ -189,13 +197,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: '#4287f5',
-
+    color: 'black',
   },
   inputContainer: {
     width: windowWidth * .85,
   },
   input: {
-    borderColor: '#4287f5',
+    // borderColor: '#4287f5',
     borderWidth: 0.7,
     padding: 10,
     margin: 10
@@ -206,8 +214,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     borderWidth: 0.7,
     position: 'absolute',
-    top: 390,
-    // left: (-windowWidth * .4),
+    marginTop: 20,
+    left: 0,
+    // top: 390,
+    // left: (windowWidth-130),
     zIndex: 1000
   },
   mapContainer: {
@@ -226,7 +236,7 @@ const styles = StyleSheet.create({
     width: '95%',
     zIndex: 20
   },
-  coordinates: {    
+  coordinates: {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -241,7 +251,7 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     height: 60,
     borderColor: '#4287f5',
-    // backgroundColor: isAddLocationMode ? '#ffffffcc' : '#d4d8d9d4d8d9cc',
+    // backgroundColor: isAddLocationMode ? '#ffffffcc' : '#ddddddcc',
     borderWidth: 0.7,
     borderRadius: 10,
   },
@@ -255,10 +265,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: "flex-end",
     justifyContent: "center",
-    backgroundColor: '#d4d8d9',
+    backgroundColor: '#ddd',
     padding: 10,
     marginVertical: 10,
-    borderColor: '#4287f5',
+    // borderColor: '#4287f5',
     borderWidth: 0.7,
     width: '45%',
   },
@@ -269,7 +279,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#4287f5",
     padding: 10,
     marginVertical: 10,
-    borderColor: '#4287f5',
+    // borderColor: '#4287f5',
     borderWidth: 0.7,
     width: '45%',
   },
@@ -307,7 +317,7 @@ const styles = StyleSheet.create({
   },
   icon3: {
     color: '#4287f5',
-    fontSize: 30,
+    fontSize: 40,
     padding: 10,
   },
 });

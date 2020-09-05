@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, FlatList, Modal, Dimensions } from "react-native";
-import FontAwesomeIcon from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwesomeIcon from "react-native-vector-icons/SimpleLineIcons";
 import Dialog, { DialogFooter, DialogButton, SlideAnimation, DialogContent } from 'react-native-popup-dialog';
 import toastMaker from '../utils/feedbackGenerator';
 
 import { KEY } from '../router/index';
 import CardItem from '../components/CardItem';
+import CategoryCard from '../components/CategoryCard';
 import ModifyCategory from '../action/ModifyCategory';
 import DialogComponent from '../components/DialogComponent';
 
@@ -70,7 +71,7 @@ export default function Categories({ props }) {
                   keyExtractor={(item, index) => item.id}
                   data={props.renderedCategories}
                   renderItem={itemData => (
-                    <CardItem
+                    <CategoryCard
                       id={itemData.item.id}
                       onSelectedCategory={props.onUpdateCategory}
                       // onDelete={removeCategoryHandler}
@@ -84,7 +85,7 @@ export default function Categories({ props }) {
               :
               <View style={styles.welcomeContainer}>
                 <Text style={styles.textPrompt}>Please add your{"\n"}places categories</Text>
-                <FontAwesomeIcon name="map-marker" style={styles.icon} />
+                <FontAwesomeIcon name="direction" style={styles.icon} />
               </View>
           }
         </View>

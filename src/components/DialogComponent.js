@@ -6,11 +6,8 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
 
-import CardItem from '../components/CardItem';
 import ModifyLocation from '../action/ModifyLocation';
 import ModifyCategory from '../action/ModifyCategory';
-import ActionMenu from '../components/ActionMenu';
-
 
 export default function DialogComponent(props) {
 
@@ -41,11 +38,11 @@ export default function DialogComponent(props) {
                     onTouchOutside={() => { (props.onDismiss()) }}
                     // onTouchOutside={() => { visible = (!visible) }}
                     // onTouchOutside={() => { visible = props.setLocationDialogOpen; }}
-                                    dialogAnimation={
-                                        new SlideAnimation({
-                                            slideFrom: 'bottom',
-                                        })
-                                    }
+                    dialogAnimation={
+                        new SlideAnimation({
+                            slideFrom: 'bottom',
+                        })
+                    }
                     dialogStyle={styles.locationDialog}
                 >
                     <DialogContent>
@@ -75,6 +72,11 @@ export default function DialogComponent(props) {
 
                                 isAddLocationMode={props.isAddLocationMode}
                                 setIsAddLocationMode={props.setIsAddLocationMode}
+
+
+                                showMenu={props.showMenu}
+                                setShowMenu={props.setShowMenu}
+                                
                                 // setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
                                 // isUpdateMode={isUpdateMode}
 
