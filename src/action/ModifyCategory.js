@@ -39,15 +39,12 @@ const ModifyCategory = props => {
       // props.setUpdateOpen;
       // props.visible()
       setNameInput('');
-      props.setUpdateOpen(false)
     } else {
       // TODO: Fix Toast No name has been ebtered. https://www.npmjs.com/package/react-native-toast-message
       Alert.alert("No input.");
       console.log("No name has been entered.");
       // toastMaker("No name has been entered");
       setNameInput('');
-
-      props.onDismiss()
       // visible=false
     }
   }
@@ -103,8 +100,7 @@ const ModifyCategory = props => {
           </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity
-              onPress={() => { setCloseDialog(true) }}
-              // onPress={() => { props.onCancel; }}
+              onPress={() => { props.onDismiss(); }}
               style={styles.button1}
             >
               <Icon name="map-marker-down" style={styles.icon2} />

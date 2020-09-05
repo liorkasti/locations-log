@@ -76,7 +76,7 @@ export default function DialogComponent(props) {
 
                                 showMenu={props.showMenu}
                                 setShowMenu={props.setShowMenu}
-                                
+
                                 // setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
                                 // isUpdateMode={isUpdateMode}
 
@@ -96,35 +96,9 @@ export default function DialogComponent(props) {
                 < Dialog
                     visible={props.updateOpen}
                     onTouchOutside={() => {
-                        (props.onDismiss())
+                        props.onDismiss()
                     }}
-                    /* 
-                    opptional;
-                    dialogTitle={
-                        <DialogTitle
-                        title="Dialog Title"
-                        // dialogStyle={styles.dialogTitle}
-                        />}
-                      
-                    footer={
-                      <DialogFooter>
-                        <DialogButton
-                          text="CANCEL"
-                          onPress={() => { cancelCategoryHandler }}
-                        />
-                        <DialogButton
-                          text="OK"
-                          onPress={props.updateTextHandler}
-                        // onPress={() => { }}
-                        />
-                      </DialogFooter>
-                    }
-                    */
-                    dialogAnimation={
-                        new SlideAnimation({
-                            slideFrom: 'bottom',
-                        })
-                    }
+                    dialogAnimation={new SlideAnimation({ slideFrom: 'bottom', })}
                     dialogStyle={styles.dialog}
                 >
                     <DialogContent>
