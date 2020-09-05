@@ -158,6 +158,7 @@ export default function Index(props) {
             case "deleteCategory":
                 console.log('action: ' + action);
                 onDeleteHandler(renderedCategory);
+                setShowMenu(false);
                 break;
             case "resetCategories":
                 console.log('action: ' + action);

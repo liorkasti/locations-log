@@ -144,7 +144,7 @@ const Category = ({ props }) => {
               // locationList.length ?
 
               <>                
-                <Text style={styles.textPrompt}>Your locations list</Text>
+                <Text style={styles.textPrompt}>Your Locations</Text>
                 <ItemsList
                   _currentLocation={JSON.stringify(currentLocation)}
                   currentLocation={currentLocation}

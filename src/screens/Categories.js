@@ -65,7 +65,7 @@ export default function Categories({ props }) {
           {
             (categoryList.length || props.renderedCategories.length) ?
               <>
-                <Text style={styles.textPrompt}>Your Categories List</Text>
+                <Text style={styles.textPrompt}>Your Categories</Text>
 
                 <FlatList
                   keyExtractor={(item, index) => item.id}
