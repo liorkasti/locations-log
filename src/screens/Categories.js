@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   icon: {
-    color: "rgba(0,88,155,1)",
+    color: "#4287f5",
     fontSize: 120,
   }
 });

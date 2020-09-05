@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     right: 0
   },
   taxtMap: {
-    color: "rgba(0,88,155,1)",
+    color: "#4287f5",
     position: "absolute",
     alignItems: 'center',
     fontSize: 16,

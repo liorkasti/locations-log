@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     width: windowWidth,
   },
   headerStack: {
-    borderColor: "rgba(0,88,155,1)",
+    borderColor: "#4287f5",
     borderWidth: 0,
     borderBottomWidth: .7,
     justifyContent: "center",
@@ -181,11 +181,11 @@ const styles = StyleSheet.create({
     left: windowWidth - 42,
   },
   icon: {
-    color: "rgba(0,88,155,1)",
+    color: "#4287f5",
     fontSize: 28,
   },
   bachIcon: {
-    color: "rgba(0,88,155,1)",
+    color: "#4287f5",
     fontSize: 35,
     width: "100%",
     height: 30,
@@ -193,14 +193,14 @@ const styles = StyleSheet.create({
     left: 4
   },
   textCreate: {
-    color: "rgba(0,88,155,1)",
+    color: "#4287f5",
     fontSize: 16,
     right: 26
   },
   header: {
     position: "absolute",
     width: '100%',
-    color: "rgba(0,88,155,1)",
+    color: "#4287f5",
     fontSize: 20,
     fontFamily: "roboto-regular",
     textAlign: "center",

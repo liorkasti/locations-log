@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         borderWidth: 0.7
     },
     icon: {
-        color: "rgba(0,88,155,1)",
+        color: "#4287f5",
         fontSize: 20,
     },
 });

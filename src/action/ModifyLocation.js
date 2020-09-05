@@ -188,21 +188,21 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 20,
     textAlign: 'center',
-    color: 'rgba(0,88,155,1)',
+    color: '#4287f5',
 
   },
   inputContainer: {
     width: windowWidth * .85,
   },
   input: {
-    borderColor: 'rgba(0,88,155,1)',
+    borderColor: '#4287f5',
     borderWidth: 0.7,
     padding: 10,
     margin: 10
   },
   coordsClose: {
     backgroundColor: '#ffffffcc',
-    borderColor: 'rgba(0,88,155,1)',
+    borderColor: '#4287f5',
     borderRadius: 50,
     borderWidth: 0.7,
     position: 'absolute',
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
   },
   mapButton: {
     marginVertical: 10,
-    borderColor: 'rgba(0,88,155,1)',
+    borderColor: '#4287f5',
     borderWidth: 0.7,
     justifyContent: 'center',
     alignItems: 'center',
@@ -240,8 +240,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     opacity: 0.8,
     height: 60,
-    borderColor: 'rgba(0,88,155,1)',
-    // backgroundColor: isAddLocationMode ? '#ffffffcc' : '#cccccccc',
+    borderColor: '#4287f5',
+    // backgroundColor: isAddLocationMode ? '#ffffffcc' : '#d4d8d9d4d8d9cc',
     borderWidth: 0.7,
     borderRadius: 10,
   },
@@ -255,10 +255,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: "flex-end",
     justifyContent: "center",
-    backgroundColor: '#ccc',
+    backgroundColor: '#d4d8d9',
     padding: 10,
     marginVertical: 10,
-    borderColor: 'rgba(0,88,155,1)',
+    borderColor: '#4287f5',
     borderWidth: 0.7,
     width: '45%',
   },
@@ -266,10 +266,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-end",
     justifyContent: "center",
-    backgroundColor: "rgba(0,88,155,1)",
+    backgroundColor: "#4287f5",
     padding: 10,
     marginVertical: 10,
-    borderColor: 'rgba(0,88,155,1)',
+    borderColor: '#4287f5',
     borderWidth: 0.7,
     width: '45%',
   },
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     left: -5,
   },
   coordsText: {
-    color: 'rgba(0,88,155,1)',
+    color: '#4287f5',
     justifyContent: 'center',
     textAlign: 'center',
     paddingTop: 15
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
   textButton: {
     justifyContent: 'center',
     textAlign: 'center',
-    color: 'rgba(0,88,155,1)',
+    color: '#4287f5',
     fontWeight: 'bold',
     paddingHorizontal: 5,
     left: -5
@@ -301,12 +301,12 @@ const styles = StyleSheet.create({
     left: -5
   },
   icon2: {
-    color: 'rgba(0,88,155,1)',
+    color: '#4287f5',
     fontSize: 20,
     left: -5
   },
   icon3: {
-    color: 'rgba(0,88,155,1)',
+    color: '#4287f5',
     fontSize: 30,
     padding: 10,
   },

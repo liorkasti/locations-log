@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
     zIndex: 1
   },
   icon: {
-    color: "rgba(0,88,155,1)",
+    color: "#4287f5",
     fontSize: 120,    
     zIndex: 1
   },

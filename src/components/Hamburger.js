@@ -290,7 +290,7 @@ export default class Hamburger extends Component {
                         marginLeft: this.marginLeft,
                         width: 5,
                         marginBottom: this.topBarMargin,
-                        backgroundColor: color ? color : 'rgba(0,88,155,1)',
+                        backgroundColor: color ? color : '#4287f5',
                         transform: [
                             {
                                 rotate: this.topBar.interpolate({
@@ -306,14 +306,14 @@ export default class Hamburger extends Component {
                         height: 3,
                         width: 5,
                         opacity: this.middleBarOpacity,
-                        backgroundColor: color ? color : 'rgba(0,88,155,1)',
+                        backgroundColor: color ? color : '#4287f5',
                         marginTop: 4
                     }}/>
                     <Animated.View style={{
                         height: 3,
                         marginLeft: this.marginLeft,
                         width: 5,
-                        backgroundColor: color ? color : 'rgba(0,88,155,1)',
+                        backgroundColor: color ? color : '#4287f5',
                         marginTop: this.bottomBarMargin,
                         transform: [
                             {

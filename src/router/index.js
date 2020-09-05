@@ -173,7 +173,7 @@ export default function Index(props) {
 
     return (
         <View style={styles.container}>
-            <StatusBar backgroundColor="rgba(0,88,155,1)" />
+            <StatusBar backgroundColor="#4287f5" />
 
             <HeaderBar
                 componentIndex={componentIndex}
