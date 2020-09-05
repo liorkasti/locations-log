@@ -132,8 +132,6 @@ export default function Index(props) {
         // if (confirmation) {
         setRenderedCategories(removeCategory(renderedCategories, deleteItem));
         setComponentIndex(componentIndex - 1);
-        // if (showMenu) setShowMenu(false);
-        // removeValue(deleteItem);
     };
 
 

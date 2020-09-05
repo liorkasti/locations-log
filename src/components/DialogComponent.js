@@ -26,23 +26,10 @@ export default function DialogComponent(props) {
     return (
         <View style={styles.container}>
             <View style={styles.textContainer}>
-                {/* {locationDialogOpen && */}
                 < Dialog
                     visible={props.locationDialogOpen}
-                    // onTouchOutside={() => { visible = onDismiss(); }}
-                    // onTouchOutside={setLocationDialogOpen(false)}
-                    // onTouchOutside={() => {
-                    //   setLocationDialogOpen({ visible: false });
-                    // }}
-                    // onTouchOutside={() => { props.cancelCategoryHandler }}
                     onTouchOutside={() => { (props.onDismiss()) }}
-                    // onTouchOutside={() => { visible = (!visible) }}
-                    // onTouchOutside={() => { visible = props.setLocationDialogOpen; }}
-                    dialogAnimation={
-                        new SlideAnimation({
-                            slideFrom: 'bottom',
-                        })
-                    }
+                    dialogAnimation={new SlideAnimation({ slideFrom: 'bottom', })}
                     dialogStyle={styles.locationDialog}
                 >
                     <DialogContent>
@@ -77,27 +64,16 @@ export default function DialogComponent(props) {
                                 showMenu={props.showMenu}
                                 setShowMenu={props.setShowMenu}
 
-                                // setIsUpdateMode={() => { setIsUpdateMode(!isUpdateMode) }}
-                                // isUpdateMode={isUpdateMode}
-
-                                // reloadStorage={reloadStorage}
-                                // renderedCategory={props.renderedCategory}
-                                // onUpdateCategories={props.onUpdateCategories}
-
                                 windowWidth={props.windowWidth}
                                 windowHeight={props.windowHeight}
                             />
                         </View>
                     </DialogContent>
                 </Dialog>
-                {/* } */}
 
-                {/* {(props.updateOpen) && */}
                 < Dialog
                     visible={props.updateOpen}
-                    onTouchOutside={() => {
-                        props.onDismiss()
-                    }}
+                    onTouchOutside={() => { props.onDismiss() }}
                     dialogAnimation={new SlideAnimation({ slideFrom: 'bottom', })}
                     dialogStyle={styles.dialog}
                 >
