@@ -181,6 +181,7 @@ export default function Index(props) {
                 handleMenu={(subroute, _, action = _) => {
                     menuBarActionHandler(subroute, action);
                 }}
+                onActionMenu={(action) => { menuBarActionHandler(action); }}
 
                 renderedCategories={renderedCategories}
                 onUpdateCategories={renderedCategoriesHandler}
@@ -201,7 +202,6 @@ export default function Index(props) {
                 setShowMenu={() => { setShowMenu(!showMenu); }}
 
                 onDelete={onDeleteHandler}
-                onActionMenu={(action) => { menuBarActionHandler(action); }}
                 onLogout={setLogout}
 
                 dialogOpen={dialogOpen}
@@ -245,6 +245,9 @@ export default function Index(props) {
 
                 showMenu={showMenu}
                 setShowMenu={() => { setShowMenu(!showMenu); }}
+                handleMenu={(subroute, _, action = _) => {
+                    menuBarActionHandler(subroute, action);
+                }}
                 onActionMenu={(_action) => { handleAction(action); }}
 
                 showBack={showBack}

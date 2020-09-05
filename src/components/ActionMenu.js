@@ -7,62 +7,50 @@ import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
 
 
 const ActionMenu = (props) => {
-    const [count, setCount] = useState(0);
-    const onPress = () => setCount(prevCount => prevCount + 1);
-
-    const onOptionSelect = () => {
-        // alert(`Selected number: ${value}`);
-        Alert.alert("Selected add menu item");
-        console.log("props: ", props.onActionMenu)
-    
-        this.setState({ opened: true });
-        this.setState(onActionMenu(value))
-    };
+    useEffect(() => {
+        console.log("props", props);
+    }, []);
 
     return (
         <View style={styles.container}>
-            <View style={styles.group}>
-                <TouchableOpacity
-                    // onPress={onOptionSelect}
-                    onPress={onOptionSelect}
+            <TouchableOpacity
+                onPress={() => { props.handleMenu("addLocation") }}
+                tag="Add Location"
+                style={styles.actionButton}
+            >
+                {/* <Text style={{ color: 'red' }}>Two</Text> */}
+                <Text style={styles.textMenuItem}>{props.tag || 'Add Location'}</Text>
+                <FontAwesomeIcon name="add-location" style={styles.icon} />
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => { props.handleMenu("editCategory") }}
+                tag='Edit Location'
+                style={styles.actionButton}
+            >
+                <Text style={styles.textMenuItem}>{props.tag || 'Edit Location'}</Text>
+                <FontAwesomeIcon name="edit-location" style={styles.icon} />
 
-                    tag="Add Location"
-                    style={styles.actionButton}
-                >
-                    {/* <Text style={{ color: 'red' }}>Two</Text> */}
-                    <Text style={styles.textMenuItem}>{props.tag || 'Add Location'}</Text>
-                    <FontAwesomeIcon name="add-location" style={styles.icon} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    // onPress={() => { props.onActionMenu("editCategory") }}
-                    tag='Edit Location'
-                    style={styles.actionButton}
-                >
-                    <Text style={styles.textMenuItem}>{props.tag || 'Edit Location'}</Text>
-                    <FontAwesomeIcon name="edit-location" style={styles.icon} />
+            </TouchableOpacity>
 
-                </TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => { props.handleMenu("deleteCategory") }}
+                // onPress={() => { props.onDelete(props.renderedCategory); }}
+                tag="Delete Category"
+                style={styles.actionButton}
+            >
+                <Text style={styles.textMenuItem}>{props.tag || 'Delete Category'}</Text>
+                <Icon name="map-marker-remove-variant" style={styles.icon} />
+            </TouchableOpacity>
 
-                <TouchableOpacity
-                    onPress={() => { props.onDelete(props.renderedCategory); }}
-                    // onPress={() => { props.onActionMenu("deleteCategory"), props.renderedCategory }}
-                    tag="Delete Category"
-                    style={styles.actionButton}
-                >
-                    <Text style={styles.textMenuItem}>{props.tag || 'Delete Category'}</Text>
-                    <Icon name="map-marker-remove-variant" style={styles.icon} />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    onPress={() => { props.onLogout(); }}
-                    // onPress={() => { props.onActionMenu("resetCategories") }}
-                    tag="Reset Categories"
-                    style={styles.actionButton}
-                >
-                    <Text style={styles.textMenuItem}>{props.tag || 'Reset Categories'}</Text>
-                    <Icon name="map-marker-off" style={styles.icon} />
-                </TouchableOpacity>
-            </View>
+            <TouchableOpacity
+                onPress={() => { props.handleMenu("resetCategories") }}
+                // onPress={() => { props.onActionMenu("resetCategories") }}
+                tag="Reset Categories"
+                style={styles.actionButton}
+            >
+                <Text style={styles.textMenuItem}>{props.tag || 'Reset Categories'}</Text>
+                <Icon name="map-marker-off" style={styles.icon} />
+            </TouchableOpacity>
         </View>
     )
 };
@@ -72,19 +60,20 @@ const windowWidth = Dimensions.get('window').width;
 const styles = StyleSheet.create({
     container: {
         position: "absolute",
-    },
-    group: {
-        alignItems: "flex-end",
+        alignItems: "center",
         justifyContent: "center",
-        backgroundColor: "#111111aa",
+        backgroundColor: "rgba(0,88,155,1)",
+        backgroundColor: "#ffffffdd",
         shadowColor: "#000",
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        width: 200,
-        height: 200,
-        top: 52,
-        left: 212,
-        zIndex: 6000,
+        height: 180,
+        width: windowWidth / 2,
+        width: 220,
+        top: 0,
+        right: 0,
+        left: windowWidth - 262,
+        zIndex: 999,
     },
     textMenuItem: {
         textAlign: 'right',
@@ -92,18 +81,21 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         borderBottomWidth: 0.7,
-        borderColor: 'white',
+        borderColor: "rgba(0,88,155,1)",
+        color: "rgba(0,88,155,1)",
         width: 150,
     },
     actionButton: {
-        padding: 8,
+        paddingVertical: 8,
         flexDirection: "row",
         // paddingHorizontal: 10
     },
     icon: {
         color: 'white',
+        color: "rgba(0,88,155,1)",
         fontSize: 20,
-        paddingHorizontal: 5,
+        paddingHorizontal: 8,
+        top: 2,
         textAlign: 'right',
         alignSelf: 'stretch',
     },

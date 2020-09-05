@@ -123,6 +123,15 @@ const Category = ({ props }) => {
 
   return (
     <View style={styles.container}>
+
+      {props.showMenu &&
+        < ActionMenu
+          handleMenu={props.handleMenu}
+          showMenu={props.showMenu}
+          setShowMenu={props.setShowMenu}
+          style={styles.menuContainer}
+        />
+      }
       <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
 
         <View style={styles.textContainer}>
@@ -250,9 +259,13 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   boxContainer: {
+    
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center'
+  },
+  menuContainer: {
+    position: 'absolute',
   },
   textContainer: {
     alignItems: 'center',
@@ -275,7 +288,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: "rgba(0,88,155,1)",
-    fontSize: 120,
+    fontSize: 120,    
     zIndex: 1
   },
 });

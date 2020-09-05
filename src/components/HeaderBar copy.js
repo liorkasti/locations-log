@@ -17,9 +17,10 @@ const HeaderBar = (props) => {
       <View style={styles.headerStack}>
 
         {props.showMenu &&
+
           <ActionMenu
             handleMenu={(menuItem) => { props.handleMenu(menuItem); }}
-            
+            showMenu={props.showMenu}
             onDelete={props.onDelete}
 
             renderedCategories={props.renderedCategories}
@@ -32,6 +33,7 @@ const HeaderBar = (props) => {
             style={styles.actionMenu}
           />
         }
+        
         <Text style={styles.bsD1}>BS&quot;D</Text>
         <Text style={styles.header}>{props.header}</Text>
         <View style={styles.buttonstack}>

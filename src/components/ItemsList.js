@@ -60,7 +60,7 @@ const ItemsList = (props) => {
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
 
-    console.log(' DATA: ' + DATA);
+    console.log(' DATA: ' + JSON.stringify(DATA));
 
     return (
       <Item

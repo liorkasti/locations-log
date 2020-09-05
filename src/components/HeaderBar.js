@@ -6,8 +6,10 @@ import Hamburger from '../components/Hamburger';
 import ActionMenu from '../components/ActionMenu';
 
 const HeaderBar = (props) => {
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
+
   }, [props.componentIndex]);
 
   return (
@@ -42,10 +44,9 @@ const HeaderBar = (props) => {
                   />
                 </TouchableOpacity>
 
+                {/* 
                 {props.showMenu &&
-
                   <View style={styles.buttonRow}>
-
                     <TouchableOpacity
                       onPress={() => { props.onActionMenu("addLocation") }}
                       style={styles.actionMenu}>
@@ -71,16 +72,17 @@ const HeaderBar = (props) => {
                     >
                       <Icon name="map-marker-remove-variant" style={styles.icon} />
                     </TouchableOpacity>
-                    
-                    {/* <TouchableOpacity
+
+                    <TouchableOpacity
                     onPress={() => { props.onActionMenu("resetCategories"); }}
                     tag="Reset Categories"
                     style={styles.actionMenu}
                 >
                     <Icon name="map-marker-off" style={styles.icon} />
-                </TouchableOpacity> */}
+                </TouchableOpacity>
                   </View>
-                }
+                } 
+                 */}
               </View>
             </>
 
@@ -91,7 +93,6 @@ const HeaderBar = (props) => {
                 onPress={() => { props.setDialogOpen(); }}
                 style={styles.createButton}
               >
-
                 {props.dialogOpen
                   ?
                   <Icon name="close" style={styles.icon} />
@@ -99,6 +100,22 @@ const HeaderBar = (props) => {
                   <FontAwesomeIcon name="add-location" style={styles.icon} />
                 }
               </TouchableOpacity>
+
+              {/* {props.renderedCategories.length ?
+
+                <TouchableOpacity
+                  onPress={() => { props.handleMenu("editCategory") }}
+                  style={styles.actionMenu}>
+                  {props.updateOpen ?
+                    <Icon name="close" style={styles.icon} />
+                    :
+                    <FontAwesomeIcon name="edit-location" style={styles.icon} />
+                  }
+                </TouchableOpacity>
+                : 
+                null
+              } */}
+
             </View>
           }
 
@@ -146,7 +163,7 @@ const styles = StyleSheet.create({
     left: windowWidth - 140,
   },
   actionMenu: {
-    zIndex: 100,
+    // zIndex: 999,
     marginRight: 5,
     fontSize: 30,
   },
