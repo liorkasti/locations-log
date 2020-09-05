@@ -1,5 +1,13 @@
 
 export const addCategory = (items, item) => {
+  // TODO: Check it input exists
+  const index = items.findIndex(category => category.name === item);
+  console.warn('index: ' + index + "item: " + item);
+  // if (index !== -1) {
+  //   return item;
+  // } else {
+  //   return [...items, { id: Math.random().toString(36).substr(2, 5), name: item }];
+  // }
   return [...items, { id: Math.random().toString(36).substr(2, 5), name: item }];
 };
 

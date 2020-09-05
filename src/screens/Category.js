@@ -71,33 +71,26 @@ const Category = ({ props }) => {
     setCurrentLocation(locationDetails);
     props.onUpdateLocation(locationDetails)
     props.onUpdateLocations(locationDetails)
-
     // console.log("The Current Location on category addLocationHandler: ", currentLocation);
-
     if (isAddLocationMode) setIsAddLocationMode(false);
-
     props.setLocationDialogOpen(false)
-
-    // updateStorage(locationDatiles);
-
-    //TODO: set the line below to active before production.
-    // props.setDialogOpen(false)
   };
 
-  const onUpdateHandler = categoryName => {
+  const onUpdateCategoryHandler = categoryName => {
 
     props.onUpdateCategory(categoryName)
     console.warn("onUpdateHandler in Category!")
     const index = props.renderedCategories.findIndex(category => category.name === props.renderedCategory);
-    props.onUpdateHandler(props.renderedCategories, index, categoryName);
+    updateStorage(index, categoryName);
     //TODO: set the line below to active before production.
     // props.setIsUpdateMode(false);
     // props.setUpdateOpen(false);
   };
 
   // call for local storing 
-  const updateStorage = (newListItem) => {
-    setCurrentLocation(newListItem);
+  const updateStorage = (index, categoryName) => {
+    setCurrentLocation(categoryName);
+    props.onUpdateHandler(props.renderedCategories, index, categoryName);
     console.warn("onUpdateHandler in Category!")
 
     // setLocationList(addLocation(locationList, newListItem)); 0000000000000000000000
@@ -114,14 +107,9 @@ const Category = ({ props }) => {
   }
 
   const cancelCategoryHandler = () => {
-    console.log("I am cancelCategoryHandler now")
-    // props.onDismiss();
-    // onDismiss();
-    // setIsCancelMode(true);
     if (props.dialogOpen) props.setDialogOpen();
     if (props.updateOpen) props.setUpdateOpen();
     if (props.locationDialogOpen) props.setLocationDialogOpen()
-    // props.setUpdateOpen(false);
   };
 
   return (
@@ -180,7 +168,7 @@ const Category = ({ props }) => {
           // onAdd={addLocationHandler}
           reloadStorage={props.reloadStorage}
 
-          onUpdate={onUpdateHandler}
+          onUpdate={onUpdateCategoryHandler}
 
           myLocationList={props.myLocationList}
           onUpdateCategories={props.onUpdateCategories}
