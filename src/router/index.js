@@ -95,10 +95,10 @@ export default function Index(props) {
 
     // update the categories list
     const renderedCategoriesHandler = async (categoryListNode) => {
-        if (addCategory(renderedCategories, categoryListNode) === -1) {
-            Alert.alert("The category '" + categoryListNode + "' already exist!");
-        } else {
+        if (addCategory(renderedCategories, categoryListNode) !== categoryListNode) {
             setRenderedCategories(addCategory(renderedCategories, categoryListNode));
+        } else {
+            Alert.alert("The category '" + categoryListNode + "' already exist!");
         }
         // TODO: Asynch Storage
         // items = multiSet(KEYS.CATEGORIES, item)
