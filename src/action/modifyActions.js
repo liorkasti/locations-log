@@ -8,15 +8,20 @@ export const addCategory = (items, item) => {
   } else {
     return item;
   }
-  // return [...items, { id: Math.random().toString(36).substr(2, 5), name: item }];
 };
 
 export const addLocation = (items, item) => {
   // console.warn('New Location: ' + JSON.stringify(item));
   // console.warn('Locations list before storage: ' + JSON.stringify(items));
   // console.warn('Locations list before storage: ' + items);
-
-  // return [...items, {item}];
+  // TODO: Check it input exists
+  const index = items.findIndex(location => location.nameInput === item);
+  console.warn('index: ' + index + "item: " + item);
+  // if (index === -1) {
+  //   return [...items, { id: Math.random().toString(36).substr(2, 5), name: item }];
+  // } else {
+  //   return item;
+  // }
   return [...items, { id: Math.random().toString(36).substr(2, 5), item }];
 };
 

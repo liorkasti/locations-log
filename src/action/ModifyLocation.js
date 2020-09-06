@@ -45,7 +45,7 @@ const ModifyLocation = props => {
       // props.onSave(nameInput, addressInput);
       // props.onSave(nameInput, addressInput, {latitude: 0, longitude: 0})
       let locationDetails = { nameInput, addressInput, coordinates }
-      console.warn("locationDatiles: " + JSON.stringify(locationDetails));
+      // console.warn("locationDatiles: " + JSON.stringify(locationDetails));
 
       props.onSaveLocation(locationDetails);
       // props.onSaveLocation(nameInput, addressInput, {latitude: coordinates.latitude, longitude: coordinates.longitude});

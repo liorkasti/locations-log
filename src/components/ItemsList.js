@@ -21,94 +21,53 @@ const ItemsList = (props) => {
   const [selectedId, setSelectedId] = useState(null);
 
   useEffect(() => {
-
-    const _props = JSON.stringify(props);
-    console.log('ItemsList._props: ' + _props);
-    console.log('ItemsList.props: ' + props);
-    console.log('ItemsList locationDialogOpen: ' + JSON.stringify(props.locationDialogOpen));
-    console.log('ItemsList props.renderedLocations: ' + JSON.stringify(props.renderedLocations));
-    console.log('ItemsList props.renderedLocations: ' + JSON.stringify(props.renderedLocations).length);
-    console.log('ItemsList after storage: ' + JSON.stringify(props.locationList));
-    // setLocationList(props.renderedLocation)
-    console.log(' xxxxxxxxxxx _currentLocation: ' + props._currentLocation);
-
+    console.log(' NNNNNNNNN nameInput NNNNNNNNN : ' + props.renderedLocations[props.renderedLocations.length-1].item.nameInput);
   }, [])
 
-  // const DATA = [props.locationList]
-  const DATA = [
-    
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-    },
-  ];
-
-  const Item = ({ item, onPress, style }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.item, style]}>
-      <Text style={styles.title}>{item.title}</Text>
-    </TouchableOpacity>
-  );
-
-  const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
-
-    console.log(' DATA: ' + JSON.stringify(DATA));
-
-    return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-
-        // id={itemData.data.id}
-        // title={itemData.data.nameInput}
-        // address={itemData.data.address}
-
-        setCurrentLocation={props.setCurrentLocation}
-        locationList={props.locationList}
-        onUpdateCategories={props.onUpdateCategories}
-        setRenderedCategory={props.setRenderedCategory}
-
-        onPress={props.onNext}
-        style={styles.categoryItem}
-      />
-    );
-  };
+  const DATA = JSON.stringify(props.locationList)
+  // const DATA = [
+  //   {
+  //     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+  //     title: "First Item",
+  //   },
+  //   {
+  //     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+  //     title: "Second Item",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-471f-bd96-145571e29d72",
+  //     title: "Third Item",
+  //   },
+  // ];
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}>
-        {/* <Text style={styles.textPrompt}>Your locations list</Text> */}
-        <SafeAreaView style={styles.container}>
-          <FlatList
+      {/* <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}> */}
+      <SafeAreaView style={styles.container}>
+        {/* <FlatList
             data={DATA}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             extraData={selectedId}
-          />
-        </SafeAreaView>
+          /> */}
 
-        {/* <FlatList
+        <FlatList
           keyExtractor={(item, index) => item.id}
-          // data={DATA}
-          // data={props.locationList}
+          data={props.renderedLocations}
           renderItem={itemData => (
             <LocationCard
-              data={DATA}
-              renderItem={renderItem}
-              keyExtractor={(item) => item.id}
-              extraData={selectedId}
+              id={itemData.item.id}
+              onSelectedLocation={props.onSelectedLocation}
+
+              // onDelete={removeCategoryHandler}
+              onPress={props.onNext}
+              title={props.renderedLocations[props.renderedLocations.length-1].item.nameInput}
+              style={styles.cardItem}
             />
           )}
-        /> */}
-      </ScrollView>
+        />
+      </SafeAreaView>
+      {/* </ScrollView> */}
     </View >
   );
 }
@@ -169,7 +128,7 @@ const styles = StyleSheet.create({
   textContainer: {
     alignItems: 'center',
   },
-  categoryItem: {
+  cardItem: {
     alignItems: 'center',
     width: '80%',
   },

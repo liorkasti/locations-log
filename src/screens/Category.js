@@ -138,6 +138,7 @@ const Category = ({ props }) => {
                   currentLocation={currentLocation}
                   setCurrentLocation={setCurrentLocation}
 
+                  renderedLocations={props.renderedLocations}
                   locationList={locationList}
                   setLocationList={setLocationList}
                   
@@ -145,7 +146,8 @@ const Category = ({ props }) => {
                   setRenderedLocation={props.setRenderedLocation}
                   
                   onUpdateCategories={props.onUpdateCategories}
-                  setRenderedCategory={props.setRenderedCategory}
+                  onSelectedCategory={props.onUpdateCategory}
+                  onSelectedLocation={props.onSelectedLocation}
                   
                   onPress={props.onNext}
                   
@@ -172,6 +174,7 @@ const Category = ({ props }) => {
 
           myLocationList={props.myLocationList}
           onUpdateCategories={props.onUpdateCategories}
+          onUpdateLocation={props.onUpdateLocation}
 
           onCancel={cancelCategoryHandler}
 

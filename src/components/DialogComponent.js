@@ -38,7 +38,7 @@ export default function DialogComponent(props) {
                                 initialValue=""
                                 visible={props.locationDialogOpen}
                                 locationDialogOpen={props.locationDialogOpen}
-                                setLocationDialogOpen={props.setLocationDialogOpen}
+                                setLocationDialogOpen={props.setLocationDialogOpen}                                
 
                                 onSaveLocation={props.onSaveLocation}
                                 onUpdate={props.onUpdate}
@@ -46,7 +46,6 @@ export default function DialogComponent(props) {
                                 reloadStorage={props.reloadStorage}
 
                                 myLocationList={props.myLocationList}
-                                onUpdateCategories={props.onUpdateCategories}
 
                                 onCancel={props.onCancel}
                                 onDismiss={props.onDismiss}
