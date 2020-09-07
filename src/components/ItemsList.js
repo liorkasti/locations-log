@@ -22,6 +22,8 @@ const ItemsList = (props) => {
 
   useEffect(() => {
     console.log(' NNNNNNNNN nameInput NNNNNNNNN : ' + props.renderedLocations[props.renderedLocations.length-1].item.nameInput);
+    console.log(' NNNNNNNNN renderedLocations NNNNNNNNN : ' + JSON.stringify(props.renderedLocations));
+    console.log(' NNNNNNNNN map NNNNNNNNN : ' + props.renderedLocations.map(location => location.item.nameInput));
   }, [])
 
   const DATA = JSON.stringify(props.locationList)
@@ -58,10 +60,10 @@ const ItemsList = (props) => {
             <LocationCard
               id={itemData.item.id}
               onSelectedLocation={props.onSelectedLocation}
-
               // onDelete={removeCategoryHandler}
               onPress={props.onNext}
-              title={props.renderedLocations[props.renderedLocations.length-1].item.nameInput}
+              title={itemData.item.item.nameInput}
+              // title={props.renderedLocations[props.renderedLocations.length-1].item.nameInput}
               style={styles.cardItem}
             />
           )}

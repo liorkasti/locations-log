@@ -54,8 +54,8 @@ export default function Index(props) {
         // console.log("Root Current Category: ", renderedCategory);
         // // console.log('Storage Rendered Categories: : ', items);
         // console.log("Root Current Categories: ", renderedCategories);
-        // console.log("Root Current Location: ", renderedLocation);
-        // console.log("Root Current Locations: ", renderedLocations);
+        console.log("Root Current Location: ", renderedLocation);
+        console.log("Root Current Locations: ", renderedLocations);
         // console.log("Index props: ", props)
 
         if (componentIndex < 0) {
@@ -111,13 +111,17 @@ export default function Index(props) {
     }
     // update the locations list
     const renderedLocationsHandler = async (locationsListNode) => {
-        // console.log("renderedLocationsHandler: ", locationsListNode)
-        setRenderedLocations(addLocation(renderedLocations, locationsListNode));
+        // console.warn("SET renderedLocationsHandler", locationsListNode)
+        console.warn("exist? ", addLocation(renderedLocations, locationsListNode))
+        if (addLocation(renderedLocations, locationsListNode) !== locationsListNode) {
+            setRenderedLocations(addLocation(renderedLocations, locationsListNode));
+        } else {
+            Alert.alert("The location '" + locationsListNode.nameInput + "' already exist!");
+        }
     }
 
     const onUpdateHandler = (renderedCategories, renderedCategory, editCategory) => {
         // Alert.alert("Update Category", "Are you sure you want to update to '" + editCategory + "'?");
-
         // TODO: confirmationAlert cancelable
         // confirmation = confirmationAlert("Delete Category", "Are you sure you want to delete");
         // if (confirmation) {

@@ -1,9 +1,9 @@
 
 export const addCategory = (items, item) => {
   // TODO: Check it input exists
-  const index = items.findIndex(category => category.name === item);
-  console.warn('index: ' + index + "item: " + item);
-  if (index === -1) {
+  const exist = items.findIndex(category => category.name === item);
+  console.warn('index: ' + exist + "item: " + item);
+  if (exist === -1) {
     return [...items, { id: Math.random().toString(36).substr(2, 5), name: item }];
   } else {
     return item;
@@ -13,16 +13,21 @@ export const addCategory = (items, item) => {
 export const addLocation = (items, item) => {
   // console.warn('New Location: ' + JSON.stringify(item));
   // console.warn('Locations list before storage: ' + JSON.stringify(items));
-  // console.warn('Locations list before storage: ' + items);
+  console.warn('Locations list before storage: ' + items + " | item to add:" + item);
+  console.warn('location.nameInput: ' + items.findIndex(location => location.nameInput));
   // TODO: Check it input exists
-  const index = items.findIndex(location => location.nameInput === item);
-  console.warn('index: ' + index + "item: " + item);
-  // if (index === -1) {
-  //   return [...items, { id: Math.random().toString(36).substr(2, 5), name: item }];
-  // } else {
-  //   return item;
-  // }
-  return [...items, { id: Math.random().toString(36).substr(2, 5), item }];
+  const exist = items.findIndex(location => location.item.nameInput === item.nameInput);
+  console.warn('exist: ' + exist + "item: " + item.nameInput);
+  if (exist === -1) {
+    return [...items, {
+      id: Math.random().toString(36).substr(2, 4), item
+      // locationName: item.nameInput, address: item.address,
+      // coordinates: { latitude: item.coordinates.latitude, longitude: coordinates.longitude }
+    }];
+  } else {
+    return item;
+  }
+  // return [...items, { id: Math.random().toString(36).substr(2, 5), item }];
 };
 
 export const updateCategory = (items, index, newName) => {

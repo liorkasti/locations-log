@@ -32,30 +32,16 @@ const Category = ({ props }) => {
   useEffect(() => {
 
     const _props = JSON.stringify(props);
-    // props = JSON.parse(_props);
-    // console.log('Category.props: ' + props);
-    // console.log('Category._props: ' + _props);
-    // console.log('locationDialogOpen: ' + locationDialogOpen);
-    // console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations));
-    // console.log('========= props.renderedLocations: ' + JSON.stringify(props.renderedLocations).length);
-    // console.log('========= locationList: ' + JSON.stringify(locationList));
-    // console.log('========= locationList: ' + JSON.stringify(locationList.nameInput));
-    console.log('props.showMenu: ' + JSON.stringify(props.showMenu));
 
+    console.log(' Category renderedLocations map : ' + props.renderedLocations.map(location => location.item.nameInput));
     // if (props.showMenu) setShowMenu(false)
-
     setLocationList(props.renderedLocations)
-    // setLocationList(props.renderedLocation)
-    // console.log('LocationList after storage: ' + JSON.stringify(locationList));
-    // console.log('LocationList: ' + JSON.stringify(locationList));
-
 
     if (props.isUpdateMode) {
       // props.setUpdateOpen(false);
       // TODO: validate add asynch starage and sorting capabiliteis
       // initStorage();
     }
-
 
     if (isAddLocationMode) {
       // props.setUpdateOpen(false);
