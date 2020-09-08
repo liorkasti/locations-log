@@ -1,32 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Text, TouchableOpacity, SafeAreaView, FlatList, ScrollView, Dimensions, Picker } from "react-native";
-import FontAwesomeIcon from "react-native-vector-icons/MaterialIcons";
-import Dialog, { DialogFooter, DialogTitle, DialogButton, SlideAnimation, PopupDialog, DialogContent } from 'react-native-popup-dialog';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
-
+import CategoryCard from './CategoryCard';
 import LocationCard from './LocationCard';
-import ModifyLocation from '../action/ModifyLocation';
-import ModifyCategory from '../action/ModifyCategory';
-import DialogComponent from './DialogComponent';
-import ActionMenu from './ActionMenu';
-
 
 // export default function Category({ props }) {
 // export function Category( {props} ) {
 // const Category = (props) => {
 const ItemsList = (props) => {
 
-  const [selectedId, setSelectedId] = useState(null);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
-    console.log(' NNNNNNNNN nameInput NNNNNNNNN : ' + props.renderedLocations[props.renderedLocations.length-1].item.nameInput);
-    console.log(' NNNNNNNNN renderedLocations NNNNNNNNN : ' + JSON.stringify(props.renderedLocations));
-    console.log(' NNNNNNNNN map NNNNNNNNN : ' + props.renderedLocations.map(location => location.item.nameInput));
+    // console.log(' 000000000 props : ' + JSON.stringify(props));
+    // console.log(' NNNNNNNNN props.renderedCategories name NNNNNNNNN : ' + props.renderedCategories[props.renderedCategories.length - 1].item.name);
+    console.log(' NNNNNNNNN categories name  map NNNNNNNNN : ' + props.renderedCategories.map(category => category.categoryName));
+    // console.log(' NNNNNNNNN props.renderedCategory NNNNNNNNN : ' + JSON.stringify(props.renderedCategory));
+
+    // console.log(' NNNNNNNNN nameInput NNNNNNNNN : ' + props.renderedLocations[props.renderedLocations.length - 1].item.nameInput);
+    // console.log(' NNNNNNNNN renderedLocations NNNNNNNNN : ' + JSON.stringify(props.renderedLocations));
+    // console.log(' NNNNNNNNN locations inputName map NNNNNNNNN : ' + props.renderedLocations.map(location => location.item.nameInput));
+
+    // if (props.componentIndex === 0) {
+    //   setData(props.renderedCategories)
+    //   console.log(' NNNNNNNNN props.renderedCategory NNNNNNNNN : ' + props.renderedCategory);
+    // } else {
+    //   setData(props.renderedLocations)
+    // }
   }, [])
 
-  const DATA = JSON.stringify(props.locationList)
+  // const DATA = JSON.stringify(props.locationList)
   // const DATA = [
   //   {
   //     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
@@ -46,28 +49,41 @@ const ItemsList = (props) => {
     <View style={styles.container}>
       {/* <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}> */}
       <SafeAreaView style={styles.container}>
-        {/* <FlatList
-            data={DATA}
-            renderItem={renderItem}
-            keyExtractor={(item) => item.id}
-            extraData={selectedId}
-          /> */}
-
-        <FlatList
-          keyExtractor={(item, index) => item.id}
-          data={props.renderedLocations}
-          renderItem={itemData => (
-            <LocationCard
-              id={itemData.item.id}
-              onSelectedLocation={props.onSelectedLocation}
-              // onDelete={removeCategoryHandler}
-              onPress={props.onNext}
-              title={itemData.item.item.nameInput}
-              // title={props.renderedLocations[props.renderedLocations.length-1].item.nameInput}
-              style={styles.cardItem}
-            />
-          )}
-        />
+        {props.componentIndex > 0 ?
+          // --------------------- Category View: ---------------------
+          <FlatList
+            keyExtractor={(item, index) => item.id}
+            data={props.renderedLocations}
+            renderItem={itemData => (
+              <LocationCard
+                id={itemData.item.id}
+                onSelectedLocation={props.onSelectedLocation}
+                // onDelete={removeCategoryHandler}
+                onPress={props.onPress}
+                title={itemData.item.item.nameInput}
+                // title={props.renderedLocations[props.renderedLocations.length-1].item.nameInput}
+                style={styles.cardItem}
+              />
+            )}
+          />
+          :
+          // --------------------- Categories View: --------------------- 
+          <FlatList
+            keyExtractor={(item, index) => item.id}
+            data={props.renderedCategories}
+            renderItem={itemData => (
+              <CategoryCard
+                id={itemData.item.id}
+                onSelectedCategory={props.onUpdateCategory}
+                // onDelete={removeCategoryHandler}
+                onPress={props.onNext}
+                title={itemData.item.categoryName}
+                // style={styles.categoryItem}
+                style={styles.cardItem}
+              />
+            )}
+          />
+        }
       </SafeAreaView>
       {/* </ScrollView> */}
     </View >
@@ -132,7 +148,7 @@ const styles = StyleSheet.create({
   },
   cardItem: {
     alignItems: 'center',
-    width: '80%',
+    width: '100%',
   },
   welcomeContainer: {
     // flex: 1,

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 // import { KEYS, setItem, getItem, clearAll } from '../utils/myLocationsStorage';
 // import { KEYS, storeData, setItem, getItem, multiSet, multiGet, getMyStringValue, getMyObject, getAllKeys, clearAll } from '../utils/myLocationsStorage';
-import { addCategory, addLocations, addLocation, updateCategory, removeCategory } from '../action/modifyActions';
+import { addCategory, addLocations, addLocation, appendCategory, appendLocation, updateCategory, removeCategory } from '../action/modifyActions';
 import Categories from "../screens/Categories";
 import Category from "../screens/Category";
 import Location from "../screens/Location";
@@ -51,11 +51,11 @@ export default function Index(props) {
 
     useEffect(() => {
         // // console.log("Storage Rendered Category: ", item);
-        // console.log("Root Current Category: ", renderedCategory);
+        console.log("Root Current Category: ", renderedCategory);
         // // console.log('Storage Rendered Categories: : ', items);
-        // console.log("Root Current Categories: ", renderedCategories);
-        console.log("Root Current Location: ", renderedLocation);
-        console.log("Root Current Locations: ", renderedLocations);
+        console.log("Root Current Categories: ", renderedCategories);
+        // console.log("Root Current Location: ", renderedLocation);
+        // console.log("Root Current Locations: ", renderedLocations);
         // console.log("Index props: ", props)
 
         if (componentIndex < 0) {
@@ -87,18 +87,19 @@ export default function Index(props) {
     let history = useHistory();
 
     // set the new category
-    const renderedCategoryHandler = async (categoryNode) => {
-        setRenderedCategory(categoryNode);
+    const renderedCategoryHandler = async (categoryName) => {
+        setRenderedCategory([{categoryName: categoryName, locations: renderedLocations}]);
+        // TODO: Asynch Storage
         // item = setItem(KEYS.CATEGORIES, JSON.stringify(categoryNode))
         // item = getItem(KEYS.CATEGORIES, JSON.stringify(categoryNode))
     }
 
     // update the categories list
-    const renderedCategoriesHandler = async (categoryListNode) => {
-        if (addCategory(renderedCategories, categoryListNode) !== categoryListNode) {
-            setRenderedCategories(addCategory(renderedCategories, categoryListNode));
+    const renderedCategoriesHandler = async (categoryName) => {
+        if (addCategory(renderedCategories, categoryName) !== categoryName) {
+            setRenderedCategories(addCategory(renderedCategories, categoryName, renderedLocations));
         } else {
-            Alert.alert("The category '" + categoryListNode + "' already exist!");
+            Alert.alert("The category '" + categoryName + "' already exist!");
         }
         // TODO: Asynch Storage
         // items = multiSet(KEYS.CATEGORIES, item)
@@ -109,6 +110,7 @@ export default function Index(props) {
     const renderedLocationHandler = async (locationNode) => {
         setRenderedLocation(locationNode);
     }
+
     // update the locations list
     const renderedLocationsHandler = async (locationsListNode) => {
         // console.warn("SET renderedLocationsHandler", locationsListNode)
@@ -118,7 +120,17 @@ export default function Index(props) {
         } else {
             Alert.alert("The location '" + locationsListNode.nameInput + "' already exist!");
         }
+        appendLocationHandler(renderedCategories, renderedCategory, renderedLocations);
     }
+
+    const appendLocationHandler = (categories, category, location) => {
+        console.warn("SET appendLocationHandler", categories, category, locations)
+
+        appendLocation();
+    };
+
+
+
 
     const onUpdateHandler = (renderedCategories, renderedCategory, editCategory) => {
         // Alert.alert("Update Category", "Are you sure you want to update to '" + editCategory + "'?");

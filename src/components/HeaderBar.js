@@ -22,7 +22,7 @@ const HeaderBar = (props) => {
         <View style={styles.buttonstack}>
 
           {props.componentIndex > 0 ?
-            // --------------------- Current Category View: ---------------------
+            // --------------------- Category View: ---------------------
             <>
               <TouchableOpacity onPress={() => {
                 props.onBack()

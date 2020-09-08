@@ -20,7 +20,7 @@ const LocationCard = props => {
         // <TouchableOpacity activeOpacity={0.8} onPress={props.onDelete}>
         <TouchableNativeFeedback
             onPress={() => {
-                // props.onPress(props.onSelectedLocation(JSON.stringify(props.locationList).nameInput))
+                props.onPress();
                 console.log("props.renderedCategories", props.renderedCategories)
             }}
         >

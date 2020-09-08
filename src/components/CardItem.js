@@ -8,7 +8,7 @@ const CardItem = props => {
         // <TouchableOpacity activeOpacity={0.8} onPress={props.onDelete}>
         <TouchableNativeFeedback
             onPress={() => {
-                props.onPress(props.onSelectedCategory(props.title))
+                props.onPress(props.onPress(props.title))
                 console.log("SelectedCategory: ", props.title)
                 // console.log("props.renderedCategories", props.renderedCategories)
             }}

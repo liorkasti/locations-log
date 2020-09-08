@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: 10,
         marginVertical: 10,
-        width: '75%',
+        // width: '75%',
+        width: '100%',
         backgroundColor: '#ddd',
         borderColor: 'black',
         borderWidth: 0.7

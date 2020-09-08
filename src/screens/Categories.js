@@ -9,6 +9,8 @@ import CardItem from '../components/CardItem';
 import CategoryCard from '../components/CategoryCard';
 import ModifyCategory from '../action/ModifyCategory';
 import DialogComponent from '../components/DialogComponent';
+import ItemsList from '../components/ItemsList';
+
 
 // export default function Categories(props) {
 export default function Categories({ props }) {
@@ -23,7 +25,7 @@ export default function Categories({ props }) {
     if (isAddMode) {
       reloadStorage()
       // console.log("The Current Category: ", currentCategory);
-      // console.log("The Category List: ", categoryList);
+      console.log("The Category List: ", props.renderedCategories);
     }
     // return {  };
   }, [])
@@ -44,7 +46,7 @@ export default function Categories({ props }) {
 
   const reloadStorage = () => {
     setCurrentCategory(props.renderedCategory);
-    setCategoryList(props.renderedCategories);
+    // setCategoryList(props.renderedCategories);
     setIsAddMode(false);
   }
 
@@ -67,7 +69,39 @@ export default function Categories({ props }) {
               <>
                 <Text style={styles.textPrompt}>Your Categories</Text>
 
-                <FlatList
+                <ItemsList
+                  currentComponent={props.currentComponent}
+                  componentIndex={props.componentIndex}
+
+                  addCategoryHandler={addCategoryHandler}
+                  cancelCategoryHandler={cancelCategoryHandler}
+
+                  renderedCategory={props.renderedCategory}
+                  onUpdateCategory={props.onUpdateCategory}
+
+                  renderedCategories={props.renderedCategories}
+                  setRenderedCategories={props.setRenderedCategories}
+
+                  currentLocation={props.currentLocation}
+                  setCurrentLocation={props.setCurrentLocation}
+
+                  renderedLocations={props.renderedLocations}
+                  // locationList={locationList}
+                  // setLocationList={setLocationList}
+
+                  renderedLocations={props.renderedLocations}
+                  setRenderedLocation={props.setRenderedLocation}
+
+                  onUpdateCategories={props.onUpdateCategories}
+                  onSelectedCategory={props.onUpdateCategory}
+                  onSelectedLocation={props.onSelectedLocation}
+
+                  onNext={props.onNext}
+
+                  // style={styles.categoryItem}
+                />
+                {/* 
+                 <FlatList
                   keyExtractor={(item, index) => item.id}
                   data={props.renderedCategories}
                   renderItem={itemData => (
@@ -81,6 +115,7 @@ export default function Categories({ props }) {
                     />
                   )}
                 />
+                     */}
               </>
               :
               <View style={styles.welcomeContainer}>
@@ -161,7 +196,7 @@ const styles = StyleSheet.create({
   },
   categoryItem: {
     alignItems: 'center',
-    // width: '80%',
+    width: '100%',
   },
   welcomeContainer: {
     // flex: 1,
