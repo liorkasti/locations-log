@@ -5,7 +5,6 @@ import Dialog, { DialogFooter, DialogButton, SlideAnimation, DialogContent } fro
 import toastMaker from '../utils/feedbackGenerator';
 
 import { KEY } from '../router/index';
-import CardItem from '../components/CardItem';
 import CategoryCard from '../components/CategoryCard';
 import ModifyCategory from '../action/ModifyCategory';
 import DialogComponent from '../components/DialogComponent';
@@ -110,7 +109,7 @@ export default function Categories({ props }) {
                       onSelectedCategory={props.onUpdateCategory}
                       // onDelete={removeCategoryHandler}
                       onPress={props.onNext}
-                      title={itemData.item.name}
+                      title={itemData.item.categoryName}
                       style={styles.categoryItem}
                     />
                   )}

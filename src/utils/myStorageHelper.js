@@ -9,24 +9,24 @@
 //   if (!categories || !categories instanceof Array) {
 //     return [];
 //   }
-//   if (!categoryToFilterOut || !categoryToFilterOut.name) {
+//   if (!categoryToFilterOut || !categoryToFilterOut.categoryName) {
 //     return categories;
 //   }
-//   return categories.filter(item => item.name !== categoryToFilterOut.name);
+//   return categories.filter(item => item.categoryName !== categoryToFilterOut.categoryName);
 // };
 
 // export const findCategoryIndex = (categories, category) => {
-//   if (!categories || !category || !category.name) {
+//   if (!categories || !category || !category.categoryName) {
 //     return -1;
 //   }
-//   return categories.findIndex(item => item.name === category.name);
+//   return categories.findIndex(item => item.categoryName === category.categoryName);
 // };
 
 // // export const sortCategories = (categories, sortMode) => {
 // //   switch (sortMode) {
 // //     case SORT_MODE.ALPHABETICALLY:
 // //       const clonedCategories = [...categories];
-// //       return clonedCategories.sort((a, b) => a.name.localeCompare(b.name));
+// //       return clonedCategories.sort((a, b) => a.categoryName.localeCompare(b.categoryName
 // //     case SORT_MODE.DEFAULT:
 // //     default:
 // //       return categories;

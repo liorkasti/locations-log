@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TouchableNativeFeedback } from 'react-native';
 import FontAwesomeIcon from "react-native-vector-icons/FontAwesome";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 const CategoryCard = props => {
+
+    useEffect(() => {
+        console.log(' 00000 CategoryCard props : ' + JSON.stringify(props));
+    }, []);
+
     return (
         // <TouchableOpacity activeOpacity={0.8} onPress={props.onDelete}>
         <TouchableNativeFeedback

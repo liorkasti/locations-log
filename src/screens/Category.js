@@ -33,7 +33,7 @@ const Category = ({ props }) => {
 
     const _props = JSON.stringify(props);
 
-    console.log(' Category renderedLocations map : ' + props.renderedLocations.map(location => location.item.nameInput));
+    console.log(' Category renderedLocations map : ' + props.renderedLocations.map(location => location.item.locationName));
     // if (props.showMenu) setShowMenu(false)
     setLocationList(props.renderedLocations)
 
@@ -66,7 +66,7 @@ const Category = ({ props }) => {
 
     props.onUpdateCategory(categoryName)
     console.warn("onUpdateHandler in Category!")
-    const index = props.renderedCategories.findIndex(category => category.name === props.renderedCategory);
+    const index = props.renderedCategories.findIndex(category => category.categoryName === props.renderedCategory);
     updateStorage(index, categoryName);
     //TODO: set the line below to active before production.
     // props.setIsUpdateMode(false);
@@ -133,7 +133,8 @@ const Category = ({ props }) => {
                   
                   onUpdateCategories={props.onUpdateCategories}
                   onSelectedCategory={props.onUpdateCategory}
-                  onSelectedLocation={props.onSelectedLocation}
+
+                  onSelectedLocation={props.onUpdateLocation}
                   
                   onPress={props.onNext}
                   

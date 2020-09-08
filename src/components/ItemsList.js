@@ -13,13 +13,13 @@ const ItemsList = (props) => {
 
   useEffect(() => {
     // console.log(' 000000000 props : ' + JSON.stringify(props));
-    // console.log(' NNNNNNNNN props.renderedCategories name NNNNNNNNN : ' + props.renderedCategories[props.renderedCategories.length - 1].item.name);
+    // console.log(' NNNNNNNNN props.renderedCategories name NNNNNNNNN : ' + props.renderedCategories[props.renderedCategories.length - 1].item.categoryName);
     console.log(' NNNNNNNNN categories name  map NNNNNNNNN : ' + props.renderedCategories.map(category => category.categoryName));
     // console.log(' NNNNNNNNN props.renderedCategory NNNNNNNNN : ' + JSON.stringify(props.renderedCategory));
 
-    // console.log(' NNNNNNNNN nameInput NNNNNNNNN : ' + props.renderedLocations[props.renderedLocations.length - 1].item.nameInput);
+    // console.log(' NNNNNNNNN locationName NNNNNNNNN : ' + props.renderedLocations[props.renderedLocations.length - 1].item.locationName);
     // console.log(' NNNNNNNNN renderedLocations NNNNNNNNN : ' + JSON.stringify(props.renderedLocations));
-    // console.log(' NNNNNNNNN locations inputName map NNNNNNNNN : ' + props.renderedLocations.map(location => location.item.nameInput));
+    // console.log(' NNNNNNNNN locations inputName map NNNNNNNNN : ' + props.renderedLocations.map(location => location.item.locationName));
 
     // if (props.componentIndex === 0) {
     //   setData(props.renderedCategories)
@@ -60,9 +60,8 @@ const ItemsList = (props) => {
                 onSelectedLocation={props.onSelectedLocation}
                 // onDelete={removeCategoryHandler}
                 onPress={props.onPress}
-                title={itemData.item.item.nameInput}
-                // title={props.renderedLocations[props.renderedLocations.length-1].item.nameInput}
-                style={styles.cardItem}
+                title={itemData.item.item.locationName}
+                // title={props.renderedLocations[props.renderedLocations.length-1].item.locationName}
               />
             )}
           />
@@ -79,7 +78,6 @@ const ItemsList = (props) => {
                 onPress={props.onNext}
                 title={itemData.item.categoryName}
                 // style={styles.categoryItem}
-                style={styles.cardItem}
               />
             )}
           />

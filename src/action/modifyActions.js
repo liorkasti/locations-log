@@ -12,10 +12,10 @@ export const addCategory = (categories, categoryName, locations) => {
 export const addLocation = (items, item) => {
   // TODO: Check it input exists in the specific category
   console.warn('Locations list before storage: ' + items + " | item to add:" + item);
-  console.warn('location.nameInput: ' + items.findIndex(location => location.nameInput));
+  console.warn('location.locationName: ' + items.findIndex(location => location.locationName));
 
-  const exist = items.findIndex(location => location.item.nameInput === item.nameInput);
-  console.warn('exist: ' + exist + "item: " + item.nameInput);
+  const exist = items.findIndex(location => location.item.locationName === item.locationName);
+  console.warn('exist: ' + exist + "item: " + item.locationName);
   if (exist === -1) {
     const append = [...items, { id: Math.random().toString(36).substr(2, 4), item }];
     // appendCategory(append)
@@ -36,14 +36,14 @@ export const appendLocation = (items, item) => {
 export const updateCategory = (items, index, newName) => {
 
   // console.warn('TO BE UPDATE: ' + newName + " in index: ", index);
-  // console.warn('TO BE UPDATE: ' + newName + " in index: ", items[index].name);
-  items[index].name = newName;
+  // console.warn('TO BE UPDATE: ' + newName + " in index: ", items[index].categoryName);
+  items[index].categoryName = newName;
   return items;
 };
 
 export const removeCategory = (items, item) => {
   console.log('TO BE DELETED: ' + item);
-  return items.filter(category => category.name !== item);
+  return items.filter(category => category.categoryName !== item);
 };
 // export const cancelCategoryAdditionHandler = () => {
 //   setIsCancelMode(true);

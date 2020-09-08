@@ -118,7 +118,7 @@ export default function Index(props) {
         if (addLocation(renderedLocations, locationsListNode) !== locationsListNode) {
             setRenderedLocations(addLocation(renderedLocations, locationsListNode));
         } else {
-            Alert.alert("The location '" + locationsListNode.nameInput + "' already exist!");
+            Alert.alert("The location '" + locationsListNode.locationName + "' already exist!");
         }
         appendLocationHandler(renderedCategories, renderedCategory, renderedLocations);
     }

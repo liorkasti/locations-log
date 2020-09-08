@@ -26,7 +26,7 @@ const LocationCard = props => {
         >
             {/* onPress={props.onDelete.bind(this, props.id)} > */}
             < View style={styles.rowItem} >
-                {/* itemData.item.value  nameInput, addressInput, coordinates */}
+                {/* itemData.item.value  locationName, addressInput, coordinates */}
                 < Text > {props.title}</Text >
                 <Icon name="map-marker-right" style={styles.icon} />
             </View >

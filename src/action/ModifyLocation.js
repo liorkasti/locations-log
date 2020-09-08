@@ -8,7 +8,7 @@ import MapButton from "../components/MapButton";
 
 
 const ModifyLocation = props => {
-  const [nameInput, setNameInput] = useState("");
+  const [locationName, setLocationName] = useState("");
   const [addressInput, setAddressInput] = useState("");
   const [coordinates, setCoordinates] = useState([]);
   const [isAddLocationMode, setIsAddLocationMode] = useState(false);
@@ -27,8 +27,8 @@ const ModifyLocation = props => {
     // if (props.showMediumMap) { console.log("props.showMediumMap: ", props.showMediumMap); }
   }, [])
 
-  const nameInputHandler = enteredText => {
-    setNameInput(enteredText);
+  const locationNameHandler = enteredText => {
+    setLocationName(enteredText);
   };
 
   const addressInputHandler = addressInput => {
@@ -41,15 +41,15 @@ const ModifyLocation = props => {
     // console.log("coordinates.length: ",  coordinates.length);
     // console.log('******************* isAddLocationMode: ***************' + isAddLocationMode);
 
-    if (nameInput.length > 0 && addressInput.length > 0 && coordinates.latitude && coordinates.longitude) {
-      // props.onSave(nameInput, addressInput);
-      // props.onSave(nameInput, addressInput, {latitude: 0, longitude: 0})
-      let locationDetails = { nameInput, addressInput, coordinates }
+    if (locationName.length > 0 && addressInput.length > 0 && coordinates.latitude && coordinates.longitude) {
+      // props.onSave(locationName, addressInput);
+      // props.onSave(locationName, addressInput, {latitude: 0, longitude: 0})
+      let locationDetails = { locationName, addressInput, coordinates }
       // console.warn("locationDatiles: " + JSON.stringify(locationDetails));
 
       props.onSaveLocation(locationDetails);
-      // props.onSaveLocation(nameInput, addressInput, {latitude: coordinates.latitude, longitude: coordinates.longitude});
-      setNameInput('');
+      // props.onSaveLocation(locationName, addressInput, {latitude: coordinates.latitude, longitude: coordinates.longitude});
+      setLocationName('');
       setAddressInput('');
       setCoordinates;
       setIsAddLocationMode(true);
@@ -83,8 +83,8 @@ const ModifyLocation = props => {
               <TextInput
                 placeholder="Name"
                 style={styles.input}
-                onChangeText={nameInputHandler}
-                value={nameInput}
+                onChangeText={locationNameHandler}
+                value={locationName}
               />
             </View>
 
