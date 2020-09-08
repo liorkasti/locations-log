@@ -73,7 +73,7 @@ const ItemsList = (props) => {
             renderItem={itemData => (
               <CategoryCard
                 id={itemData.item.id}
-                onSelectedCategory={props.onUpdateCategory}
+                onSelectedCategory={props.onSelectedCategory}
                 // onDelete={removeCategoryHandler}
                 onPress={props.onNext}
                 title={itemData.item.categoryName}

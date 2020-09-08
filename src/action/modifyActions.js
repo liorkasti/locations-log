@@ -3,7 +3,7 @@ export const addCategory = (categories, categoryName, locations) => {
   const exist = categories.findIndex(category => category.categoryName === categoryName);
   console.warn('index: ' + exist + "item: " + categoryName);
   if (exist === -1) {
-    return [...categories, { id: Math.random().toString(36).substr(2, 5), categoryName: categoryName, locations: locations }];
+    return [...categories, { id: Math.random().toString(36).substr(2, 5), categoryName: categoryName, locations: [locations] }];
   } else {
     return categoryName;
   }

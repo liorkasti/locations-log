@@ -88,7 +88,9 @@ export default function Index(props) {
 
     // set the new category
     const renderedCategoryHandler = async (categoryName) => {
-        setRenderedCategory([{categoryName: categoryName, locations: renderedLocations}]);
+        console.log('I am HERE NOW: ');
+
+        setRenderedCategory(categoryName);
         // TODO: Asynch Storage
         // item = setItem(KEYS.CATEGORIES, JSON.stringify(categoryNode))
         // item = getItem(KEYS.CATEGORIES, JSON.stringify(categoryNode))
@@ -150,7 +152,7 @@ export default function Index(props) {
         // TODO: confirmationAlert cancelable
         // confirmation = confirmationAlert("Delete Category", "Are you sure you want to delete");
         // if (confirmation) {
-        setRenderedCategories(removeCategory(renderedCategories, deleteItem));
+        setRenderedCategories(removeCategory(renderedCategories, deleteItem), renderedLocations);
         setComponentIndex(componentIndex - 1);
     };
 

@@ -15,7 +15,8 @@ export default function Location(props) {
   return (
     <View style={styles.container}><Text>Location Screen</Text>
       <View style={styles.parent}>
-        <LocationItem></LocationItem>
+        <Text style={styles.container}>123456</Text>
+        {/* <LocationItem></LocationItem> */}
       </View>
     </View>
   );
