@@ -86,7 +86,7 @@ export default function Index(props) {
 
     let history = useHistory();
 
-    // set the new category
+    // set current category
     const renderedCategoryHandler = async (categoryName) => {
         console.log('I am HERE NOW: ', renderedCategoryHandler);
 
@@ -108,10 +108,18 @@ export default function Index(props) {
         // const result = setItem(KEYS.CATEGORIES, JSON.stringify(renderedCategories));
         // console.warn("SET ITEMS", result)
     }
+
     // update the location list
     const renderedLocationHandler = async (locationNode) => {
         setRenderedLocation(locationNode);
     }
+
+    // update current location 
+    const appendLocationHandler = (categories, category, location) => {
+        console.warn("SET appendLocationHandler", categories, category, locations)
+
+        appendLocation();
+    };
 
     // update the locations list
     const renderedLocationsHandler = async (locationsListNode) => {
@@ -124,13 +132,6 @@ export default function Index(props) {
         }
         appendLocationHandler(renderedCategories, renderedCategory, renderedLocations);
     }
-
-    const appendLocationHandler = (categories, category, location) => {
-        console.warn("SET appendLocationHandler", categories, category, locations)
-
-        appendLocation();
-    };
-
 
 
 
@@ -206,19 +207,28 @@ export default function Index(props) {
                 }}
                 onActionMenu={(action) => { menuBarActionHandler(action); }}
 
-                renderedCategories={renderedCategories}
-                onUpdateCategories={renderedCategoriesHandler}
-
-                renderedCategory={renderedCategory}
-                onUpdateCategory={renderedCategoryHandler}
-
                 header={headers[componentKeys[componentIndex]]}
                 onBack={() => {
                     if (showMenu) setShowMenu(false);
                     setComponentIndex(componentIndex - 1);
                 }}
 
-                onNext={() => { setComponentIndex(componentIndex + 1) }}
+                onNext={() => {
+                    if (showMenu) setShowMenu(false);
+                    setComponentIndex(componentIndex + 1)
+                }}
+
+                renderedCategories={renderedCategories}
+                onUpdateCategories={renderedCategoriesHandler}
+
+                renderedCategory={renderedCategory}
+                onUpdateCategory={renderedCategoryHandler}
+
+                renderedLocation={renderedLocation}
+                onUpdateLocation={renderedLocationHandler}
+
+                renderedLocations={renderedLocations}
+                onUpdateLocations={renderedLocationsHandler}
 
                 // onActionMenu={menuBarActionHandler}
                 showMenu={showMenu}

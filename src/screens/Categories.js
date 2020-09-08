@@ -92,8 +92,7 @@ export default function Categories({ props }) {
                   setRenderedLocation={props.setRenderedLocation}
 
                   onUpdateCategories={props.onUpdateCategories}
-                  onSelectedCategory={props.onUpdateCategory}
-                  onSelectedLocation={props.onSelectedLocation}
+                  onSelectedCategory={props.onUpdateCategory}                  
 
                   onNext={props.onNext}
 

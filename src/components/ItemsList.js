@@ -33,22 +33,6 @@ const ItemsList = (props) => {
     // }
   }, [])
 
-  // const DATA = JSON.stringify(props.locationList)
-  // const DATA = [
-  //   {
-  //     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-  //     title: "First Item",
-  //   },
-  //   {
-  //     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-  //     title: "Second Item",
-  //   },
-  //   {
-  //     id: "58694a0f-3da1-471f-bd96-145571e29d72",
-  //     title: "Third Item",
-  //   },
-  // ];
-
   return (
     <View style={styles.container}>
       {/* <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}> */}
@@ -63,7 +47,7 @@ const ItemsList = (props) => {
                 id={itemData.item.id}
                 onSelectedLocation={props.onSelectedLocation}
                 // onDelete={removeCategoryHandler}
-                onPress={props.onPress}
+                onNext={props.onNext}
                 title={itemData.item.item.locationName}
                 // title={props.renderedLocations[props.renderedLocations.length-1].item.locationName}
               />

@@ -140,7 +140,9 @@ const Category = ({ props }) => {
                   renderedCategories={props.renderedCategories}
                   setRenderedCategories={props.setRenderedCategories}
 
-                  onPress={props.onNext}
+                  onSelectedLocation={props.onUpdateLocation}
+
+                  onNext={props.onNext}
 
                   style={styles.categoryItem}
                 />
