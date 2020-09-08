@@ -6,22 +6,15 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 const LocationCard = props => {
 
     useEffect(() => {
-        // const _props = JSON.stringify(props);
-        // console.log('LocationCard._props: ' + _props);
-        // // props = JSON.parse(props);
-        // console.log('LocationCard.props: ' + props);
-        // // console.log("Selected Location: ", _props.locationList)
-        // // console.log('locationDialogOpen: ' + locationDialogOpen);
-        // console.log('LocationList: ' + JSON.stringify(props.locationList));
-        // // console.log('LocationList: ' + JSON.stringify(locationList));
-    }, [])
+        console.log(' 11111 CategoryCard props : ' + JSON.stringify(props));
+    }, []);
 
     return (
         // <TouchableOpacity activeOpacity={0.8} onPress={props.onDelete}>
         <TouchableNativeFeedback
             onPress={() => {
-                props.onPress();
-                console.log("props.renderedCategories", props.renderedCategories)
+                // props.onPress();
+                // console.log("props.renderedCategories", props.renderedCategories)
             }}
         >
             {/* onPress={props.onDelete.bind(this, props.id)} > */}

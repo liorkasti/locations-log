@@ -12,14 +12,18 @@ const ItemsList = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    // console.log(' 000000000 props : ' + JSON.stringify(props));
-    // console.log(' NNNNNNNNN props.renderedCategories name NNNNNNNNN : ' + props.renderedCategories[props.renderedCategories.length - 1].item.categoryName);
-    console.log(' NNNNNNNNN categories name  map NNNNNNNNN : ' + props.renderedCategories.map(category => category.categoryName));
-    // console.log(' NNNNNNNNN props.renderedCategory NNNNNNNNN : ' + JSON.stringify(props.renderedCategory));
+    // console.log(' ItemsList props : ' + JSON.stringify(props));
+    console.log(' componentIndex : ' + props.componentIndex);
+    
+    // console.log(' NNNNNNNNN categories name  map NNNNNNNNN : ' + props.renderedCategories.map(category.categoryName => category.item.categoryName));
+    console.log(' NNNNNNNNN props.renderedCategory NNNNNNNNN : ' + JSON.stringify(props.renderedCategory));
 
-    // console.log(' NNNNNNNNN locationName NNNNNNNNN : ' + props.renderedLocations[props.renderedLocations.length - 1].item.locationName);
-    // console.log(' NNNNNNNNN renderedLocations NNNNNNNNN : ' + JSON.stringify(props.renderedLocations));
-    // console.log(' NNNNNNNNN locations inputName map NNNNNNNNN : ' + props.renderedLocations.map(location => location.item.locationName));
+    if(props.renderedLocations.length) {
+      // console.log(' NNNNNNNNN props.renderedCategories name NNNNNNNNN : ' + props.renderedCategories[props.renderedCategories.length - 1].item.categoryName);
+      console.log(' NNNNNNNNN locationName NNNNNNNNN : ' + props.renderedLocations[props.renderedLocations.length - 1].item.locationName);
+    }
+    console.log(' NNNNNNNNN renderedLocations NNNNNNNNN : ' + JSON.stringify(props.renderedLocations));
+    console.log(' NNNNNNNNN locations inputName map NNNNNNNNN : ' + props.renderedLocations.map(location => location.item.locationName));
 
     // if (props.componentIndex === 0) {
     //   setData(props.renderedCategories)
@@ -49,7 +53,7 @@ const ItemsList = (props) => {
     <View style={styles.container}>
       {/* <ScrollView style={{ zIndex: 1, width: windowWidth * .7, height: windowHeight * .95 }}> */}
       <SafeAreaView style={styles.container}>
-        {props.componentIndex > 0 ?
+        {props.componentIndex === 1 ?
           // --------------------- Category View: ---------------------
           <FlatList
             keyExtractor={(item, index) => item.id}

@@ -88,7 +88,7 @@ export default function Index(props) {
 
     // set the new category
     const renderedCategoryHandler = async (categoryName) => {
-        console.log('I am HERE NOW: ');
+        console.log('I am HERE NOW: ', renderedCategoryHandler);
 
         setRenderedCategory(categoryName);
         // TODO: Asynch Storage

@@ -117,27 +117,31 @@ const Category = ({ props }) => {
             locationList.length || props.renderedLocations.length ?
               // locationList.length ?
 
-              <>                
+              <>
                 <Text style={styles.textPrompt}>Your Locations</Text>
                 <ItemsList
-                  _currentLocation={JSON.stringify(currentLocation)}
+                  currentComponent={props.currentComponent}
+                  componentIndex={props.componentIndex}
+
                   currentLocation={currentLocation}
+
                   setCurrentLocation={setCurrentLocation}
 
                   renderedLocations={props.renderedLocations}
                   locationList={locationList}
                   setLocationList={setLocationList}
-                  
+
                   renderedLocations={props.renderedLocations}
                   setRenderedLocation={props.setRenderedLocation}
-                  
-                  onUpdateCategories={props.onUpdateCategories}
-                  onSelectedCategory={props.onUpdateCategory}
 
-                  onSelectedLocation={props.onUpdateLocation}
-                  
+                  renderedCategory={props.renderedCategory}
+                  onUpdateCategory={props.onUpdateCategory}
+
+                  renderedCategories={props.renderedCategories}
+                  setRenderedCategories={props.setRenderedCategories}
+
                   onPress={props.onNext}
-                  
+
                   style={styles.categoryItem}
                 />
               </>
